@@ -46,6 +46,7 @@
 
     ```bash
     npm run build
+    npm run dev
     ```
 
 7. Serve the application
