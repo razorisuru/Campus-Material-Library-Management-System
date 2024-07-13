@@ -56,6 +56,6 @@ class STLearningMaterialsController extends Controller
     {
         // $subjects = Subjects::all();
         $materials = LearningMaterial::with(['subjects', 'user'])->get();
-        return view('PDF.view', compact('materials'));
+        return view('studentView.view', compact('materials'));
     }
 }

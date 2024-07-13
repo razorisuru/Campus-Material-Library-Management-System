@@ -80,5 +80,6 @@ Route::get('/degree-programmes/{id}/subjects', [DegreeProgrammeController::class
 
 
 Route::get('/student-dashboard', [STLearningMaterialsController::class, 'index']);
+Route::get('/student-view', [STLearningMaterialsController::class, 'view']);
 Route::post('/student-dashboard', [STLearningMaterialsController::class, 'upload'])->name('StUpload.store');
 
