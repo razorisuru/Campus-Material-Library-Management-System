@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DegreeProgrammeController;
 use App\Http\Controllers\LearningMaterialsController;
+use App\Http\Controllers\STLearningMaterialsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,4 +77,8 @@ Route::middleware([
 // Degree API
 Route::get('/degree-programmes/{id}/subjects', [DegreeProgrammeController::class, 'getSubjects']);
 
+
+
+Route::get('/student-dashboard', [STLearningMaterialsController::class, 'index']);
+Route::post('/student-dashboard', [STLearningMaterialsController::class, 'upload'])->name('StUpload.store');
 
