@@ -74,6 +74,14 @@ Route::middleware([
     Route::post('/upload', [LearningMaterialsController::class, 'upload'])->name('upload.store');
 });
 
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::delete('/upload/{id}', [LearningMaterialsController::class, 'destroy'])->name('upload.destroy');
+});
+
 // Degree API
 Route::get('/degree-programmes/{id}/subjects', [DegreeProgrammeController::class, 'getSubjects']);
 

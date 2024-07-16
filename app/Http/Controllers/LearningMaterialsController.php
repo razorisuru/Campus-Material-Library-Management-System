@@ -6,6 +6,7 @@ use App\Models\Subject;
 use Illuminate\Http\Request;
 use App\Models\DegreeProgramme;
 use App\Models\LearningMaterial;
+use Illuminate\Support\Facades\Storage;
 
 class LearningMaterialsController extends Controller
 {
@@ -32,7 +33,7 @@ class LearningMaterialsController extends Controller
                 // $extension = $file->getClientOriginalExtension();
                 $filename = $file->getClientOriginalName();
                 $path = "uploads/files/";
-                $file->move($path, $filename);
+                $file->storeAs('public', $path. $filename);
                 $imageData[] = [
                     'subject_id' => $request->subject_id,
                     'title' => $request->title,
@@ -50,6 +51,27 @@ class LearningMaterialsController extends Controller
 
         return redirect()->back()->with('status', 'Uploaded Successfully');
         // return $filename;
+    }
+
+    public function destroy($id)
+    {
+        // Find the file record in the database
+        $learningMaterial = LearningMaterial::findOrFail($id);
+
+        // Delete the file from the storage
+        if (Storage::exists('public/'.$learningMaterial->file_path)) {
+            Storage::delete('public/'.$learningMaterial->file_path);
+            $learningMaterial->delete();
+            return redirect()->back()->with('status', 'File Deleted Successfully');
+        }else{
+            return ('public/'.$learningMaterial->file_path);
+        }
+
+        // Delete the database record
+        // $learningMaterial->delete();
+
+
+        // return $learningMaterial->file_path;
     }
 
     public function view()
