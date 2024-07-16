@@ -57,11 +57,8 @@
 
 8. Login credentials
 
-````bash
-    **Email:** isuru@mail.com
+    ````bash
+    Email: isuru@mail.com
 
-**Password:** Isuru@123
-    ```
-
-
-````
+    Password: Isuru@123
+    ````
