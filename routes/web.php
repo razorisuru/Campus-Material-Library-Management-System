@@ -49,7 +49,7 @@ Route::middleware([
 
 
 
-
+// pdf management
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
