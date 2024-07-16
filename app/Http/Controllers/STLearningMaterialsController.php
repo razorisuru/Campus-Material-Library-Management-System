@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Subject;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\DegreeProgramme;
 use App\Models\LearningMaterial;
@@ -13,7 +14,8 @@ class STLearningMaterialsController extends Controller
     {
         $subjects = Subject::all();
         $degrees = DegreeProgramme::all();
-        return view('studentView.stdUpload', compact(['subjects', 'degrees']));
+        $categories = Category::all();
+        return view('studentView.stdUpload', compact(['subjects', 'degrees', 'categories']));
     }
 
     public function upload(Request $request)
@@ -24,7 +26,7 @@ class STLearningMaterialsController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'files.*' => 'required|mimes:pdf,doc,docx,txt,pptx|max:51200',
-            'category' => 'required|string|in:lecture_notes,presentations,tests,activities',
+            'category' => 'required',
         ]);
 
         if ($files = $request->file('files')) {
@@ -37,7 +39,7 @@ class STLearningMaterialsController extends Controller
                     'subject_id' => $request->subject_id,
                     'title' => $request->title,
                     'description' => $request->description,
-                    'category' => $request->category,
+                    'category_id' => $request->category,
                     'file_path' => $path . $filename,
                     'uploaded_by' => Auth()->user()->id,
                     'created_at' => now(),

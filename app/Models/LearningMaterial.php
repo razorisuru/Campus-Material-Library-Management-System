@@ -13,7 +13,6 @@ class LearningMaterial extends Model
         'subject_id',
         'title',
         'description',
-        'category',
         'file_path',
         'uploaded_by',
     ];
@@ -31,5 +30,10 @@ class LearningMaterial extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'uploaded_by');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }

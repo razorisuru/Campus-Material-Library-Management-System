@@ -16,9 +16,9 @@ return new class extends Migration
             $table->foreignId('subject_id')->constrained('subjects')->onDelete('cascade');
             $table->string('title');
             $table->text('description')->nullable();
-            $table->enum('category', ['lecture_notes', 'presentations', 'tests', 'activities']);
             $table->string('file_path');
             $table->foreignId('uploaded_by')->constrained('users')->onDelete('cascade');
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -91,7 +91,14 @@
                                     <div class="mb-4">
                                         <label class="block mb-2">Select Category</label>
                                         <div class="flex ">
-                                            <label class="inline-flex items-center mb-2 sm:mb-0">
+                                            @foreach ($categories as $category)
+                                                <label class="inline-flex items-center mb-2 sm:mb-0">
+                                                    <input type="radio" name="category" value="{{ $category->id }}"
+                                                        class="form-radio text-blue-600">
+                                                    <span class="ml-2">{{ $category->name }}</span>
+                                                </label>
+                                            @endforeach
+                                            {{-- <label class="inline-flex items-center mb-2 sm:mb-0">
                                                 <input type="radio" name="category" value="lecture_notes"
                                                     class="form-radio text-blue-600">
                                                 <span class="ml-2">Lecture Notes</span>
@@ -110,7 +117,7 @@
                                                 <input type="radio" name="category" value="activities"
                                                     class="form-radio text-blue-600">
                                                 <span class="ml-2">Activities</span>
-                                            </label>
+                                            </label> --}}
                                         </div>
                                     </div>
 
@@ -134,8 +141,7 @@
                                                             upload</span> or drag and drop</p>
                                                     <p class="text-muted small">Only Upload PDF, DOCX, PPTX up to 50MB</p>
                                                 </div>
-                                                <input id="files" name="files[]" type="file" class="d-none"
-                                                    multiple>
+                                                <input id="files" name="files[]" type="file" class="d-none" multiple>
                                             </label>
                                         </div>
                                         <div id="file-list" class="mt-4 text-muted small"></div>
