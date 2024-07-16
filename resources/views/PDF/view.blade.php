@@ -18,7 +18,7 @@
         <div class="card">
             <div class="card-header">
                 <h5 class="card-title">
-                    jQuery Datatable
+                    PDF Datatable
                 </h5>
             </div>
             <div class="card-body">
@@ -39,7 +39,7 @@
                             @foreach ($materials as $material)
                                 <tr>
                                     <td>{{ $material->title }}</td>
-                                    <td>{{ $material->category }}</td>
+                                    <td>{{ $material->category->name }}</td>
                                     <td>{{ $material->subjects->subject_code . '-' . $material->subjects->name }}</td>
                                     <td>{{ $material->description }}</td>
                                     <td><a href="{{ asset('storage/' . $material->file_path) }}" target="_blank" class="">
