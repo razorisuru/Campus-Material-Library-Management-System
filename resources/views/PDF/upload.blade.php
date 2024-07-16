@@ -37,9 +37,9 @@
 
                 <div class="col-12 col-md-12">
                     <div class="card">
-                        <div class="card-header">
+                        {{-- <div class="card-header">
                             <h5 class="card-title">Multiple Files</h5>
-                        </div>
+                        </div> --}}
                         <div class="card-content">
                             <div class="card-body">
 
@@ -56,6 +56,8 @@
                                 <form method="POST" action="{{ route('upload.store') }}" enctype="multipart/form-data">
                                     @csrf
                                     <fieldset class="form-group">
+                                        <label for="degree_programme" class="mb-2">Select Degree
+                                            Programme</label>
                                         <select class="form-select" id="degreeSelect" name="degree_programme_id">
                                             <option value="" disabled selected>Select Degree</option>
                                             @foreach ($degrees as $degree)
@@ -65,6 +67,7 @@
                                     </fieldset>
 
                                     <fieldset class="form-group">
+                                        <label for="degree_programme" class="mb-2">Select Subject</label>
                                         <select class="form-select" id="subjectSelect" name="subject_id" disabled>
                                             <option value="" disabled selected>Select Subject</option>
                                         </select>
@@ -74,13 +77,14 @@
                                         <label for="helperText">Title</label>
                                         <input type="text" id="helperText" name="title" class="form-control"
                                             placeholder="Name">
-                                        <p><small class="text-muted">Enter the title.</small></p>
+                                        {{-- <p><small class="text-muted">Enter the title.</small></p> --}}
                                     </div>
 
 
-                                    <div class="form-group with-title mb-3">
+                                    <div class="form-group with-title mt-2 mb-3">
+                                        {{-- <label for="degree_programme" class="mb-2"></label> --}}
                                         <textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                        <label>Description</label>
+                                        <label>Enter a Description</label>
                                     </div>
 
 
@@ -113,14 +117,14 @@
 
 
                                     <div class="mb-4">
-                                        <label for="file" class="d-block text-dark font-weight-medium mb-2">File
+                                        <label for="file" class="">File
                                             Upload</label>
                                         <div class="d-flex align-items-center justify-content-center w-100">
                                             <label for="files" id="drop-zone"
                                                 class="d-flex flex-column align-items-center justify-content-center w-100 h-32 border border-dashed rounded-lg cursor-pointer transition-colors duration-200 ease-in-out">
                                                 <div
                                                     class="d-flex flex-column align-items-center justify-content-center pt-5 pb-6">
-                                                    <svg class="w-8 h-8 mb-4 text-muted" xmlns="http://www.w3.org/2000/svg"
+                                                    <svg class="w-8 h-8 mb-4 " xmlns="http://www.w3.org/2000/svg"
                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
                                                             stroke-width="2"
