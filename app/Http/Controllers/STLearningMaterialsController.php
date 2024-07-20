@@ -58,7 +58,7 @@ class STLearningMaterialsController extends Controller
     public function view()
     {
         // $subjects = Subjects::all();
-        $materials = LearningMaterial::with(['subjects', 'user'])->get();
-        return view('studentView.view', compact('materials'));
+        $materials = LearningMaterial::with(['subjects', 'user'])->where('status', '=', 'approved')->get();
+        return view('studentView.index', compact('materials'));
     }
 }

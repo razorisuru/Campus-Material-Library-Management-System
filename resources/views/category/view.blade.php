@@ -54,11 +54,10 @@
                                         <button class="btn btn-secondary edit-btn" type="button">Edit</button>
                                         <button class="btn btn-success save-btn d-none" type="button">Save</button>
                                         <form action="{{ route('category.destroy', $category->id) }}" method="POST"
-                                            class="d-inline">
+                                            class="d-inline" onsubmit="return submitForm(this);">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-danger" type="submit"
-                                                onclick="return confirm('Are you sure you want to delete this category?')">Delete</button>
+                                            <button class="btn btn-danger" type="submit">Delete</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -68,6 +67,26 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            function submitForm(form) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Proceed with the form submission
+                        form.submit();
+                    }
+                });
+                return false;
+            }
+        </script>
 
         <script>
             document.addEventListener('DOMContentLoaded', function() {

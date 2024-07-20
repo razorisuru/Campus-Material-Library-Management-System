@@ -22,7 +22,7 @@
                                 <th>Description</th>
                                 <th>Category</th>
                                 <th>Subject</th>
-                                <th>File Path</th>
+                                <th>File</th>
                                 <th>Status</th>
                                 <th>Uploaded By</th>
                                 <th>Delete</th>
@@ -38,7 +38,7 @@
 
                                     <td><a href="{{ asset('storage/' . $material->file_path) }}" target="_blank"
                                             class="">
-                                            {{ $material->file_path }}
+                                            {{ basename($material->file_path) }}
                                         </a></td>
 
                                     @if ($material->status == 'approved')
@@ -108,9 +108,9 @@
                                         <td>
 
                                             <div class="dropdown">
-                                                <button class="badge bg-danger border-0 dropdown-toggle me-1"
-                                                    type="button" id="dropdownMenuButton5" data-bs-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
+                                                <button class="badge bg-danger border-0 dropdown-toggle me-1" type="button"
+                                                    id="dropdownMenuButton5" data-bs-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">
                                                     {{ $material->status }}
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton5"
@@ -141,11 +141,11 @@
 
                                     <td>{{ $material->user->name }}</td>
                                     <td>
-                                        <form action="{{ route('upload.destroy', $material->id) }}" method="POST">
+                                        <form action="{{ route('upload.destroy', $material->id) }}" method="POST"
+                                            onsubmit="return submitForm(this);">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-danger" type="submit"
-                                                onclick="return confirm('Are you sure you want to delete this file?')">Delete</button>
+                                            <button class="btn btn-danger" type="submit">Delete</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -156,6 +156,27 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            function submitForm(form) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Proceed with the form submission
+                        form.submit();
+                    }
+                });
+                return false;
+            }
+        </script>
+
         @if (session('status'))
             <script>
                 Swal.fire({

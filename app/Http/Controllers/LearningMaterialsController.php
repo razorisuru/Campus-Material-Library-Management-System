@@ -62,13 +62,13 @@ class LearningMaterialsController extends Controller
         $learningMaterial = LearningMaterial::findOrFail($id);
 
         // Delete the file from the storage
-        if (Storage::exists('public/' . $learningMaterial->file_path)) {
-            Storage::delete('public/' . $learningMaterial->file_path);
-            $learningMaterial->delete();
-            return redirect()->back()->with('status', 'File Deleted Successfully');
-        } else {
-            return ('public/' . $learningMaterial->file_path);
-        }
+        // if (Storage::exists('public/' . $learningMaterial->file_path)) {
+        Storage::delete('public/' . $learningMaterial->file_path);
+        $learningMaterial->delete();
+        return redirect()->back()->with('status', 'File Deleted Successfully');
+        // } else {
+        //     return ('public/' . $learningMaterial->file_path);
+        // }
 
         // Delete the database record
         // $learningMaterial->delete();
