@@ -35,7 +35,7 @@ class LearningMaterialsController extends Controller
                 // $extension = $file->getClientOriginalExtension();
                 $filename = $file->getClientOriginalName();
                 $path = "uploads/files/";
-                $file->storeAs('public', $path. $filename);
+                $file->storeAs('public', $path . $filename);
                 $imageData[] = [
                     'subject_id' => $request->subject_id,
                     'title' => $request->title,
@@ -43,6 +43,7 @@ class LearningMaterialsController extends Controller
                     'category_id' => $request->category,
                     'file_path' => $path . $filename,
                     'uploaded_by' => Auth()->user()->id,
+                    'status' => 'approved',
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
@@ -61,12 +62,12 @@ class LearningMaterialsController extends Controller
         $learningMaterial = LearningMaterial::findOrFail($id);
 
         // Delete the file from the storage
-        if (Storage::exists('public/'.$learningMaterial->file_path)) {
-            Storage::delete('public/'.$learningMaterial->file_path);
+        if (Storage::exists('public/' . $learningMaterial->file_path)) {
+            Storage::delete('public/' . $learningMaterial->file_path);
             $learningMaterial->delete();
             return redirect()->back()->with('status', 'File Deleted Successfully');
-        }else{
-            return ('public/'.$learningMaterial->file_path);
+        } else {
+            return ('public/' . $learningMaterial->file_path);
         }
 
         // Delete the database record
@@ -81,5 +82,32 @@ class LearningMaterialsController extends Controller
         // $subjects = Subjects::all();
         $materials = LearningMaterial::with(['subjects', 'user', 'category'])->get();
         return view('PDF.view', compact('materials'));
+    }
+
+    public function approve(Request $request, $id)
+    {
+        $material = LearningMaterial::findOrFail($id);
+        $material->status = 'approved';
+        $material->save();
+
+        return redirect()->back()->with('success', 'Learning material approved successfully.');
+    }
+
+    public function pending(Request $request, $id)
+    {
+        $material = LearningMaterial::findOrFail($id);
+        $material->status = 'pending';
+        $material->save();
+
+        return redirect()->back()->with('success', 'Learning material approved successfully.');
+    }
+
+    public function reject(Request $request, $id)
+    {
+        $material = LearningMaterial::findOrFail($id);
+        $material->status = 'rejected';
+        $material->save();
+
+        return redirect()->back()->with('success', 'Learning material rejected successfully.');
     }
 }

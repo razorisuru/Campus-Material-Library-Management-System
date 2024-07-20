@@ -42,6 +42,7 @@ class STLearningMaterialsController extends Controller
                     'category_id' => $request->category,
                     'file_path' => $path . $filename,
                     'uploaded_by' => Auth()->user()->id,
+                    'status' => 'pending',
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];

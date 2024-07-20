@@ -78,6 +78,16 @@
 
                 </li>
 
+                <li class="sidebar-item">
+                    <a href="{{ route('category.view') }}" class='sidebar-link'>
+                        <i class="bi bi-stack"></i>
+                        <span>Category</span>
+                    </a>
+
+
+
+                </li>
+
                 {{-- <li class="sidebar-item  has-sub">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-collection-fill"></i>

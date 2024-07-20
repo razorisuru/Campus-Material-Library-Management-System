@@ -82,7 +82,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Profile Visit</h4>
+                                <h4>Dashboard Visit</h4>
                             </div>
                             <div class="card-body">
                                 <div id="chart-profile-visit"></div>
@@ -94,7 +94,7 @@
                     <div class="col-12 col-xl-4">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Profile Visit</h4>
+                                <h4>Access Material</h4>
                             </div>
                             <div class="card-body">
                                 <div class="row">
@@ -105,7 +105,7 @@
                                                 <use
                                                     xlink:href="{{ asset('assets/auth/static/images/bootstrap-icons.svg#circle-fill') }}" />
                                             </svg>
-                                            <h5 class="mb-0 ms-3">Europe</h5>
+                                            <h5 class="mb-0 ms-3">Student</h5>
                                         </div>
                                     </div>
                                     <div class="col-5">
@@ -123,7 +123,7 @@
                                                 <use
                                                     xlink:href="{{ asset('') }}assets/static/images/bootstrap-icons.svg#circle-fill" />
                                             </svg>
-                                            <h5 class="mb-0 ms-3">America</h5>
+                                            <h5 class="mb-0 ms-3">Teacher</h5>
                                         </div>
                                     </div>
                                     <div class="col-5">
@@ -173,7 +173,7 @@
                                                 <td class="col-3">
                                                     <div class="d-flex align-items-center">
                                                         <div class="avatar avatar-md">
-                                                            <img src="{{ asset('') }}./assets/compiled/jpg/5.jpg">
+                                                            <img src="{{ asset('assets/auth/compiled/jpg/5.jpg') }}">
                                                         </div>
                                                         <p class="font-bold ms-3 mb-0">Si Cantik</p>
                                                     </div>
@@ -186,7 +186,7 @@
                                                 <td class="col-3">
                                                     <div class="d-flex align-items-center">
                                                         <div class="avatar avatar-md">
-                                                            <img src="{{ asset('') }}./assets/compiled/jpg/2.jpg">
+                                                            <img src="{{ asset('assets/auth/compiled/jpg/2.jpg') }}">
                                                         </div>
                                                         <p class="font-bold ms-3 mb-0">Si Ganteng</p>
                                                     </div>

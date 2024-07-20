@@ -3,17 +3,9 @@
 @section('styles')
     <link rel="stylesheet" href="{{ asset('assets/auth/extensions/simple-datatables/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/auth/compiled/css/table-datatable.css') }}">
-
-    <link rel="stylesheet" href="{{ asset('assets/auth/extensions/toastify-js/src/toastify.css') }}">
-
-    <link rel="stylesheet" href="{{ asset('assets/auth/extensions/sweetalert2/sweetalert2.min.css') }}">
 @endsection
 
 @section('content')
-    <script src="{{ asset('assets/auth/extensions/sweetalert2/sweetalert2.min.js') }}"></script>
-    <script src="{{ asset('assets/auth/static/js/pages/sweetalert2.js') }}"></script>
-
-
     <section class="section">
         <div class="card">
             <div class="card-header">
@@ -27,10 +19,11 @@
                         <thead>
                             <tr>
                                 <th>Title</th>
+                                <th>Description</th>
                                 <th>Category</th>
                                 <th>Subject</th>
-                                <th>Description</th>
                                 <th>File Path</th>
+                                <th>Status</th>
                                 <th>Uploaded By</th>
                                 <th>Delete</th>
                             </tr>
@@ -39,12 +32,113 @@
                             @foreach ($materials as $material)
                                 <tr>
                                     <td>{{ $material->title }}</td>
+                                    <td>{{ $material->description }}</td>
                                     <td>{{ $material->category->name }}</td>
                                     <td>{{ $material->subjects->subject_code . '-' . $material->subjects->name }}</td>
-                                    <td>{{ $material->description }}</td>
-                                    <td><a href="{{ asset('storage/' . $material->file_path) }}" target="_blank" class="">
+
+                                    <td><a href="{{ asset('storage/' . $material->file_path) }}" target="_blank"
+                                            class="">
                                             {{ $material->file_path }}
                                         </a></td>
+
+                                    @if ($material->status == 'approved')
+                                        <td>
+
+                                            <div class="dropdown">
+                                                <button class="badge bg-success border-0 dropdown-toggle me-1"
+                                                    type="button" id="dropdownMenuButton5" data-bs-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                    {{ $material->status }}
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton5"
+                                                    style="">
+                                                    <div class="dropdown-item">
+                                                        <form action="{{ route('materials.pending', $material->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            <button type="submit"
+                                                                class="btn btn-warning btn-sm">Pending</button>
+                                                        </form>
+                                                    </div>
+                                                    <div class="dropdown-item">
+                                                        <form action="{{ route('materials.reject', $material->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            <button type="submit"
+                                                                class="btn btn-danger btn-sm">Reject</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </td>
+                                    @elseif ($material->status == 'pending')
+                                        <td>
+
+                                            <div class="dropdown">
+                                                <button class="badge bg-warning border-0 dropdown-toggle me-1"
+                                                    type="button" id="dropdownMenuButton5" data-bs-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                    {{ $material->status }}
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton5"
+                                                    style="">
+                                                    <div class="dropdown-item">
+                                                        <form action="{{ route('materials.approve', $material->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            <button type="submit"
+                                                                class="btn btn-success btn-sm">Approve</button>
+                                                        </form>
+                                                    </div>
+                                                    <div class="dropdown-item">
+                                                        <form action="{{ route('materials.reject', $material->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            <button type="submit"
+                                                                class="btn btn-danger btn-sm">Reject</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                    @else
+                                        <td>
+
+                                            <div class="dropdown">
+                                                <button class="badge bg-danger border-0 dropdown-toggle me-1"
+                                                    type="button" id="dropdownMenuButton5" data-bs-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                    {{ $material->status }}
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton5"
+                                                    style="">
+                                                    <div class="dropdown-item">
+                                                        <form action="{{ route('materials.approve', $material->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            <button type="submit"
+                                                                class="btn btn-success btn-sm">Approve</button>
+                                                        </form>
+                                                    </div>
+                                                    <div class="dropdown-item">
+                                                        <form action="{{ route('materials.pending', $material->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            <button type="submit"
+                                                                class="btn btn-warning btn-sm">Pending</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                    @endif
+
+
+
                                     <td>{{ $material->user->name }}</td>
                                     <td>
                                         <form action="{{ route('upload.destroy', $material->id) }}" method="POST">

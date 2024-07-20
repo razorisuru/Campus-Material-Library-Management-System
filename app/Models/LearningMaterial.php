@@ -15,6 +15,7 @@ class LearningMaterial extends Model
         'description',
         'file_path',
         'uploaded_by',
+        'status',
     ];
 
     public function subjects()

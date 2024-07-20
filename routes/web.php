@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DegreeProgrammeController;
 use App\Http\Controllers\LearningMaterialsController;
 use App\Http\Controllers\STLearningMaterialsController;
@@ -82,6 +83,10 @@ Route::middleware([
     Route::delete('/upload/{id}', [LearningMaterialsController::class, 'destroy'])->name('upload.destroy');
 });
 
+Route::post('/materials/approve/{id}', [LearningMaterialsController::class, 'approve'])->name('materials.approve');
+Route::post('/materials/reject/{id}', [LearningMaterialsController::class, 'reject'])->name('materials.reject');
+Route::post('/materials/pending/{id}', [LearningMaterialsController::class, 'pending'])->name('materials.pending');
+
 // Degree API
 Route::get('/degree-programmes/{id}/subjects', [DegreeProgrammeController::class, 'getSubjects']);
 
@@ -90,4 +95,37 @@ Route::get('/degree-programmes/{id}/subjects', [DegreeProgrammeController::class
 Route::get('/student-dashboard', [STLearningMaterialsController::class, 'index']);
 Route::get('/student-view', [STLearningMaterialsController::class, 'view']);
 Route::post('/student-dashboard', [STLearningMaterialsController::class, 'upload'])->name('StUpload.store');
+
+// Category management
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/category', [CategoryController::class, 'index'])->name('category.view');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::put('/category/{id}', [CategoryController::class, 'update'])->name('category.update');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::delete('/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+});
 

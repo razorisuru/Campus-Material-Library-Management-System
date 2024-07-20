@@ -5,14 +5,10 @@
     <link rel="stylesheet" href="{{ asset('assets/auth/extensions/filepond/filepond.css') }}">
     <link rel="stylesheet"
         href="{{ asset('assets/auth/extensions/filepond-plugin-image-preview/filepond-plugin-image-preview.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/auth/extensions/toastify-js/src/toastify.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('assets/auth/extensions/sweetalert2/sweetalert2.min.css') }}">
 @endsection
 
 @section('content')
-    <script src="{{ asset('assets/auth/extensions/sweetalert2/sweetalert2.min.js') }}"></script>
-    <script src="{{ asset('assets/auth/static/js/pages/sweetalert2.js') }}"></script>
 
 
     <div class="page-heading">

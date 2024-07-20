@@ -17,11 +17,18 @@
     <link rel="stylesheet" href="{{ asset('assets/auth/compiled/css/app-dark.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/auth/compiled/css/iconly.css') }}">
 
+    <link rel="stylesheet" href="{{ asset('assets/auth/extensions/toastify-js/src/toastify.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('assets/auth/extensions/sweetalert2/sweetalert2.min.css') }}">
+
     @yield('styles')
 </head>
 
 <body>
     <script src="{{ asset('assets/auth/static/js/initTheme.js') }} "></script>
+    <script src="{{ asset('assets/auth/extensions/sweetalert2/sweetalert2.min.js') }}"></script>
+    <script src="{{ asset('assets/auth/static/js/pages/sweetalert2.js') }}"></script>
+    <script src="{{ asset('assets/auth/jquery-3.6.0.min.js') }}"></script>
     <div id="app">
         @include('partials.sidebar')
         <div id="main">

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('file_path');
             $table->foreignId('uploaded_by')->constrained('users')->onDelete('cascade');
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
+            $table->enum('status', ['pending', 'approved', 'rejected']);
             $table->timestamps();
         });
     }
