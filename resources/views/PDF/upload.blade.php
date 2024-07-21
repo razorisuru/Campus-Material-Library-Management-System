@@ -5,7 +5,6 @@
     <link rel="stylesheet" href="{{ asset('assets/auth/extensions/filepond/filepond.css') }}">
     <link rel="stylesheet"
         href="{{ asset('assets/auth/extensions/filepond-plugin-image-preview/filepond-plugin-image-preview.css') }}">
-
 @endsection
 
 @section('content')

@@ -51,13 +51,13 @@
                                             value="{{ $category->name }}">
                                     </td>
                                     <td>
-                                        <button class="btn btn-secondary edit-btn" type="button">Edit</button>
-                                        <button class="btn btn-success save-btn d-none" type="button">Save</button>
+                                        <button class="btn btn-secondary btn-sm edit-btn" type="button">Edit</button>
+                                        <button class="btn btn-success btn-sm save-btn d-none" type="button">Save</button>
                                         <form action="{{ route('category.destroy', $category->id) }}" method="POST"
                                             class="d-inline" onsubmit="return submitForm(this);">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-danger" type="submit">Delete</button>
+                                            <button class="btn btn-danger btn-sm" type="submit">Delete</button>
                                         </form>
                                     </td>
                                 </tr>
