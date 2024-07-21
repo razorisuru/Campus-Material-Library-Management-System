@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             Categories::class,
             Degrees::class,
             Subjects::class,
+            EBookCategorySeeder::class,
         ]);
     }
 }

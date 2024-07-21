@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('e_book_category_join', function (Blueprint $table) {
+        Schema::create('ebook_category_join', function (Blueprint $table) {
             $table->unsignedBigInteger('ebook_id');
             $table->unsignedBigInteger('category_id');
             $table->timestamps();
@@ -27,6 +27,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('e_book_category_joins');
+        Schema::dropIfExists('ebook_category_joins');
     }
 };
