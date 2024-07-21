@@ -10,15 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('e_books', function (Blueprint $table) {
+        Schema::create('e_book_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title');
-            $table->string('author');
+            $table->string('name')->unique();
             $table->text('description')->nullable();
-            $table->date('publication_date')->nullable();
-            $table->string('isbn')->unique()->nullable();
-            $table->string('cover_image')->nullable();
-            $table->string('file_path');
             $table->timestamps();
         });
     }
@@ -28,6 +23,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('e_books');
+        Schema::dropIfExists('e_book_categories');
     }
 };
