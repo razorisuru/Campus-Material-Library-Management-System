@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DegreeProgrammeController;
+use App\Http\Controllers\EBookController;
 use App\Http\Controllers\LearningMaterialsController;
 use App\Http\Controllers\STLearningMaterialsController;
 
@@ -95,6 +96,10 @@ Route::get('/degree-programmes/{id}/subjects', [DegreeProgrammeController::class
 Route::get('/student-dashboard', [STLearningMaterialsController::class, 'index']);
 Route::get('/student-view', [STLearningMaterialsController::class, 'view']);
 Route::post('/student-dashboard', [STLearningMaterialsController::class, 'upload'])->name('StUpload.store');
+
+
+Route::get('/student-ebook', [EBookController::class, 'index']);
+
 
 // Category management
 Route::middleware([

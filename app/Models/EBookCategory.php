@@ -16,6 +16,6 @@ class EBookCategory extends Model
 
     public function ebooks()
     {
-        return $this->belongsToMany(EBook::class, 'ebook_category', 'category_id', 'ebook_id');
+        return $this->belongsToMany(EBookCategoryJoin::class, 'ebook_category', 'category_id', 'ebook_id');
     }
 }

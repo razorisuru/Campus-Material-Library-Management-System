@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class EBookCategoryJoin extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'category_id',
+        'ebook_id'
+    ];
 }
