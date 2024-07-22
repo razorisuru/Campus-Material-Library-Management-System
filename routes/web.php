@@ -101,6 +101,30 @@ Route::post('/student-dashboard', [STLearningMaterialsController::class, 'upload
 // ebook route
 Route::get('/ebook', [EbookController::class, 'index']);
 
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/ebook.manageview', [EbookController::class, 'ManageView'])->name('ebook.ManageView');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/ebook.uploadview', [EbookController::class, 'UploadView'])->name('ebook.UploadView');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::post('/ebook.store', [EbookController::class, 'store'])->name('ebook.store');
+});
+
 
 // Category management
 Route::middleware([
