@@ -2,12 +2,11 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('assets/auth/extensions/choices.js/public/assets/styles/choices.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/auth/extensions/choices.js/public/assets/styles/choices.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/auth/extensions/filepond/filepond.css') }}">
     <link rel="stylesheet"
         href="{{ asset('assets/auth/extensions/filepond-plugin-image-preview/filepond-plugin-image-preview.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/auth/extensions/flatpickr/flatpickr.min.css') }}">
-
-    <link rel="stylesheet" href="{{ asset('assets/auth/extensions/choices.js/public/assets/styles/choices.css') }}">
 @endsection
 
 @section('content')
@@ -98,7 +97,77 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <div class="choices" data-type="select-multiple" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false"><div class="choices__inner"><select class="choices form-select multiple-remove choices__input" multiple="multiple" hidden="" tabindex="-1" data-choice="active"><option value="trapeze" data-custom-properties="[object Object]">Trapeze</option><option value="blue" data-custom-properties="[object Object]">Blue</option></select><div class="choices__list choices__list--multiple"><div class="choices__item choices__item--selectable" data-item="" data-id="1" data-value="trapeze" data-custom-properties="[object Object]" aria-selected="true" data-deletable="">Trapeze<button type="button" class="choices__button" aria-label="Remove item: 'trapeze'" data-button="">Remove item</button></div><div class="choices__item choices__item--selectable" data-item="" data-id="2" data-value="blue" data-custom-properties="[object Object]" aria-selected="true" data-deletable="">Blue<button type="button" class="choices__button" aria-label="Remove item: 'blue'" data-button="">Remove item</button></div></div><input type="search" name="search_terms" class="choices__input choices__input--cloned" autocomplete="off" autocapitalize="off" spellcheck="false" role="textbox" aria-autocomplete="list" aria-label="null"></div><div class="choices__list choices__list--dropdown" aria-expanded="false"><div class="choices__list" aria-multiselectable="true" role="listbox"><div class="choices__group " role="group" data-group="" data-id="130249733500" data-value="Colors"><div class="choices__heading">Colors</div></div><div id="choices--duyb-item-choice-6" class="choices__item choices__item--choice choices__item--selectable is-highlighted" role="treeitem" data-choice="" data-id="6" data-value="green" data-select-text="Press to select" data-choice-selectable="" aria-selected="true">Green</div><div id="choices--duyb-item-choice-8" class="choices__item choices__item--choice choices__item--selectable" role="treeitem" data-choice="" data-id="8" data-value="purple" data-select-text="Press to select" data-choice-selectable="">Purple</div><div id="choices--duyb-item-choice-5" class="choices__item choices__item--choice choices__item--selectable" role="treeitem" data-choice="" data-id="5" data-value="red" data-select-text="Press to select" data-choice-selectable="">Red</div><div class="choices__group " role="group" data-group="" data-id="1051510405513" data-value="Figures"><div class="choices__heading">Figures</div></div><div id="choices--duyb-item-choice-4" class="choices__item choices__item--choice choices__item--selectable" role="treeitem" data-choice="" data-id="4" data-value="polygon" data-select-text="Press to select" data-choice-selectable="">Polygon</div><div id="choices--duyb-item-choice-1" class="choices__item choices__item--choice choices__item--selectable" role="treeitem" data-choice="" data-id="1" data-value="romboid" data-select-text="Press to select" data-choice-selectable="">Romboid</div><div id="choices--duyb-item-choice-3" class="choices__item choices__item--choice choices__item--selectable" role="treeitem" data-choice="" data-id="3" data-value="triangle" data-select-text="Press to select" data-choice-selectable="">Triangle</div></div></div></div>
+                                        <div class="choices" data-type="select-multiple" role="combobox"
+                                            aria-autocomplete="list" aria-haspopup="true" aria-expanded="false">
+                                            <div class="choices__inner"><select
+                                                    class="choices form-select multiple-remove choices__input"
+                                                    multiple="multiple" hidden="" tabindex="-1" data-choice="active">
+                                                    <option value="trapeze" data-custom-properties="[object Object]">Trapeze
+                                                    </option>
+                                                    <option value="blue" data-custom-properties="[object Object]">Blue
+                                                    </option>
+                                                </select>
+                                                <div class="choices__list choices__list--multiple">
+                                                    <div class="choices__item choices__item--selectable" data-item=""
+                                                        data-id="1" data-value="trapeze"
+                                                        data-custom-properties="[object Object]" aria-selected="true"
+                                                        data-deletable="">Trapeze<button type="button"
+                                                            class="choices__button" aria-label="Remove item: 'trapeze'"
+                                                            data-button="">Remove item</button></div>
+                                                    <div class="choices__item choices__item--selectable" data-item=""
+                                                        data-id="2" data-value="blue"
+                                                        data-custom-properties="[object Object]" aria-selected="true"
+                                                        data-deletable="">Blue<button type="button"
+                                                            class="choices__button" aria-label="Remove item: 'blue'"
+                                                            data-button="">Remove item</button></div>
+                                                </div><input type="search" name="search_terms"
+                                                    class="choices__input choices__input--cloned" autocomplete="off"
+                                                    autocapitalize="off" spellcheck="false" role="textbox"
+                                                    aria-autocomplete="list" aria-label="null">
+                                            </div>
+                                            <div class="choices__list choices__list--dropdown" aria-expanded="false">
+                                                <div class="choices__list" aria-multiselectable="true" role="listbox">
+                                                    <div class="choices__group " role="group" data-group=""
+                                                        data-id="130249733500" data-value="Colors">
+                                                        <div class="choices__heading">Colors</div>
+                                                    </div>
+                                                    <div id="choices--duyb-item-choice-6"
+                                                        class="choices__item choices__item--choice choices__item--selectable is-highlighted"
+                                                        role="treeitem" data-choice="" data-id="6" data-value="green"
+                                                        data-select-text="Press to select" data-choice-selectable=""
+                                                        aria-selected="true">Green</div>
+                                                    <div id="choices--duyb-item-choice-8"
+                                                        class="choices__item choices__item--choice choices__item--selectable"
+                                                        role="treeitem" data-choice="" data-id="8"
+                                                        data-value="purple" data-select-text="Press to select"
+                                                        data-choice-selectable="">Purple</div>
+                                                    <div id="choices--duyb-item-choice-5"
+                                                        class="choices__item choices__item--choice choices__item--selectable"
+                                                        role="treeitem" data-choice="" data-id="5" data-value="red"
+                                                        data-select-text="Press to select" data-choice-selectable="">Red
+                                                    </div>
+                                                    <div class="choices__group " role="group" data-group=""
+                                                        data-id="1051510405513" data-value="Figures">
+                                                        <div class="choices__heading">Figures</div>
+                                                    </div>
+                                                    <div id="choices--duyb-item-choice-4"
+                                                        class="choices__item choices__item--choice choices__item--selectable"
+                                                        role="treeitem" data-choice="" data-id="4"
+                                                        data-value="polygon" data-select-text="Press to select"
+                                                        data-choice-selectable="">Polygon</div>
+                                                    <div id="choices--duyb-item-choice-1"
+                                                        class="choices__item choices__item--choice choices__item--selectable"
+                                                        role="treeitem" data-choice="" data-id="1"
+                                                        data-value="romboid" data-select-text="Press to select"
+                                                        data-choice-selectable="">Romboid</div>
+                                                    <div id="choices--duyb-item-choice-3"
+                                                        class="choices__item choices__item--choice choices__item--selectable"
+                                                        role="treeitem" data-choice="" data-id="3"
+                                                        data-value="triangle" data-select-text="Press to select"
+                                                        data-choice-selectable="">Triangle</div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <label for="helperText">Cover Image</label>

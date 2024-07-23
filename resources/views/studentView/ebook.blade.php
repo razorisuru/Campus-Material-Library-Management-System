@@ -209,12 +209,12 @@
                                 <div class="flex flex-col gap-3 pb-3 ebook-item" data-title="{{ $ebook->title }}"
                                     data-author="{{ $ebook->author }}" data-description="{{ $ebook->description }}"
                                     data-publication-date="{{ $ebook->publication_date }}"
-                                    data-isbn="{{ $ebook->isbn }}" data-cover-image="{{ $ebook->cover_image }}"
+                                    data-isbn="{{ $ebook->isbn }}" data-cover-image="{{ asset('storage/' . $ebook->cover_image) }}"
                                     data-file-path="{{ $ebook->file_path }}"
                                     data-categories="{{ $ebook->categories->pluck('name')->implode(',') }}"
                                     style="cursor: pointer;">
                                     <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
-                                        style='background-image: url("https://cdn.usegalileo.ai/stability/af0c2990-59a0-44df-be74-22e84afdae02.png");'>
+                                        style='background-image: url(" {{ asset('storage/' . $ebook->cover_image) }}");'>
                                     </div>
                                     <p class="text-[#0e141b] text-base font-medium leading-normal">{{ $ebook->title }}
                                     </p>
