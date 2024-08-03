@@ -30,7 +30,8 @@
                         <tbody>
                             @foreach ($ebooks as $ebook)
                                 <tr>
-                                    <td>{{ $ebook->title }}</td>
+                                    <td><a href="{{ asset('storage/' . $ebook->file_path) }}" data-bs-toggle="tooltip"
+                                            data-bs-original-title="Download Ebook">{{ $ebook->title }}</a></td>
                                     <td>{{ $ebook->description }}</td>
                                     <td>{{ $ebook->author }}</td>
                                     <td>{{ $ebook->publication_date }}</td>
@@ -144,15 +145,15 @@
 
 
 
-                                    <td>{{ $material->user->name }}</td>
+                                    <td>{{ $material->user->name }}</td> --}}
                                     <td>
-                                        <form action="{{ route('upload.destroy', $material->id) }}" method="POST"
+                                        <form action="{{ route('ebook.destroy', $ebook->id) }}" method="POST"
                                             onsubmit="return submitForm(this);">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-danger" type="submit">Delete</button>
                                         </form>
-                                    </td> --}}
+                                    </td>
                                 </tr>
                             @endforeach
 
@@ -180,6 +181,17 @@
                 });
                 return false;
             }
+        </script>
+
+        <script>
+            // If you want to use tooltips in your project, we suggest initializing them globally
+            // instead of a "per-page" level.
+            document.addEventListener('DOMContentLoaded', function() {
+                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+                var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+                    return new bootstrap.Tooltip(tooltipTriggerEl)
+                })
+            }, false);
         </script>
 
         @if (session('status'))

@@ -125,6 +125,14 @@ Route::middleware([
     Route::post('/ebook.store', [EbookController::class, 'store'])->name('ebook.store');
 });
 
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::delete('/upload/{id}', [EbookController::class, 'destroy'])->name('ebook.destroy');
+});
+
 
 // Category management
 Route::middleware([

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\EBook;
+use Illuminate\Http\Request;
 use App\Models\EBookCategory;
+use Illuminate\Support\Facades\Storage;
 
 class EbookController extends Controller
 {
@@ -21,7 +22,8 @@ class EbookController extends Controller
         return view('EBOOK.UploadView', compact(['ebookCategories']));
     }
 
-    public function ManageView() {
+    public function ManageView()
+    {
         $ebooks = EBook::with('categories')->get(); // Load categories with ebooks
         $ebookCategories = EBookCategory::all(); // Load categories with ebooks
         return view('EBOOK.ManageView', compact(['ebooks', 'ebookCategories']));
@@ -68,10 +70,32 @@ class EbookController extends Controller
         // EBook::insert($imageData);
 
         // if ($request->has('categories')) {
-            // $ebook->categories()->attach($request->categories);
-            $ebook->categories()->attach([1, 4]);
+        // $ebook->categories()->attach($request->categories);
+        $ebook->categories()->attach([1, 4]);
         // }
 
         return redirect()->back()->with('status', 'Uploaded Successfully');
+    }
+
+    public function destroy($id)
+    {
+        // Find the file record in the database
+        $ebook = EBook::findOrFail($id);
+
+        // Delete the file from the storage
+        // if (Storage::exists('public/' . $learningMaterial->file_path)) {
+        Storage::delete('public/' . $ebook->file_path);
+        Storage::delete('public/' . $ebook->cover_image);
+        $ebook->delete();
+        return redirect()->back()->with('status', 'File Deleted Successfully');
+        // } else {
+        //     return ('public/' . $learningMaterial->file_path);
+        // }
+
+        // Delete the database record
+        // $learningMaterial->delete();
+
+
+        // return $learningMaterial->file_path;
     }
 }
