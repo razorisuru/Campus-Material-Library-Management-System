@@ -56,6 +56,44 @@ class LearningMaterialsController extends Controller
         // return $filename;
     }
 
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'degree_programme_id' => 'required|exists:degree_programmes,id',
+            'subject_id' => 'required|exists:subjects,id',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'files.*' => 'nullable|mimes:pdf,doc,docx,txt,pptx|max:51200',
+            'category' => 'required',
+        ]);
+
+        $learningMaterial = LearningMaterial::findOrFail($id);
+
+        if ($files = $request->file('files')) {
+            foreach ($files as $key => $file) {
+                $filename = $file->getClientOriginalName();
+                $path = "uploads/files/";
+                $file->storeAs('public', $path . $filename);
+                $file_path = $path . $filename;
+            }
+        } else {
+            $file_path = $learningMaterial->file_path;
+        }
+
+        $learningMaterial->update([
+            'subject_id' => $request->subject_id,
+            'title' => $request->title,
+            'description' => $request->description,
+            'category_id' => $request->category,
+            'file_path' => $file_path,
+            'uploaded_by' => Auth()->user()->id,
+            'status' => 'approved',
+        ]);
+
+        return redirect()->back()->with('status', 'Updated Successfully');
+    }
+
+
     public function destroy($id)
     {
         // Find the file record in the database
@@ -77,11 +115,21 @@ class LearningMaterialsController extends Controller
         // return $learningMaterial->file_path;
     }
 
+
     public function view()
     {
         // $subjects = Subjects::all();
-        $materials = LearningMaterial::with(['subjects', 'user', 'category'])->get();
+        $materials = LearningMaterial::with(['subjects', 'user', 'category', 'degree'])->get();
         return view('PDF.view', compact('materials'));
+    }
+
+    public function EditView($id)
+    {
+        // $subjects = Subject::all();
+        $degrees = DegreeProgramme::all();
+        $categories = Category::all();
+        $materials = LearningMaterial::with(['subjects', 'user', 'category', 'degree'])->findOrFail($id);
+        return view('PDF.EditView', compact('materials', 'categories', 'degrees'));
     }
 
     public function approve(Request $request, $id)

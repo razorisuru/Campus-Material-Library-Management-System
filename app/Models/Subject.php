@@ -21,7 +21,7 @@ class Subject extends Model
         return $this->hasMany(LearningMaterial::class);
     }
 
-    public function degreeProgramme()
+    public function degree()
     {
         return $this->belongsTo(DegreeProgramme::class);
     }

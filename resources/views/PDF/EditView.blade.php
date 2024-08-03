@@ -48,39 +48,65 @@
                                     </div>
                                 @endif
 
-                                <form method="POST" action="{{ route('upload.store') }}" enctype="multipart/form-data">
+                                <form method="POST" action="{{ route('upload.update', $materials->id) }}"
+                                    enctype="multipart/form-data">
                                     @csrf
-                                    <fieldset class="form-group">
-                                        <label for="degree_programme" class="mb-2">Select Degree
-                                            Programme</label>
-                                        <select class="form-select" id="degreeSelect" name="degree_programme_id">
-                                            <option value="" disabled selected>Select Degree</option>
-                                            @foreach ($degrees as $degree)
-                                                <option value="{{ $degree->id }}">{{ $degree->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </fieldset>
-
-                                    <fieldset class="form-group">
-                                        <label for="degree_programme" class="mb-2">Select Subject</label>
-                                        <select class="form-select" id="subjectSelect" name="subject_id" disabled>
-                                            <option value="" disabled selected>Select Subject</option>
-                                        </select>
-                                    </fieldset>
+                                    @method('PATCH')
 
                                     <div class="form-group">
                                         <label for="helperText">Title</label>
-                                        <input type="text" id="helperText" name="title" class="form-control"
-                                            placeholder="Name">
+                                        <input type="text" value="{{ $materials->title }}" id="helperText" name="title"
+                                            class="form-control" placeholder="Name">
                                         {{-- <p><small class="text-muted">Enter the title.</small></p> --}}
                                     </div>
 
 
                                     <div class="form-group with-title mt-2 mb-3">
                                         {{-- <label for="degree_programme" class="mb-2"></label> --}}
-                                        <textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                        <textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3">{{ $materials->description }}</textarea>
                                         <label>Enter a Description</label>
                                     </div>
+
+                                    {{-- <div class="form-group">
+                                        <select name="degree" class="form-select text-blue-600">
+                                            @foreach ($degrees as $degree)
+                                                <option value="{{ $degree->id }}"
+                                                    {{ $materials->degree->id == $degree->id ? 'selected' : '' }}>
+                                                    {{ $degree->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+
+                                    </div> --}}
+
+                                    <fieldset class="form-group">
+                                        <label for="degree_programme" class="mb-2">Select Degree
+                                            Programme</label>
+                                        <select class="form-select" id="degreeSelect" name="degree_programme_id">
+                                            {{-- <option value="" disabled selected>Select Degree</option> --}}
+                                            @foreach ($degrees as $degree)
+                                                <option value="{{ $degree->id }}"
+                                                    {{ $materials->degree->id == $degree->id ? 'selected' : '' }}>
+                                                    {{ $degree->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </fieldset>
+
+                                    <fieldset class="form-group">
+
+                                        <label for="degree_programme" class="mb-2">Select Subject</label>
+                                        <a href="" class="ms-2" data-bs-toggle="tooltip"
+                                            data-bs-original-title="If you need to change the subject please select a Degree first!">?</a>
+                                        <select class="form-select" id="subjectSelect" name="subject_id">
+
+                                            <option value="{{ $materials->subjects->id }}" selected>
+                                                {{ $materials->subjects->subject_code }} -
+                                                {{ $materials->subjects->name }}
+                                            </option>
+
+                                        </select>
+                                    </fieldset>
 
 
                                     <div class="mb-4">
@@ -89,18 +115,20 @@
                                             @foreach ($categories as $category)
                                                 <label class="inline-flex items-center mb-2 sm:mb-0">
                                                     <input type="radio" name="category" value="{{ $category->id }}"
-                                                        class="form-radio text-blue-600">
+                                                        class="form-radio text-blue-600"
+                                                        {{ $materials->category->id == $category->id ? 'checked' : '' }}>
                                                     <span class="ml-2">{{ $category->name }}</span>
                                                 </label>
                                             @endforeach
-
                                         </div>
                                     </div>
 
 
-
                                     <div class="mb-4">
-                                        <label for="file" class="">File
+                                        <h5>File name : <a
+                                                href="{{ asset('storage/' . $materials->file_path) }}">{{ basename($materials->file_path) }}</a>
+                                        </h5>
+                                        <label for="file" class="">NewFile
                                             Upload</label>
                                         <div name="files[]" class="filepond--root multiple-files-filepond filepond--hopper"
                                             data-style-button-remove-item-position="left"
@@ -125,7 +153,8 @@
                                             <div class="filepond--panel filepond--panel-root" data-scalable="true">
                                                 <div class="filepond--panel-top filepond--panel-root"></div>
                                                 <div class="filepond--panel-center filepond--panel-root"
-                                                    style="transform: translate3d(0px, 8px, 0px) scale3d(1, 0.6, 1);"></div>
+                                                    style="transform: translate3d(0px, 8px, 0px) scale3d(1, 0.6, 1);">
+                                                </div>
                                                 <div class="filepond--panel-bottom filepond--panel-root"
                                                     style="transform: translate3d(0px, 68px, 0px);"></div>
                                             </div><span class="filepond--assistant" id="filepond--assistant-52d8cf0i6"

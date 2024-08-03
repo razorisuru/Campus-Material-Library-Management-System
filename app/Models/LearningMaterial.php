@@ -37,4 +37,16 @@ class LearningMaterial extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function degree()
+    {
+        return $this->hasOneThrough(
+            DegreeProgramme::class,
+            Subject::class,
+            'id', // Foreign key on Subject table
+            'id', // Foreign key on DegreeProgramme table
+            'subject_id', // Local key on LearningMaterial table
+            'degree_programme_id' // Local key on Subject table
+        );
+    }
 }

@@ -21,11 +21,12 @@
                                 <th>Title</th>
                                 <th>Description</th>
                                 <th>Category</th>
+                                <th>Degree</th>
                                 <th>Subject</th>
                                 <th>File</th>
                                 <th>Status</th>
                                 <th>Uploaded By</th>
-                                <th>Delete</th>
+                                <th>Option</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -34,6 +35,7 @@
                                     <td>{{ $material->title }}</td>
                                     <td>{{ $material->description }}</td>
                                     <td>{{ $material->category->name }}</td>
+                                    <td>{{ $material->degree->name }}</td>
                                     <td>{{ $material->subjects->subject_code . '-' . $material->subjects->name }}</td>
 
                                     <td><a href="{{ asset('storage/' . $material->file_path) }}" target="_blank"
@@ -141,12 +143,15 @@
 
                                     <td>{{ $material->user->name }}</td>
                                     <td>
-                                        <form action="{{ route('upload.destroy', $material->id) }}" method="POST"
-                                            onsubmit="return submitForm(this);">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn btn-danger" type="submit">Delete</button>
-                                        </form>
+                                        <div class="d-flex">
+                                            <a class="btn btn-sm btn-info me-1" href="{{ route('upload.EditPage', $material->id) }}">Update</a>
+                                            <form action="{{ route('upload.store', $material->id) }}" method="POST"
+                                                onsubmit="return submitForm(this);">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
