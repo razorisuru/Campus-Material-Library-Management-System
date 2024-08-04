@@ -86,6 +86,64 @@ class EbookController extends Controller
         return redirect()->back()->with('status', 'Uploaded Successfully');
     }
 
+    public function update(Request $request, $id)
+    {
+        $ebook = Ebook::findOrFail($id);
+
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'author' => 'required|string|max:255',
+            'description' => 'required|string',
+            'publication_date' => 'required|string',
+            'isbn' => 'required|string',
+            'cover_image' => 'nullable|mimes:png,jpg,jpeg|max:51200',
+            'ebook_file' => 'nullable|mimes:pdf,docx|max:51200',
+        ]);
+
+        $cover_image_filename = $ebook->cover_image;
+        $ebook_file_filename = $ebook->file_path;
+        $cover_image_path = "";
+        $ebook_file_path = "";
+
+        if ($request->hasFile('cover_image')) {
+            Storage::delete('public/' . $ebook->cover_image);
+            $cover_image = $request->file('cover_image');
+            $cover_image_filename = $cover_image->getClientOriginalName();
+            $cover_image_path = "uploads/ebooks-cover/";
+            $cover_image->storeAs('public', $cover_image_path . $cover_image_filename);
+        } else {
+            $cover_image_path = "";
+        }
+
+        if ($request->hasFile('ebook_file')) {
+            Storage::delete('public/' . $ebook->file_path);
+            $ebook_file = $request->file('ebook_file');
+            $ebook_file_filename = $ebook_file->getClientOriginalName();
+            $ebook_file_path = "uploads/ebooks/";
+            $ebook_file->storeAs('public', $ebook_file_path . $ebook_file_filename);
+        } else {
+            $ebook_file_path = "";
+        }
+
+        $ebook->update([
+            'title' => $request->title,
+            'author' => $request->author,
+            'description' => $request->description,
+            'publication_date' => $request->publication_date,
+            'isbn' => $request->isbn,
+            'cover_image' => $cover_image_path . $cover_image_filename,
+            'file_path' => $ebook_file_path . $ebook_file_filename,
+            'updated_at' => now(),
+        ]);
+
+        if ($request->has('categories')) {
+            $ebook->categories()->sync($request->categories);
+        }
+
+        return redirect()->back()->with('status', 'Updated Successfully');
+    }
+
+
     public function destroy($id)
     {
         // Find the file record in the database

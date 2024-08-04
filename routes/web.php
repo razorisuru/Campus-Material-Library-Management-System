@@ -92,6 +92,7 @@ Route::middleware([
     Route::get('/ebook.uploadview', [EbookController::class, 'UploadView'])->name('ebook.UploadView');
     Route::post('/ebook', [EbookController::class, 'store'])->name('ebook.store');
     Route::delete('/ebook/{id}', [EbookController::class, 'destroy'])->name('ebook.destroy');
+    Route::patch('/ebook/{id}', [EbookController::class, 'update'])->name('ebook.update');
 
     Route::get('/ebook/edit/{id}', [EbookController::class, 'EditView'])->name('ebook.EditPage');
 

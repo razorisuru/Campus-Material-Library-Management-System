@@ -50,20 +50,21 @@
                                     </div>
                                 @endif
 
-                                <form method="POST" action="{{ route('ebook.store') }}" enctype="multipart/form-data">
+                                <form method="POST" action="{{ route('ebook.update', $ebook->id) }}"
+                                    enctype="multipart/form-data">
                                     @csrf
-
+                                    @method('PATCH')
                                     <div class="form-group">
                                         <label for="helperText">Title</label>
-                                        <input type="text" id="helperText" value="{{ $ebook->title }}" name="title" class="form-control"
-                                            placeholder="Name">
+                                        <input type="text" id="helperText" value="{{ $ebook->title }}" name="title"
+                                            class="form-control" placeholder="Name">
                                         {{-- <p><small class="text-muted">Enter the title.</small></p> --}}
                                     </div>
 
                                     <div class="form-group">
                                         <label for="helperText">Author</label>
-                                        <input type="text" id="helperText" value="{{ $ebook->author }}" name="author" class="form-control"
-                                            placeholder="Author">
+                                        <input type="text" id="helperText" value="{{ $ebook->author }}" name="author"
+                                            class="form-control" placeholder="Author">
                                         {{-- <p><small class="text-muted">Enter the title.</small></p> --}}
                                     </div>
 
@@ -75,8 +76,9 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="helperText">Publication Date {{ $ebook->publication_date }}</label>
+                                        <label for="helperText">Publication Date</label>
                                         <input type="text" name="publication_date"
+                                            value="{{ $ebook->publication_date }}"
                                             class="form-control mb-3 flatpickr-date flatpickr-input active"
                                             placeholder="Select date.." readonly="readonly">
                                     </div>
@@ -91,8 +93,8 @@
 
                                     <div class="form-group mb-2">
                                         <label for="helperText">ISBN</label>
-                                        <input type="text" id="helperText" name="isbn" class="form-control"
-                                            placeholder="ISBN">
+                                        <input type="text" id="helperText" value="{{ $ebook->isbn }}" name="isbn"
+                                            class="form-control" placeholder="ISBN">
                                         {{-- <p><small class="text-muted">Enter the title.</small></p> --}}
                                     </div>
 
@@ -170,110 +172,93 @@
                                         </div>
                                     </div>
 
-                                    <label for="helperText">Cover Image</label>
-                                    <div name="cover_image" class="filepond--root image-preview-filepond filepond--hopper"
-                                        data-style-button-remove-item-position="left"
-                                        data-style-button-process-item-position="right"
-                                        data-style-load-indicator-position="right"
-                                        data-style-progress-indicator-position="right"
-                                        data-style-button-remove-item-align="false" style="height: 76px;">
-                                        <input name="cover_image" class="filepond--browser" type="file"
-                                            id="filepond--browser-j6fiedrjo" aria-controls="filepond--assistant-j6fiedrjo"
-                                            aria-labelledby="filepond--drop-label-j6fiedrjo"
-                                            accept="image/png,image/jpg,image/jpeg">
-                                        <div class="filepond--drop-label"
-                                            style="transform: translate3d(0px, 0px, 0px); opacity: 1;"><label
-                                                for="filepond--browser-j6fiedrjo" id="filepond--drop-label-j6fiedrjo"
-                                                aria-hidden="true">Drag &amp; Drop your files or <span
-                                                    class="filepond--label-action" tabindex="0">Browse</span></label>
+                                    <div class="form-group mb-2 d-flex flex-column">
+                                        <label for="helperText">Current Cover Image</label>
+                                        <img width="400px" class="img-fluid mb-2"
+                                            src="{{ asset('storage/' . $ebook->cover_image) }}" alt="">
+                                        <label for="helperText">Upload New Cover Image</label>
+                                        <div name="cover_image"
+                                            class="filepond--root image-preview-filepond filepond--hopper"
+                                            data-style-button-remove-item-position="left"
+                                            data-style-button-process-item-position="right"
+                                            data-style-load-indicator-position="right"
+                                            data-style-progress-indicator-position="right"
+                                            data-style-button-remove-item-align="false" style="height: 76px;">
+                                            <input name="cover_image" class="filepond--browser" type="file"
+                                                id="filepond--browser-j6fiedrjo"
+                                                aria-controls="filepond--assistant-j6fiedrjo"
+                                                aria-labelledby="filepond--drop-label-j6fiedrjo"
+                                                accept="image/png,image/jpg,image/jpeg">
+                                            <div class="filepond--drop-label"
+                                                style="transform: translate3d(0px, 0px, 0px); opacity: 1;"><label
+                                                    for="filepond--browser-j6fiedrjo" id="filepond--drop-label-j6fiedrjo"
+                                                    aria-hidden="true">Drag &amp; Drop your files or <span
+                                                        class="filepond--label-action"
+                                                        tabindex="0">Browse</span></label>
+                                            </div>
+                                            <div class="filepond--list-scroller"
+                                                style="transform: translate3d(0px, 0px, 0px);">
+                                                <ul class="filepond--list" role="list"></ul>
+                                            </div>
+                                            <div class="filepond--panel filepond--panel-root" data-scalable="true">
+                                                <div class="filepond--panel-top filepond--panel-root"></div>
+                                                <div class="filepond--panel-center filepond--panel-root"
+                                                    style="transform: translate3d(0px, 8px, 0px) scale3d(1, 0.6, 1);">
+                                                </div>
+                                                <div class="filepond--panel-bottom filepond--panel-root"
+                                                    style="transform: translate3d(0px, 68px, 0px);"></div>
+                                            </div><span class="filepond--assistant" id="filepond--assistant-j6fiedrjo"
+                                                role="status" aria-live="polite" aria-relevant="additions"></span>
+                                            <fieldset class="filepond--data"></fieldset>
+                                            <div class="filepond--drip"></div>
                                         </div>
-                                        <div class="filepond--list-scroller"
-                                            style="transform: translate3d(0px, 0px, 0px);">
-                                            <ul class="filepond--list" role="list"></ul>
-                                        </div>
-                                        <div class="filepond--panel filepond--panel-root" data-scalable="true">
-                                            <div class="filepond--panel-top filepond--panel-root"></div>
-                                            <div class="filepond--panel-center filepond--panel-root"
-                                                style="transform: translate3d(0px, 8px, 0px) scale3d(1, 0.6, 1);"></div>
-                                            <div class="filepond--panel-bottom filepond--panel-root"
-                                                style="transform: translate3d(0px, 68px, 0px);"></div>
-                                        </div><span class="filepond--assistant" id="filepond--assistant-j6fiedrjo"
-                                            role="status" aria-live="polite" aria-relevant="additions"></span>
-                                        <fieldset class="filepond--data"></fieldset>
-                                        <div class="filepond--drip"></div>
                                     </div>
 
 
 
                                     <div class="mb-4">
-                                        <label for="file" class="">File Upload</label>
-                                        <div class="d-flex align-items-center justify-content-center w-100">
-                                            <label for="files" id="drop-zone"
-                                                class="d-flex flex-column align-items-center justify-content-center w-100 h-32 border border-dashed rounded-lg cursor-pointer transition-colors duration-200 ease-in-out">
-                                                <div
-                                                    class="d-flex flex-column align-items-center justify-content-center pt-5 pb-6">
-                                                    <svg class="w-8 h-8 mb-4" xmlns="http://www.w3.org/2000/svg"
-                                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2"
-                                                            d="M7 16a4 4 0 1 1 8 0m-4 0V5m0 0a4 4 0 1 1 8 0m-8 4v4m0 4v4m0-4H3m8 0h8m-4-4h4m-4 4H7" />
-                                                    </svg>
-                                                    <p class="mb-2 text-muted"><span class="font-weight-semibold">Click to
-                                                            upload</span> or drag and drop</p>
-                                                    <p class="text-muted small">Only Upload PDF, DOCX, PPTX up to 50MB</p>
+                                        <h5>File name : <a
+                                                href="{{ asset('storage/' . $ebook->file_path) }}">{{ basename($ebook->file_path) }}</a>
+                                        </h5>
+                                        <label for="file" class="">NewFile
+                                            Upload</label>
+                                        <div class="mb-4">
+
+                                            <div name="ebook_file" class="filepond--root basic-filepond filepond--hopper"
+                                                data-style-button-remove-item-position="left"
+                                                data-style-button-process-item-position="right"
+                                                data-style-load-indicator-position="right"
+                                                data-style-progress-indicator-position="right"
+                                                data-style-button-remove-item-align="false" data-hopper-state="drag-drop"
+                                                style="height: 76px;"><input class="filepond--browser" type="file"
+                                                    id="filepond--browser-0w6ixqzbs"
+                                                    aria-controls="filepond--assistant-0w6ixqzbs"
+                                                    aria-labelledby="filepond--drop-label-0w6ixqzbs" accept=""
+                                                    name="ebook_file">
+                                                <div class="filepond--drop-label"
+                                                    style="transform: translate3d(0px, 0px, 0px); opacity: 1;"><label
+                                                        for="filepond--browser-0w6ixqzbs"
+                                                        id="filepond--drop-label-0w6ixqzbs" aria-hidden="true">Drag &amp;
+                                                        Drop your files or <span class="filepond--label-action"
+                                                            tabindex="0">Browse</span></label></div>
+                                                <div class="filepond--list-scroller"
+                                                    style="transform: translate3d(0px, 0px, 0px);">
+                                                    <ul class="filepond--list" role="list"></ul>
                                                 </div>
-                                                <input id="files" name="ebook_file" type="file" class="d-none"
-                                                    max-size="52428800" />
-                                            </label>
+                                                <div class="filepond--panel filepond--panel-root" data-scalable="true">
+                                                    <div class="filepond--panel-top filepond--panel-root"></div>
+                                                    <div class="filepond--panel-center filepond--panel-root"
+                                                        style="transform: translate3d(0px, 8px, 0px) scale3d(1, 0.6, 1);">
+                                                    </div>
+                                                    <div class="filepond--panel-bottom filepond--panel-root"
+                                                        style="transform: translate3d(0px, 68px, 0px);"></div>
+                                                </div><span class="filepond--assistant" id="filepond--assistant-0w6ixqzbs"
+                                                    role="status" aria-live="polite" aria-relevant="additions"></span>
+                                                <fieldset class="filepond--data"></fieldset>
+                                                <div class="filepond--drip"></div>
+                                            </div>
                                         </div>
-                                        <div id="file-list" class="mt-4 text-muted small"></div>
                                     </div>
-
-                                    <script>
-                                        const dropZone = document.getElementById('drop-zone');
-                                        const fileInput = document.getElementById('files');
-                                        const fileList = document.getElementById('file-list');
-
-                                        dropZone.addEventListener('dragover', (e) => {
-                                            e.preventDefault();
-                                            dropZone.classList.add('border-primary');
-                                        });
-
-                                        dropZone.addEventListener('dragleave', () => {
-                                            dropZone.classList.remove('border-primary');
-                                        });
-
-                                        dropZone.addEventListener('drop', (e) => {
-                                            e.preventDefault();
-                                            dropZone.classList.remove('border-primary');
-                                            const files = e.dataTransfer.files;
-                                            if (files.length > 1) {
-                                                alert("Please upload only one file at a time.");
-                                                return;
-                                            }
-                                            fileInput.files = files;
-                                            updateFileList();
-                                        });
-
-                                        fileInput.addEventListener('change', () => {
-                                            if (fileInput.files.length > 1) {
-                                                alert("Please upload only one file at a time.");
-                                                fileInput.value = ""; // Clear the input
-                                                fileList.innerHTML = ""; // Clear the file list
-                                            } else {
-                                                updateFileList();
-                                            }
-                                        });
-
-                                        function updateFileList() {
-                                            fileList.innerHTML = '';
-                                            if (fileInput.files.length > 0) {
-                                                fileList.innerHTML = `<p>${fileInput.files[0].name}</p>`;
-                                            }
-                                        }
-                                    </script>
-
-
 
                                     <div class="flex justify-start">
                                         <button type="submit" class="btn btn-primary">Submit</button>
