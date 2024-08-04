@@ -61,9 +61,9 @@ Route::middleware([
     Route::get('/upload', [LearningMaterialsController::class, 'index'])->name('upload.view');
     Route::get('/view', [LearningMaterialsController::class, 'view'])->name('upload.viewPage');
     Route::post('/upload', [LearningMaterialsController::class, 'upload'])->name('upload.store');
-    Route::delete('/upload/{id}', [LearningMaterialsController::class, 'destroy'])->name('upload.destroy');
     Route::get('/view/edit/{id}', [LearningMaterialsController::class, 'EditView'])->name('upload.EditPage');
-    Route::PATCH('/view/edit/{id}', [LearningMaterialsController::class, 'update'])->name('upload.update');
+    Route::patch('/view/edit/{id}', [LearningMaterialsController::class, 'update'])->name('upload.update');
+    Route::delete('/upload/{id}', [LearningMaterialsController::class, 'destroy'])->name('upload.destroy');
 
     Route::post('/materials/approve/{id}', [LearningMaterialsController::class, 'approve'])->name('materials.approve');
     Route::post('/materials/reject/{id}', [LearningMaterialsController::class, 'reject'])->name('materials.reject');
@@ -73,7 +73,6 @@ Route::middleware([
 
 // Degree API
 Route::get('/degree-programmes/{id}/subjects', [DegreeProgrammeController::class, 'getSubjects']);
-
 
 
 Route::get('/student-dashboard', [STLearningMaterialsController::class, 'index']);
@@ -91,8 +90,11 @@ Route::middleware([
 ])->group(function () {
     Route::get('/ebook.manageview', [EbookController::class, 'ManageView'])->name('ebook.ManageView');
     Route::get('/ebook.uploadview', [EbookController::class, 'UploadView'])->name('ebook.UploadView');
-    Route::post('/ebook.store', [EbookController::class, 'store'])->name('ebook.store');
-    Route::delete('/upload/{id}', [EbookController::class, 'destroy'])->name('ebook.destroy');
+    Route::post('/ebook', [EbookController::class, 'store'])->name('ebook.store');
+    Route::delete('/ebook/{id}', [EbookController::class, 'destroy'])->name('ebook.destroy');
+
+    Route::get('/ebook/edit/{id}', [EbookController::class, 'EditView'])->name('ebook.EditPage');
+
 });
 
 

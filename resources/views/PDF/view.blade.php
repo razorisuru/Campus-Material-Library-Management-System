@@ -145,7 +145,7 @@
                                     <td>
                                         <div class="d-flex">
                                             <a class="btn btn-sm btn-info me-1" href="{{ route('upload.EditPage', $material->id) }}">Update</a>
-                                            <form action="{{ route('upload.store', $material->id) }}" method="POST"
+                                            <form action="{{ route('upload.destroy', $material->id) }}" method="POST"
                                                 onsubmit="return submitForm(this);">
                                                 @csrf
                                                 @method('DELETE')

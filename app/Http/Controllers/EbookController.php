@@ -16,6 +16,8 @@ class EbookController extends Controller
         return view('studentView.ebook', compact(['ebooks', 'ebookCategories']));
     }
 
+
+
     public function UploadView()
     {
         $ebookCategories = EBookCategory::all();
@@ -27,6 +29,13 @@ class EbookController extends Controller
         $ebooks = EBook::with('categories')->get(); // Load categories with ebooks
         $ebookCategories = EBookCategory::all(); // Load categories with ebooks
         return view('EBOOK.ManageView', compact(['ebooks', 'ebookCategories']));
+    }
+
+    public function EditView($id)
+    {
+        $ebook = EBook::with('categories')->findOrFail($id);
+        $ebookCategories = EBookCategory::all(); // Load categories with ebooks
+        return view('EBOOK.EditView', compact(['ebook', 'ebookCategories']));
     }
 
     public function store(Request $request)

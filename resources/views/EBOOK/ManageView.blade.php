@@ -147,12 +147,16 @@
 
                                     <td>{{ $material->user->name }}</td> --}}
                                     <td>
-                                        <form action="{{ route('ebook.destroy', $ebook->id) }}" method="POST"
-                                            onsubmit="return submitForm(this);">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn btn-danger" type="submit">Delete</button>
-                                        </form>
+                                        <div class="d-flex">
+                                            <a class="btn btn-sm btn-info me-1"
+                                                href="{{ route('ebook.EditPage', $ebook->id) }}">Update</a>
+                                            <form action="{{ route('ebook.destroy', $ebook->id) }}" method="POST"
+                                                onsubmit="return submitForm(this);">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
