@@ -58,6 +58,8 @@
                                                         <form action="{{ route('materials.pending', $material->id) }}"
                                                             method="POST">
                                                             @csrf
+                                                            <input name="uploaderMail" type="text"
+                                                                value="{{ $material->user->email }}" hidden>
                                                             <button type="submit"
                                                                 class="btn btn-warning btn-sm">Pending</button>
                                                         </form>
@@ -66,8 +68,14 @@
                                                         <form action="{{ route('materials.reject', $material->id) }}"
                                                             method="POST">
                                                             @csrf
+                                                            <input name="uploaderMail" type="text"
+                                                                value="{{ $material->user->email }}" hidden>
+                                                            <input name="pdfName" type="text"
+                                                                value="{{ basename($material->file_path) }}" hidden>
+                                                            <input type="text" class="form-control" name="rejectReason"
+                                                                placeholder="Reason">
                                                             <button type="submit"
-                                                                class="btn btn-danger btn-sm">Reject</button>
+                                                                class="btn btn-danger btn-sm mt-1">Reject</button>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -90,6 +98,8 @@
                                                         <form action="{{ route('materials.approve', $material->id) }}"
                                                             method="POST">
                                                             @csrf
+                                                            <input name="uploaderMail" type="text"
+                                                                value="{{ $material->user->email }}" hidden>
                                                             <button type="submit"
                                                                 class="btn btn-success btn-sm">Approve</button>
                                                         </form>
@@ -98,8 +108,14 @@
                                                         <form action="{{ route('materials.reject', $material->id) }}"
                                                             method="POST">
                                                             @csrf
+                                                            <input name="uploaderMail" type="text"
+                                                                value="{{ $material->user->email }}" hidden>
+                                                            <input type="text" class="form-control" name="rejectReason"
+                                                                placeholder="Reason">
+                                                            <input name="pdfName" type="text"
+                                                                value="{{ basename($material->file_path) }}" hidden>
                                                             <button type="submit"
-                                                                class="btn btn-danger btn-sm">Reject</button>
+                                                                class="btn btn-danger btn-sm mt-1">Reject</button>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -121,6 +137,8 @@
                                                         <form action="{{ route('materials.approve', $material->id) }}"
                                                             method="POST">
                                                             @csrf
+                                                            <input name="uploaderMail" type="text"
+                                                                value="{{ $material->user->email }}" hidden>
                                                             <button type="submit"
                                                                 class="btn btn-success btn-sm">Approve</button>
                                                         </form>
@@ -129,6 +147,8 @@
                                                         <form action="{{ route('materials.pending', $material->id) }}"
                                                             method="POST">
                                                             @csrf
+                                                            <input name="uploaderMail" type="text"
+                                                                value="{{ $material->user->email }}" hidden>
                                                             <button type="submit"
                                                                 class="btn btn-warning btn-sm">Pending</button>
                                                         </form>
@@ -144,7 +164,8 @@
                                     <td>{{ $material->user->name }}</td>
                                     <td>
                                         <div class="d-flex">
-                                            <a class="btn btn-sm btn-info me-1" href="{{ route('upload.EditPage', $material->id) }}">Update</a>
+                                            <a class="btn btn-sm btn-info me-1"
+                                                href="{{ route('upload.EditPage', $material->id) }}">Update</a>
                                             <form action="{{ route('upload.destroy', $material->id) }}" method="POST"
                                                 onsubmit="return submitForm(this);">
                                                 @csrf

@@ -9,8 +9,9 @@
     <section class="section">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title">
-                    jQuery Datatable
+                <h5 class="card-title ">
+                    Admin Datatable
+                    <a class="float-end" href="{{ route('register') }}">Add User</a>
                 </h5>
             </div>
             <div class="card-body">
@@ -35,6 +36,18 @@
                                     <td>{{ $user->role }}</td>
 
                                     <td>{{ $user->created_at }}</td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <a class="btn btn-sm btn-info me-1"
+                                                href="{{ route('admin.EditPage', $user->id) }}">Update</a>
+                                            <form action="{{ route('admin.destroy', $user->id) }}" method="POST"
+                                                onsubmit="return submitForm(this);">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+                                            </form>
+                                        </div>
+                                    </td>
                                 </tr>
                             @endforeach
 
@@ -43,6 +56,36 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            function submitForm(form) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Proceed with the form submission
+                        form.submit();
+                    }
+                });
+                return false;
+            }
+        </script>
+
+        @if (session('status'))
+            <script>
+                Swal.fire({
+                    icon: "success",
+                    title: "{{ session('status') }}",
+                });
+            </script>
+        @endif
+
 
     </section>
 @endsection
