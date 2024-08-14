@@ -44,6 +44,10 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.view');
+    Route::post('/admin', [AdminController::class, 'store'])->name('admin.store');
+    Route::get('/admin-edit/{id}', [AdminController::class, 'AdminEditPage'])->name('admin.EditPage');
+    Route::patch('/admin-edit/{id}', [AdminController::class, 'store'])->name('admin.update');
+    Route::delete('/admin/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
 });
 
 

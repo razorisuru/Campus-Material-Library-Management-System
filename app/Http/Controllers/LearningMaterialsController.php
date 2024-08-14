@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Subject;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\DegreeProgramme;
 use App\Models\LearningMaterial;
+use App\Mail\pdfStatusNotifyMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class LearningMaterialsController extends Controller
@@ -156,6 +158,13 @@ class LearningMaterialsController extends Controller
         $material->status = 'rejected';
         $material->save();
 
+        $pdfName = $request->pdfName;
+        $uploaderMail = $request->uploaderMail;
+        $reason = $request->rejectReason;
+
+        Mail::to($uploaderMail)->send(new pdfStatusNotifyMail($reason, $pdfName));
+
+        // return $reason.$uploaderMail;
         return redirect()->back()->with('success', 'Learning material rejected successfully.');
     }
 }
