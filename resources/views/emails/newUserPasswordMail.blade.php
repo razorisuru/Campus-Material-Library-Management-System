@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your PDF has been rejected</title>
+    <title>Welcome to SIBA CAMPUS LMS</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,7 +24,7 @@
         }
 
         .header {
-            background-color: #d9534f;
+            background-color: #5cb85c;
             color: #ffffff;
             padding: 10px 20px;
             text-align: center;
@@ -44,12 +44,11 @@
             margin-bottom: 20px;
         }
 
-        .reason {
-            background-color: #f9f9f9;
-            border-left: 4px solid #d9534f;
+        .user-details {
+            background-color: #e9f9e9;
+            border-left: 4px solid #5cb85c;
             padding: 10px;
             margin: 20px 0;
-            font-style: italic;
         }
 
         .footer {
@@ -64,18 +63,19 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>{{ $pdfName }} PDF has been rejected</h1>
+            <h1>Welcome to SIBA CAMPUS LMS, {{ $UserName }}!</h1>
         </div>
         <div class="content">
             <p>Dear {{ $UserName }},</p>
-            <p>We regret to inform you that your submitted PDF document has been rejected due to the following reason:
-            </p>
-            <div class="reason">
-                <p>{{ $reason }}</p>
+            <p>We are excited to have you on board! Your account has been successfully created. Below are your login
+                credentials:</p>
+            <div class="user-details">
+                <p><strong>Email:</strong> {{ $email }}</p>
+                <p><strong>Password:</strong> {{ $password }}</p>
             </div>
-            <p>If you need further assistance or have any questions, please do not hesitate to contact our support team.
-            </p>
-            <p>Thank you for your understanding.</p>
+            <p>Please make sure to keep this information secure. You can log in to your account at any time using the
+                credentials above.</p>
+            <p>If you have any questions or need assistance, feel free to reach out to our support team.</p>
             <p>Best regards,<br>SIBA CAMPUS LMS Support Team</p>
         </div>
         <div class="footer">

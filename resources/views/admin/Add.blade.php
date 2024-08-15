@@ -11,12 +11,13 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Edit User</h4>
+                        <h4 class="card-title">Add User</h4>
                     </div>
+
+
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form" action="{{ route('admin.update', $user->id) }}" method="POST">
-                                @method('PATCH')
+                            <form class="form" action="{{ route('admin.store') }}" method="POST">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-12 col-12">
@@ -35,37 +36,41 @@
                                     <div class="col-md-12 col-12">
                                         <div class="form-group">
                                             <label for="first-name-column">First Name</label>
-                                            <input value="{{ $user->name }}" type="text" id="first-name-column"
-                                                class="form-control" placeholder="Full Name" name="fullName">
+                                            <input type="text" id="first-name-column" class="form-control"
+                                                placeholder="Full Name" name="fullName">
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-12">
                                         <div class="form-group">
                                             <label for="email-id-column">Email</label>
-                                            <input value="{{ $user->email }}" type="email" id="email-id-column"
-                                                class="form-control" name="email" placeholder="Email">
+                                            <input type="email" id="email-id-column" class="form-control" name="email"
+                                                placeholder="Email">
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label for="role-column">Role</label>
                                             <select id="role-column" class="form-control" name="role">
-                                                <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin
-                                                </option>
-                                                <option value="student" {{ $user->role == 'student' ? 'selected' : '' }}>
-                                                    Student</option>
-                                                <option value="teacher" {{ $user->role == 'teacher' ? 'selected' : '' }}>
-                                                    Teacher</option>
+                                                <option value="student">Student</option>
+                                                <option value="teacher">Teacher</option>
+                                                <option value="admin">Admin</option>
                                             </select>
                                         </div>
                                     </div>
-
                                     <div class="col-md-6 col-12">
-                                        <div class="col-12 mt-4 d-flex justify-content-end">
-                                            <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
-                                            <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                        <div class="form-group">
+                                            <label for="email-id-column">Email</label>
+                                            <input type="password" id="email-id-column" class="form-control"
+                                                name="password" placeholder="Password">
                                         </div>
                                     </div>
+
+
+                                    <div class="col-12 mt-4 d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
+                                        <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                    </div>
+
                                     {{-- <div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label for="company-column">Company</label>

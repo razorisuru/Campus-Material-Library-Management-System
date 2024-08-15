@@ -13,7 +13,7 @@ class Categories extends Seeder
      */
     public function run(): void
     {
-        $categories = ['Lecture Note', 'Presentation', 'Test', 'Activity', 'E-Book'];
+        $categories = ['Lecture Note', 'Presentation', 'Test', 'Activity', 'E-Book', 'C-Form'];
 
         foreach ($categories as $category) {
             Category::create(['name' => $category]);

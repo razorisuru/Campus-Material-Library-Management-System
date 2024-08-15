@@ -23,9 +23,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dash', function () {
-    return view('layouts.auth');
-});
+// Route::get('/dash', function () {
+//     return view('layouts.auth');
+// });
 
 Route::middleware([
     'auth:sanctum',
@@ -44,9 +44,10 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.view');
+    Route::get('/admin-add', [AdminController::class, 'AdminAdd'])->name('admin.add');
     Route::post('/admin', [AdminController::class, 'store'])->name('admin.store');
     Route::get('/admin-edit/{id}', [AdminController::class, 'AdminEditPage'])->name('admin.EditPage');
-    Route::patch('/admin-edit/{id}', [AdminController::class, 'store'])->name('admin.update');
+    Route::patch('/admin-edit/{id}', [AdminController::class, 'update'])->name('admin.update');
     Route::delete('/admin/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
 });
 

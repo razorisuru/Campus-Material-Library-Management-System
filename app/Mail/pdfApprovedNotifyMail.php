@@ -9,20 +9,18 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class pdfStatusNotifyMail extends Mailable
+class pdfApprovedNotifyMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    private $reason;
     private $pdfName;
     private $UserName;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($reason, $pdfName, $UserName)
+    public function __construct($pdfName, $UserName)
     {
-        $this->reason = $reason;
         $this->pdfName = $pdfName;
         $this->UserName = $UserName;
     }
@@ -43,9 +41,8 @@ class pdfStatusNotifyMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.pdfStatusNotifyMail',
+            view: 'emails.pdfApprovedNotifyMail',
             with: [
-                'reason' => $this->reason,
                 'pdfName' => $this->pdfName,
                 'UserName' => $this->UserName,
             ]

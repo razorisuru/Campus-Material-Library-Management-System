@@ -70,6 +70,8 @@
                                                             @csrf
                                                             <input name="uploaderMail" type="text"
                                                                 value="{{ $material->user->email }}" hidden>
+                                                            <input name="UserName" type="text"
+                                                                value="{{ $material->user->name }}" hidden>
                                                             <input name="pdfName" type="text"
                                                                 value="{{ basename($material->file_path) }}" hidden>
                                                             <input type="text" class="form-control" name="rejectReason"
@@ -100,6 +102,10 @@
                                                             @csrf
                                                             <input name="uploaderMail" type="text"
                                                                 value="{{ $material->user->email }}" hidden>
+                                                            <input name="UserName" type="text"
+                                                                value="{{ $material->user->name }}" hidden>
+                                                            <input name="pdfName" type="text"
+                                                                value="{{ basename($material->file_path) }}" hidden>
                                                             <button type="submit"
                                                                 class="btn btn-success btn-sm">Approve</button>
                                                         </form>
@@ -110,10 +116,12 @@
                                                             @csrf
                                                             <input name="uploaderMail" type="text"
                                                                 value="{{ $material->user->email }}" hidden>
-                                                            <input type="text" class="form-control" name="rejectReason"
-                                                                placeholder="Reason">
+                                                            <input name="UserName" type="text"
+                                                                value="{{ $material->user->name }}" hidden>
                                                             <input name="pdfName" type="text"
                                                                 value="{{ basename($material->file_path) }}" hidden>
+                                                            <input type="text" class="form-control" name="rejectReason"
+                                                                placeholder="Reason">
                                                             <button type="submit"
                                                                 class="btn btn-danger btn-sm mt-1">Reject</button>
                                                         </form>
@@ -127,8 +135,8 @@
 
                                             <div class="dropdown">
                                                 <button class="badge bg-danger border-0 dropdown-toggle me-1" type="button"
-                                                    id="dropdownMenuButton5" data-bs-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
+                                                    id="dropdownMenuButton5" data-bs-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
                                                     {{ $material->status }}
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton5"
@@ -139,6 +147,10 @@
                                                             @csrf
                                                             <input name="uploaderMail" type="text"
                                                                 value="{{ $material->user->email }}" hidden>
+                                                            <input name="UserName" type="text"
+                                                                value="{{ $material->user->name }}" hidden>
+                                                            <input name="pdfName" type="text"
+                                                                value="{{ basename($material->file_path) }}" hidden>
                                                             <button type="submit"
                                                                 class="btn btn-success btn-sm">Approve</button>
                                                         </form>
@@ -207,10 +219,11 @@
             <script>
                 Swal.fire({
                     icon: "success",
-                    title: "Deleted Successfully",
+                    title: "{{ session('status') }}",
                 });
             </script>
         @endif
+
 
     </section>
 @endsection

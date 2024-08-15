@@ -9,21 +9,17 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class pdfStatusNotifyMail extends Mailable
+class newUserPasswordMail extends Mailable
 {
     use Queueable, SerializesModels;
-
-    private $reason;
-    private $pdfName;
+    private $password;
+    private $email;
     private $UserName;
 
-    /**
-     * Create a new message instance.
-     */
-    public function __construct($reason, $pdfName, $UserName)
+    public function __construct($password, $email, $UserName)
     {
-        $this->reason = $reason;
-        $this->pdfName = $pdfName;
+        $this->password = $password;
+        $this->email = $email;
         $this->UserName = $UserName;
     }
 
@@ -33,7 +29,7 @@ class pdfStatusNotifyMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'SIBA LMS PDF Status Notification',
+            subject: 'New User Password Mail',
         );
     }
 
@@ -43,10 +39,10 @@ class pdfStatusNotifyMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.pdfStatusNotifyMail',
+            view: 'emails.newUserPasswordMail',
             with: [
-                'reason' => $this->reason,
-                'pdfName' => $this->pdfName,
+                'password' => $this->password,
+                'email' => $this->email,
                 'UserName' => $this->UserName,
             ]
         );

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\DegreeProgramme;
 use App\Models\LearningMaterial;
 use App\Mail\pdfStatusNotifyMail;
+use App\Mail\pdfApprovedNotifyMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
@@ -140,7 +141,14 @@ class LearningMaterialsController extends Controller
         $material->status = 'approved';
         $material->save();
 
-        return redirect()->back()->with('success', 'Learning material approved successfully.');
+        $pdfName = $request->pdfName;
+        $uploaderMail = $request->uploaderMail;
+        $UserName = $request->UserName;
+
+        Mail::to($uploaderMail)->queue(new pdfApprovedNotifyMail($pdfName, $UserName));
+
+
+        return redirect()->back()->with('status', 'Learning material approved successfully.');
     }
 
     public function pending(Request $request, $id)
@@ -149,7 +157,7 @@ class LearningMaterialsController extends Controller
         $material->status = 'pending';
         $material->save();
 
-        return redirect()->back()->with('success', 'Learning material approved successfully.');
+        return redirect()->back()->with('status', 'Change Success.');
     }
 
     public function reject(Request $request, $id)
@@ -160,11 +168,12 @@ class LearningMaterialsController extends Controller
 
         $pdfName = $request->pdfName;
         $uploaderMail = $request->uploaderMail;
+        $UserName = $request->UserName;
         $reason = $request->rejectReason;
 
-        Mail::to($uploaderMail)->send(new pdfStatusNotifyMail($reason, $pdfName));
+        Mail::to($uploaderMail)->queue(new pdfStatusNotifyMail($reason, $pdfName, $UserName));
 
         // return $reason.$uploaderMail;
-        return redirect()->back()->with('success', 'Learning material rejected successfully.');
+        return redirect()->back()->with('status', 'Learning material rejected successfully.');
     }
 }

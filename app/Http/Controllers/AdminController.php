@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Mail\newUserPasswordMail;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
 {
@@ -19,7 +22,41 @@ class AdminController extends Controller
         return view('admin.AdminEdit', compact(['user']));
     }
 
-    public function store(Request $request, $id)
+    public function AdminAdd()
+    {
+        return view('admin.Add');
+    }
+
+    public function store(Request $request)
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'fullName' => 'required|string',
+            'email' => 'required|email|unique:users,email',
+            'role' => 'required|string|max:255',
+            'password' => 'required|string|min:8', // Assuming you want to require a password for new users
+        ]);
+
+        $unhashedPassword = $request->password;
+        $email = $request->email;
+        $name = $request->fullName;
+
+        // Create a new user record in the database
+        $user = User::create([
+            'name' => $name,
+            'email' => $email,
+            'role' => $request->role,
+            'password' => Hash::make($unhashedPassword), // Encrypting the password
+        ]);
+
+        Mail::to($email)->queue(new newUserPasswordMail($unhashedPassword, $email, $name));
+
+        // Redirect to the desired route with a success message
+        return redirect()->route('admin.view')->with('status', 'Created Successfully');
+    }
+
+
+    public function update(Request $request, $id)
     {
 
         $request->validate([

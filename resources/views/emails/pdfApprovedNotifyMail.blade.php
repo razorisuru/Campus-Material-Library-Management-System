@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your PDF has been rejected</title>
+    <title>Your PDF has been approved</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,7 +24,7 @@
         }
 
         .header {
-            background-color: #d9534f;
+            background-color: #5cb85c;
             color: #ffffff;
             padding: 10px 20px;
             text-align: center;
@@ -44,9 +44,9 @@
             margin-bottom: 20px;
         }
 
-        .reason {
-            background-color: #f9f9f9;
-            border-left: 4px solid #d9534f;
+        .message {
+            background-color: #e9f9e9;
+            border-left: 4px solid #5cb85c;
             padding: 10px;
             margin: 20px 0;
             font-style: italic;
@@ -64,18 +64,16 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>{{ $pdfName }} PDF has been rejected</h1>
+            <h1>{{ $pdfName }} PDF has been approved</h1>
         </div>
         <div class="content">
             <p>Dear {{ $UserName }},</p>
-            <p>We regret to inform you that your submitted PDF document has been rejected due to the following reason:
-            </p>
-            <div class="reason">
-                <p>{{ $reason }}</p>
+            <p>We are pleased to inform you that your submitted PDF document has been approved. The document meets all
+                the required specifications and is now available in our system.</p>
+            <div class="message">
+                <p>Thank you for your submission. If you have any further documents or need assistance, please feel free
+                    to reach out to our support team.</p>
             </div>
-            <p>If you need further assistance or have any questions, please do not hesitate to contact our support team.
-            </p>
-            <p>Thank you for your understanding.</p>
             <p>Best regards,<br>SIBA CAMPUS LMS Support Team</p>
         </div>
         <div class="footer">
