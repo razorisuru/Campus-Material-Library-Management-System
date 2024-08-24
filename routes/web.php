@@ -19,10 +19,7 @@ use App\Http\Controllers\STLearningMaterialsController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::redirect('/', destination: 'login');
 // Route::get('/dash', function () {
 //     return view('layouts.auth');
 // });
@@ -101,7 +98,6 @@ Route::middleware([
     Route::patch('/ebook/{id}', [EbookController::class, 'update'])->name('ebook.update');
 
     Route::get('/ebook/edit/{id}', [EbookController::class, 'EditView'])->name('ebook.EditPage');
-
 });
 
 
@@ -116,4 +112,3 @@ Route::middleware([
     Route::put('/category/{id}', [CategoryController::class, 'update'])->name('category.update');
     Route::delete('/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
 });
-
