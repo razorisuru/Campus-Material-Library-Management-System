@@ -12,10 +12,9 @@ class STLearningMaterialsController extends Controller
 {
     public function index()
     {
-        $subjects = Subject::all();
-        $degrees = DegreeProgramme::all();
-        $categories = Category::all();
-        return view('studentView.stdUpload', compact(['subjects', 'degrees', 'categories']));
+        // $subjects = Subjects::all();
+        $materials = LearningMaterial::with(['subjects', 'user'])->where('status', '=', 'approved')->get();
+        return view('studentView.index', compact('materials'));
     }
 
     public function upload(Request $request)
@@ -46,7 +45,6 @@ class STLearningMaterialsController extends Controller
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
-
             }
         }
         LearningMaterial::insert($imageData);
@@ -57,8 +55,9 @@ class STLearningMaterialsController extends Controller
 
     public function view()
     {
-        // $subjects = Subjects::all();
-        $materials = LearningMaterial::with(['subjects', 'user'])->where('status', '=', 'approved')->get();
-        return view('studentView.index', compact('materials'));
+        $subjects = Subject::all();
+        $degrees = DegreeProgramme::all();
+        $categories = Category::all();
+        return view('studentView.stdUpload', compact(['subjects', 'degrees', 'categories']));
     }
 }

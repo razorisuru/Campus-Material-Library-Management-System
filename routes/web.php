@@ -28,7 +28,7 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
-    'admin',
+    'AdminRedirect',
 ])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
@@ -78,13 +78,13 @@ Route::middleware([
 Route::get('/degree-programmes/{id}/subjects', [DegreeProgrammeController::class, 'getSubjects']);
 
 
-Route::get('/student-dashboard', [STLearningMaterialsController::class, 'index']);
-Route::get('/student-view', [STLearningMaterialsController::class, 'view']);
+Route::get('/student-dashboard', [STLearningMaterialsController::class, 'index'])->name('student.dashboard');
+Route::get('/student-upload', [STLearningMaterialsController::class, 'view'])->name('student.upload');
 Route::post('/student-dashboard', [STLearningMaterialsController::class, 'upload'])->name('StUpload.store');
 
 
 // ebook routes
-Route::get('/ebook', [EbookController::class, 'index']);
+Route::get('/ebook', [EbookController::class, 'index'])->name('ebook');
 
 Route::middleware([
     'auth:sanctum',

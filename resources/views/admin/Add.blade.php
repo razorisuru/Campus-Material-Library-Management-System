@@ -59,7 +59,7 @@
                                     </div>
                                     <div class="col-md-6 col-12">
                                         <div class="form-group">
-                                            <label for="email-id-column">Email</label>
+                                            <label for="email-id-column">Password</label>
                                             <input type="password" id="email-id-column" class="form-control"
                                                 name="password" placeholder="Password">
                                         </div>
