@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddSubjectDegController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
@@ -51,6 +52,20 @@ Route::middleware([
     Route::delete('/admin/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
 });
 
+// degreeEdit
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+    'admin',
+])->group(function () {
+    Route::get('/degree-programmes', [AddSubjectDegController::class, 'show'])->name('degree.show');
+    Route::get('/degree-programmes/add', [AddSubjectDegController::class, 'add'])->name('degree.add');
+    Route::post('/degree-programmes', [AddSubjectDegController::class, 'store'])->name('degree.store');
+    Route::post('/degree-programmes-subjects', [AddSubjectDegController::class, 'SubjectStore'])->name('degree.SubjectStore');
+
+});
+
 
 // pdf management routes
 Route::middleware([
@@ -71,13 +86,7 @@ Route::middleware([
     Route::post('/materials/pending/{id}', [LearningMaterialsController::class, 'pending'])->name('materials.pending');
 });
 
-
-
-
-
 // ebook routes
-Route::get('/ebook', [EbookController::class, 'index'])->name('ebook');
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -130,5 +139,7 @@ Route::middleware([
     Route::get('/student-dashboard', [STLearningMaterialsController::class, 'index'])->name('student.dashboard');
     Route::get('/student-upload', [STLearningMaterialsController::class, 'view'])->name('student.upload');
     Route::post('/student-dashboard', [STLearningMaterialsController::class, 'upload'])->name('StUpload.store');
+    Route::get('/ebook', [EbookController::class, 'index'])->name('ebook');
 });
+
 

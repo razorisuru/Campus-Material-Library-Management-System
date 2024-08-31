@@ -52,34 +52,20 @@
                 </li>
 
 
-                <li class="sidebar-item has-sub {{ request()->routeIs('upload.view', 'upload.viewPage') ? 'active' : '' }}">
-                    <a href="#" class="sidebar-link">
+                <li class="sidebar-item  {{ request()->routeIs('upload.view', 'upload.viewPage') ? 'active' : '' }}">
+                    <a href="{{ route('upload.viewPage') }}" class="sidebar-link">
                         <i class="bi bi-stack"></i>
                         <span>PDF</span>
                     </a>
-                    <ul class="submenu {{ request()->routeIs('upload.view', 'upload.viewPage') ? 'd-block' : '' }}">
-                        <li class="submenu-item {{ request()->routeIs('upload.view') ? 'active' : '' }}">
-                            <a href="{{ route('upload.view') }}" class="submenu-link">Upload</a>
-                        </li>
-                        <li class="submenu-item {{ request()->routeIs('upload.viewPage') ? 'active' : '' }}">
-                            <a href="{{ route('upload.viewPage') }}" class="submenu-link">View</a>
-                        </li>
-                    </ul>
+
                 </li>
 
-                <li class="sidebar-item has-sub {{ request()->routeIs('ebook.UploadView', 'ebook.ManageView') ? 'active' : '' }}">
-                    <a href="#" class="sidebar-link">
+                <li class="sidebar-item  {{ request()->routeIs('ebook.UploadView', 'ebook.ManageView') ? 'active' : '' }}">
+                    <a href="{{ route('ebook.ManageView') }}" class="sidebar-link">
                         <i class="bi bi-stack"></i>
                         <span>EBOOK</span>
                     </a>
-                    <ul class="submenu {{ request()->routeIs('ebook.UploadView', 'ebook.ManageView') ? 'd-block' : '' }}">
-                        <li class="submenu-item {{ request()->routeIs('ebook.UploadView') ? 'active' : '' }}">
-                            <a href="{{ route('ebook.UploadView') }}" class="submenu-link">Upload</a>
-                        </li>
-                        <li class="submenu-item {{ request()->routeIs('ebook.ManageView') ? 'active' : '' }}">
-                            <a href="{{ route('ebook.ManageView') }}" class="submenu-link">View</a>
-                        </li>
-                    </ul>
+
                 </li>
 
                 <li class="sidebar-item {{ request()->routeIs('category.view') ? 'active' : '' }}">
@@ -96,8 +82,8 @@
                     </a>
                 </li>
 
-                <li class="sidebar-item {{ request()->routeIs('admin.view') ? 'active' : '' }}">
-                    <a href="{{ route('admin.view') }}" class="sidebar-link">
+                <li class="sidebar-item {{ request()->routeIs('degree.show') ? 'active' : '' }}">
+                    <a href="{{ route('degree.show') }}" class="sidebar-link">
                         <i class="bi bi-grid-fill"></i>
                         <span>Manage Sub</span>
                     </a>

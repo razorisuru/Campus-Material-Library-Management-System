@@ -11,6 +11,7 @@
             <div class="card-header">
                 <h5 class="card-title">
                     PDF Datatable
+                    <a class="btn btn-primary float-end" href="{{ route('ebook.UploadView') }}">Upload</a>
                 </h5>
             </div>
             <div class="card-body">
