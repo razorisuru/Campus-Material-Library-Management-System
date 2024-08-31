@@ -168,7 +168,7 @@
                 var degreeId = $(this).val();
                 if (degreeId) {
                     $.ajax({
-                        url: '/degree-programmes/' + degreeId + '/subjects',
+                        url: '/api/degree-programmes/' + degreeId + '/subjects',
                         type: 'GET',
                         dataType: 'json',
                         success: function(data) {

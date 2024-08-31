@@ -241,7 +241,7 @@
             subjectSelect.disabled = true;
 
             if (degreeId) {
-                axios.get(`/degree-programmes/${degreeId}/subjects`)
+                axios.get(`/api/degree-programmes/${degreeId}/subjects`)
                     .then(response => {
                         const subjects = response.data;
                         subjects.forEach(subject => {

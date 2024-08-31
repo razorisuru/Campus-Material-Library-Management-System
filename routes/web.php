@@ -41,6 +41,7 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
+    'admin',
 ])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.view');
     Route::get('/admin-add', [AdminController::class, 'AdminAdd'])->name('admin.add');
@@ -51,16 +52,12 @@ Route::middleware([
 });
 
 
-
-
-
-
-
 // pdf management routes
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
+    'admin',
 ])->group(function () {
     Route::get('/upload', [LearningMaterialsController::class, 'index'])->name('upload.view');
     Route::get('/view', [LearningMaterialsController::class, 'view'])->name('upload.viewPage');
@@ -75,13 +72,7 @@ Route::middleware([
 });
 
 
-// Degree API
-Route::get('/degree-programmes/{id}/subjects', [DegreeProgrammeController::class, 'getSubjects']);
 
-
-Route::get('/student-dashboard', [STLearningMaterialsController::class, 'index'])->name('student.dashboard');
-Route::get('/student-upload', [STLearningMaterialsController::class, 'view'])->name('student.upload');
-Route::post('/student-dashboard', [STLearningMaterialsController::class, 'upload'])->name('StUpload.store');
 
 
 // ebook routes
@@ -91,6 +82,7 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
+    'admin',
 ])->group(function () {
     Route::get('/ebook.manageview', [EbookController::class, 'ManageView'])->name('ebook.ManageView');
     Route::get('/ebook.uploadview', [EbookController::class, 'UploadView'])->name('ebook.UploadView');
@@ -107,6 +99,7 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
+    'admin',
 ])->group(function () {
     Route::get('/category', [CategoryController::class, 'index'])->name('category.view');
     Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
@@ -119,9 +112,23 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
+    'admin',
 ])->group(function () {
     Route::get('/ebook-category', [EbookCategoryController::class, 'index'])->name('ebook-category.view');
     Route::post('/ebook-category', [EbookCategoryController::class, 'store'])->name('ebook-category.store');
     Route::put('/ebook-category/{id}', [EbookCategoryController::class, 'update'])->name('ebook-category.update');
     Route::delete('/ebook-category/{id}', [EbookCategoryController::class, 'destroy'])->name('ebook-category.destroy');
 });
+
+
+// st controller
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/student-dashboard', [STLearningMaterialsController::class, 'index'])->name('student.dashboard');
+    Route::get('/student-upload', [STLearningMaterialsController::class, 'view'])->name('student.upload');
+    Route::post('/student-dashboard', [STLearningMaterialsController::class, 'upload'])->name('StUpload.store');
+});
+

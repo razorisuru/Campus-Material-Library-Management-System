@@ -20,8 +20,9 @@ class EbookController extends Controller
 
     public function UploadView()
     {
+        $ebooks = EBook::with('categories')->get(); // Load categories with ebooks
         $ebookCategories = EBookCategory::all();
-        return view('EBOOK.UploadView', compact(['ebookCategories']));
+        return view('EBOOK.UploadView', compact(['ebooks', 'ebookCategories']));
     }
 
     public function ManageView()
@@ -47,6 +48,10 @@ class EbookController extends Controller
             'description' => 'required|string',
             'publication_date' => 'required|string',
             'isbn' => 'required|string',
+
+            'ebookcategories' => 'required|array', // Validate categories as an array
+            'ebookcategories.*' => 'required|exists:e_book_categories,id', // Ensure each category exists
+
             'cover_image' => 'required|mimes:png,jpg,jpeg|max:51200',
             'ebook_file' => 'required|mimes:pdf,docx|max:51200',
 
@@ -75,12 +80,15 @@ class EbookController extends Controller
             'updated_at' => now(),
         ]);
 
+        if ($request->has('ebookcategories')) {
+            $ebook->categories()->attach($request->input('ebookcategories'));
+        }
 
         // EBook::insert($imageData);
 
         // if ($request->has('categories')) {
         // $ebook->categories()->attach($request->categories);
-        $ebook->categories()->attach([1, 4]);
+        // $ebook->categories()->attach([1, 4]);
         // }
 
         return redirect()->back()->with('status', 'Uploaded Successfully');
@@ -96,6 +104,10 @@ class EbookController extends Controller
             'description' => 'required|string',
             'publication_date' => 'required|string',
             'isbn' => 'required|string',
+
+            'ebookcategories' => 'required|array', // Validate categories as an array
+            'ebookcategories.*' => 'required|exists:e_book_categories,id', // Ensure each category exists
+
             'cover_image' => 'nullable|mimes:png,jpg,jpeg|max:51200',
             'ebook_file' => 'nullable|mimes:pdf,docx|max:51200',
         ]);
@@ -136,9 +148,7 @@ class EbookController extends Controller
             'updated_at' => now(),
         ]);
 
-        if ($request->has('categories')) {
-            $ebook->categories()->sync($request->categories);
-        }
+        $ebook->categories()->sync($request->input('ebookcategories', []));
 
         return redirect()->back()->with('status', 'Updated Successfully');
     }
