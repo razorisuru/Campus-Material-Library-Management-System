@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Models\EBookCategory;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class EbookCategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
-        return view('PDFcategory.view', compact('categories'));
+        $categories = EBookCategory::all();
+        return view('EbookCategory.view', compact('categories'));
     }
 
     public function store(Request $request)
@@ -21,7 +21,7 @@ class CategoryController extends Controller
 
         ]);
 
-        Category::insert(['name' => $request->category_name]);
+        EBookCategory::insert(['name' => $request->category_name]);
 
         return redirect()->back()->with('status', 'Category Added Successfully');
     }
@@ -32,7 +32,7 @@ class CategoryController extends Controller
             'name' => 'required|string|max:255',
         ]);
 
-        $category = Category::find($id);
+        $category = EBookCategory::find($id);
         if ($category) {
             $category->name = $request->name;
             $category->save();
@@ -46,7 +46,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         // Find the file record in the database
-        $category = Category::findOrFail($id);
+        $category = EBookCategory::findOrFail($id);
 
 
 

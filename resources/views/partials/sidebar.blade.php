@@ -85,7 +85,14 @@
                 <li class="sidebar-item {{ request()->routeIs('category.view') ? 'active' : '' }}">
                     <a href="{{ route('category.view') }}" class="sidebar-link">
                         <i class="bi bi-stack"></i>
-                        <span>Category</span>
+                        <span>PDF Category</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item {{ request()->routeIs('ebook-category.view') ? 'active' : '' }}">
+                    <a href="{{ route('ebook-category.view') }}" class="sidebar-link">
+                        <i class="bi bi-stack"></i>
+                        <span>EBOOK Category</span>
                     </a>
                 </li>
 

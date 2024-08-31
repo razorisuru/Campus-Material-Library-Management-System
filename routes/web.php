@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\EbookCategoryController;
 use App\Http\Controllers\DegreeProgrammeController;
 use App\Http\Controllers\EbookController;
 use App\Http\Controllers\LearningMaterialsController;
@@ -111,4 +112,16 @@ Route::middleware([
     Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
     Route::put('/category/{id}', [CategoryController::class, 'update'])->name('category.update');
     Route::delete('/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+});
+
+// EBOOK Category management routes
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/ebook-category', [EbookCategoryController::class, 'index'])->name('ebook-category.view');
+    Route::post('/ebook-category', [EbookCategoryController::class, 'store'])->name('ebook-category.store');
+    Route::put('/ebook-category/{id}', [EbookCategoryController::class, 'update'])->name('ebook-category.update');
+    Route::delete('/ebook-category/{id}', [EbookCategoryController::class, 'destroy'])->name('ebook-category.destroy');
 });
