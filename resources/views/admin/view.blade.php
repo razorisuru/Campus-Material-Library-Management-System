@@ -11,7 +11,7 @@
             <div class="card-header">
                 <h5 class="card-title ">
                     Admin Datatable
-                    <a class="float-end" href="{{ route('admin.add') }}">Add User</a>
+                    <a class="btn btn-primary float-end" href="{{ route('admin.add') }}">Add User</a>
                 </h5>
             </div>
             <div class="card-body">

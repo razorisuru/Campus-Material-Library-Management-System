@@ -41,12 +41,15 @@
                             <div class="card-body">
 
                                 @if ($errors->any())
-                                    <div class="px-4 text-light bg-danger py-3 mb-4">
-                                        <ul class="">
+                                    <div class="alert alert-danger alert-dismissible fade show px-4 py-3 mb-4"
+                                        role="alert">
+                                        <ul class="mb-0">
                                             @foreach ($errors->all() as $error)
                                                 <li>{{ $error }}</li>
                                             @endforeach
                                         </ul>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
                                     </div>
                                 @endif
 
@@ -54,33 +57,45 @@
                                     enctype="multipart/form-data">
                                     @csrf
                                     @method('PATCH')
+
                                     <div class="form-group">
-                                        <label for="helperText">Title</label>
-                                        <input type="text" id="helperText" value="{{ $ebook->title }}" name="title"
-                                            class="form-control" placeholder="Name">
-                                        {{-- <p><small class="text-muted">Enter the title.</small></p> --}}
+                                        <label for="title">Title</label>
+                                        <input type="text" id="title" name="title"
+                                            value="{{ old('title', $ebook->title) }}"
+                                            class="form-control @error('title') is-invalid @enderror" placeholder="Title">
+                                        @error('title')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="helperText">Author</label>
-                                        <input type="text" id="helperText" value="{{ $ebook->author }}" name="author"
-                                            class="form-control" placeholder="Author">
-                                        {{-- <p><small class="text-muted">Enter the title.</small></p> --}}
+                                        <label for="author">Author</label>
+                                        <input type="text" id="author" name="author"
+                                            value="{{ old('author', $ebook->author) }}"
+                                            class="form-control @error('author') is-invalid @enderror" placeholder="Author">
+                                        @error('author')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
-
 
                                     <div class="form-group with-title mt-2 mb-3">
-                                        {{-- <label for="degree_programme" class="mb-2"></label> --}}
-                                        <textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3">{{ $ebook->description }}</textarea>
-                                        <label>Enter a Description</label>
+                                        <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description"
+                                            rows="3">{{ old('description', $ebook->description) }}</textarea>
+                                        <label for="description">Enter a Description</label>
+                                        @error('description')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="helperText">Publication Date</label>
+                                        <label for="publication_date">Publication Date</label>
                                         <input type="text" name="publication_date"
-                                            value="{{ $ebook->publication_date }}"
-                                            class="form-control mb-3 flatpickr-date flatpickr-input active"
+                                            value="{{ old('publication_date', $ebook->publication_date) }}"
+                                            class="form-control mb-3 flatpickr-date flatpickr-input active @error('publication_date') is-invalid @enderror"
                                             placeholder="Select date.." readonly="readonly">
+                                        @error('publication_date')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <script>
                                         document.addEventListener('DOMContentLoaded', function() {
@@ -92,23 +107,26 @@
                                     </script>
 
                                     <div class="form-group mb-2">
-                                        <label for="helperText">ISBN</label>
-                                        <input type="text" id="helperText" value="{{ $ebook->isbn }}" name="isbn"
-                                            class="form-control" placeholder="ISBN">
-                                        {{-- <p><small class="text-muted">Enter the title.</small></p> --}}
+                                        <label for="isbn">ISBN</label>
+                                        <input type="text" id="isbn" name="isbn"
+                                            value="{{ old('isbn', $ebook->isbn) }}"
+                                            class="form-control @error('isbn') is-invalid @enderror" placeholder="ISBN">
+                                        @error('isbn')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
 
                                     <div class="form-group mb-2">
-                                        <label for="helperText">Categories</label>
+                                        <label for="categories">Categories</label>
                                         <ul class="list-unstyled mb-0">
                                             @foreach ($ebookCategories as $ebookCategory)
                                                 <li class="d-inline-block me-2 mb-1">
                                                     <div class="form-check">
                                                         <div class="checkbox">
                                                             <input type="checkbox" id="category_{{ $ebookCategory->id }}"
-                                                                class="form-check-input" name="ebookcategories[]"
-                                                                value="{{ $ebookCategory->id }}"
-                                                                {{ in_array($ebookCategory->id, $ebook->categories->pluck('id')->toArray()) ? 'checked' : '' }}>
+                                                                class="form-check-input @error('ebookcategories') is-invalid @enderror"
+                                                                name="ebookcategories[]" value="{{ $ebookCategory->id }}"
+                                                                {{ in_array($ebookCategory->id, old('ebookcategories', $ebook->categories->pluck('id')->toArray())) ? 'checked' : '' }}>
                                                             <label
                                                                 for="category_{{ $ebookCategory->id }}">{{ $ebookCategory->name }}</label>
                                                         </div>
@@ -116,6 +134,9 @@
                                                 </li>
                                             @endforeach
                                         </ul>
+                                        @error('ebookcategories')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
 
                                     <div class="form-group mb-2 d-flex flex-column">
@@ -219,6 +240,27 @@
                                         });
                                     </script>
                                 @endif
+
+
+                                <script>
+                                    // Add event listeners to input fields to remove 'is-invalid' class on user input
+                                    document.querySelectorAll('.form-control').forEach(function(input) {
+                                        input.addEventListener('input', function() {
+                                            if (this.classList.contains('is-invalid')) {
+                                                this.classList.remove('is-invalid');
+                                            }
+                                        });
+                                    });
+
+                                    // Add event listener for checkboxes (categories) to remove 'is-invalid' class on change
+                                    document.querySelectorAll('.form-check-input').forEach(function(checkbox) {
+                                        checkbox.addEventListener('change', function() {
+                                            if (this.classList.contains('is-invalid')) {
+                                                this.classList.remove('is-invalid');
+                                            }
+                                        });
+                                    });
+                                </script>
 
 
                             </div>
