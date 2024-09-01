@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\AddSubjectDegController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\aiPDFController;
+use App\Http\Controllers\EbookController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\AddSubjectDegController;
 use App\Http\Controllers\EbookCategoryController;
 use App\Http\Controllers\DegreeProgrammeController;
-use App\Http\Controllers\EbookController;
 use App\Http\Controllers\LearningMaterialsController;
 use App\Http\Controllers\STLearningMaterialsController;
 
@@ -141,5 +142,10 @@ Route::middleware([
     Route::post('/student-dashboard', [STLearningMaterialsController::class, 'upload'])->name('StUpload.store');
     Route::get('/ebook', [EbookController::class, 'index'])->name('ebook');
 });
+
+
+// routes/web.php
+Route::get('/upload-ai-pdf', [aiPDFController::class, 'index']);
+Route::post('/upload-ai-pdf', [aiPDFController::class, 'upload'])->name('ai.pdf');
 
 
