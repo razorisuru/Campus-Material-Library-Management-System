@@ -89,6 +89,13 @@
                     </a>
                 </li>
 
+                <li class="sidebar-item {{ request()->routeIs('summarize.pdf') ? 'active' : '' }}">
+                    <a href="{{ route('summarize.pdf') }}" class="sidebar-link">
+                        <i class="bi bi-grid-fill"></i>
+                        <span>SUM TEST</span>
+                    </a>
+                </li>
+
 
                 {{-- <li class="sidebar-item  has-sub">
                     <a href="#" class='sidebar-link'>
