@@ -31,7 +31,7 @@ class aiPDFController extends Controller
         // $pdfPath = $request->file('pdf_file')->store('pdfs');
         // $fullPath = storage_path('app/' . $pdfPath);
 
-        $pythonPath = 'E:\RaZoR\Advanced WEB\PROJECT\library-mng\venv\Scripts\python.exe';
+        $pythonPath = 'C:\Users\iduni\AppData\Local\Programs\Python\Python312\python.exe';
         $scriptPath = base_path('python-scripts/summarize_pdf.py');
         // dd($scriptPath);// This should be the local path
         $filename = storage_path('uploads/Summarize/VZJ8HMhjRTuFqp5YH5F2.pdf');

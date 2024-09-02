@@ -1,5 +1,6 @@
 # example.py
 import sys
+import openai
 
 def main():
     if len(sys.argv) > 1:
