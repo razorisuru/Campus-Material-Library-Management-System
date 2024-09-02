@@ -24,7 +24,7 @@ class NodeJsAiPdfController extends Controller
         $pdfPath = $request->file('pdf')->store('pdfss');
 
         // Define the Node.js script path and PDF path
-        $nodeScriptPath = base_path('node_scripts/summarizePdf.cjs');
+        $nodeScriptPath = base_path('summarizePdf.cjs');
         $pdfFullPath = storage_path("app/{$pdfPath}");
 
         // Run the Node.js script using Symfony Process
@@ -46,7 +46,7 @@ class NodeJsAiPdfController extends Controller
 
     public function arg($arg)
     {
-        $nodeScriptPath = base_path('node_scripts/test.cjs');
+        $nodeScriptPath = base_path('test.cjs');
         $process = new Process(['C:\Program Files\nodejs\node.exe', $nodeScriptPath, $arg]);
         $process->run();
 
@@ -64,7 +64,7 @@ class NodeJsAiPdfController extends Controller
 
     public function chat($arg)
     {
-        $nodeScriptPath = base_path('node_scripts/chat.cjs');
+        $nodeScriptPath = base_path('chat.cjs');
         $process = new Process(['C:\Program Files\nodejs\node.exe', $nodeScriptPath, $arg]);
         $process->run();
 
