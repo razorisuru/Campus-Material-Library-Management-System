@@ -18,7 +18,7 @@ const openai = new OpenAI({
     baseURL: "https://api.pawan.krd/cosmosrp/v1/",
 });
 
-const summarizePdf = async () => {
+const paraphrasePdf = async () => {
     const text = await parsePdf(pdfData);
     const pages = text.split("\f");
 
@@ -29,8 +29,7 @@ const summarizePdf = async () => {
             messages: [
                 {
                     role: "user",
-                    content: `Summarize this: ${pageText}`,
-                    // content: "Teach me about CJS",
+                    content: `Paraphrase this: ${pageText}`,
                 },
             ],
         });
@@ -41,4 +40,4 @@ const summarizePdf = async () => {
     console.log(summaries.join("\n\n"));
 };
 
-summarizePdf();
+paraphrasePdf();

@@ -146,4 +146,6 @@ Route::middleware([
 
 // routes/web.php
 Route::get('/summarize-pdf', [NodeJsAiPdfController::class, 'index'])->name('summarize.pdf');
+Route::get('/summarize-pdf/{arg}', [NodeJsAiPdfController::class, 'arg']);
+Route::get('/chat/{arg}', [NodeJsAiPdfController::class, 'chat']);
 Route::post('/summarize-pdf', [NodeJsAiPdfController::class, 'summarize'])->name('Summarize.pdf');

@@ -31,16 +31,6 @@ class NodeJsAiPdfController extends Controller
         $process = new Process(['C:\Program Files\nodejs\node.exe', $nodeScriptPath, $pdfFullPath]);
         $process->run();
 
-        // Get the current time
-        $current_time = time();
-
-        // Add 5 minutes (300 seconds) to the current time
-        $future_time = $current_time + 300;
-
-        // Wait until the future time is reached
-        while (time() < $future_time) {
-            // Do nothing, just wait
-        }
 
         // Check if the process was successful
         if (!$process->isSuccessful()) {
@@ -52,5 +42,41 @@ class NodeJsAiPdfController extends Controller
 
         // Return the output to the view
         return view('PDF.summarize-pdf', ['summary' => $output]);
+    }
+
+    public function arg($arg)
+    {
+        $nodeScriptPath = base_path('node_scripts/test.cjs');
+        $process = new Process(['C:\Program Files\nodejs\node.exe', $nodeScriptPath, $arg]);
+        $process->run();
+
+        // Check if the process was successful
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+
+        // Get the output from the Node.js script
+        $output = $process->getOutput();
+
+        // Return the output to the view
+        return $output;
+    }
+
+    public function chat($arg)
+    {
+        $nodeScriptPath = base_path('node_scripts/chat.cjs');
+        $process = new Process(['C:\Program Files\nodejs\node.exe', $nodeScriptPath, $arg]);
+        $process->run();
+
+        // Check if the process was successful
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+
+        // Get the output from the Node.js script
+        $output = $process->getOutput();
+
+        // Return the output to the view
+        return $output;
     }
 }
