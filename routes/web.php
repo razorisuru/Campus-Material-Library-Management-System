@@ -147,5 +147,6 @@ Route::middleware([
 // routes/web.php
 Route::get('/upload-ai-pdf', [aiPDFController::class, 'index']);
 Route::post('/upload-ai-pdf', [aiPDFController::class, 'upload'])->name('ai.pdf');
+Route::get('/run-python/{argument}', [aiPDFController::class, 'runPythonScript']);
 
 
