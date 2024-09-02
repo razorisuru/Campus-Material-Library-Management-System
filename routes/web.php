@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\AddSubjectDegController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\EbookController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\NodeJsAiPdfController;
+use App\Http\Controllers\AddSubjectDegController;
 use App\Http\Controllers\EbookCategoryController;
 use App\Http\Controllers\DegreeProgrammeController;
-use App\Http\Controllers\EbookController;
 use App\Http\Controllers\LearningMaterialsController;
 use App\Http\Controllers\STLearningMaterialsController;
 
@@ -143,3 +144,6 @@ Route::middleware([
 });
 
 
+// routes/web.php
+Route::get('/summarize-pdf', [NodeJsAiPdfController::class, 'index'])->name('summarize.pdf');
+Route::post('/summarize-pdf', [NodeJsAiPdfController::class, 'summarize'])->name('Summarize.pdf');
