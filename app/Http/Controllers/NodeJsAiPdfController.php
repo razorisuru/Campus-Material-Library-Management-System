@@ -58,7 +58,7 @@ class NodeJsAiPdfController extends Controller
 
             // Send the content to the OpenAI API
             $response = Http::withHeaders([
-                'Authorization' => '',
+                'Authorization' => 'pk-FlcimbdWcfAEfryzTjywVXQQjpbRpjcjITIrmuBPKuTfdXQY',
             ])->post('https://api.pawan.krd/cosmosrp/v1/', [
                         'model' => 'pai-001-light',
                         'messages' => [
