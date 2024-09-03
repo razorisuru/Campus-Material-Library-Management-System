@@ -29,18 +29,35 @@ class NodeJsAiPdfController extends Controller
 
         // Run the Node.js script using Symfony Process
         $process = new Process(['C:\Program Files\nodejs\node.exe', $nodeScriptPath, $pdfFullPath]);
-        $process->run();
 
+        // Start the process and handle real-time output
+        $process->start();
+
+        $output = '';
+        $errorOutput = '';
+
+        // Stream the output
+        $process->wait(function ($type, $buffer) use (&$output, &$errorOutput) {
+            if (Process::ERR === $type) {
+                $errorOutput .= $buffer;
+            } else {
+                $output .= $buffer;
+            }
+        });
 
         // Check if the process was successful
         if (!$process->isSuccessful()) {
+            // Optionally log or handle errors
             throw new ProcessFailedException($process);
+            // return response()->json(['error' => 'Failed to process the PDF'], 500);
         }
 
-        // Get the output from the Node.js script
-        $output = $process->getOutput();
+        // Check if the request expects a JSON response
+        if ($request->ajax()) {
+            return response()->json(['summary' => $output]);
+        }
 
-        // Return the output to the view
+        // For non-AJAX requests, return the full view
         return view('PDF.summarize-pdf', ['summary' => $output]);
     }
 
@@ -64,7 +81,7 @@ class NodeJsAiPdfController extends Controller
 
     public function chat($arg)
     {
-        $nodeScriptPath = base_path('node_scripts/chat.cjs');
+        $nodeScriptPath = base_path('node_scripts/test.cjs');
         $process = new Process(['C:\Program Files\nodejs\node.exe', $nodeScriptPath, $arg]);
         $process->run();
 
@@ -79,4 +96,16 @@ class NodeJsAiPdfController extends Controller
         // Return the output to the view
         return $output;
     }
+
+    // public function chat($arg)
+    // {
+    //     $nodeScriptPath = base_path('node_scripts/chat.cjs');
+    //     $process = shell_exec('C:\Program Files\nodejs\node.exe'.' '. $nodeScriptPath.' '. $arg);
+
+    //     while($process != null){
+
+    //     }
+
+    //     return view('PDF.summarize-pdf', ['summary' => $process]);
+    // }
 }

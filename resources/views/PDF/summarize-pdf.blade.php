@@ -10,8 +10,7 @@
         <div class="card">
             <div class="card-header">
                 <h5 class="card-title">
-                    PDF Datatable
-                    <a class="btn btn-primary float-end" href="{{ route('upload.view') }}">Upload</a>
+                   SUMMARIZE
                 </h5>
             </div>
             <div class="card-body">
