@@ -43,13 +43,15 @@
         <div class="sidebar-menu">
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
+                @if (Auth::user()->role == 'admin')
+                    <li class="sidebar-item {{ request()->routeIs('admin.view') ? 'active' : '' }}">
+                        <a href="{{ route('admin.view') }}" class="sidebar-link">
+                            <i class="bi bi-grid-fill"></i>
+                            <span>Admin</span>
+                        </a>
+                    </li>
+                @endif
 
-                <li class="sidebar-item {{ request()->routeIs('admin.view') ? 'active' : '' }}">
-                    <a href="{{ route('admin.view') }}" class="sidebar-link">
-                        <i class="bi bi-grid-fill"></i>
-                        <span>Admin</span>
-                    </a>
-                </li>
 
 
                 <li class="sidebar-item  {{ request()->routeIs('upload.view', 'upload.viewPage') ? 'active' : '' }}">
@@ -60,28 +62,29 @@
 
                 </li>
 
-                <li class="sidebar-item  {{ request()->routeIs('ebook.UploadView', 'ebook.ManageView') ? 'active' : '' }}">
+                <li
+                    class="sidebar-item  {{ request()->routeIs('ebook.UploadView', 'ebook.ManageView') ? 'active' : '' }}">
                     <a href="{{ route('ebook.ManageView') }}" class="sidebar-link">
                         <i class="bi bi-stack"></i>
                         <span>EBOOK</span>
                     </a>
 
                 </li>
+                @if (Auth::user()->role == 'admin')
+                    <li class="sidebar-item {{ request()->routeIs('category.view') ? 'active' : '' }}">
+                        <a href="{{ route('category.view') }}" class="sidebar-link">
+                            <i class="bi bi-stack"></i>
+                            <span>PDF Category</span>
+                        </a>
+                    </li>
 
-                <li class="sidebar-item {{ request()->routeIs('category.view') ? 'active' : '' }}">
-                    <a href="{{ route('category.view') }}" class="sidebar-link">
-                        <i class="bi bi-stack"></i>
-                        <span>PDF Category</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item {{ request()->routeIs('ebook-category.view') ? 'active' : '' }}">
-                    <a href="{{ route('ebook-category.view') }}" class="sidebar-link">
-                        <i class="bi bi-stack"></i>
-                        <span>EBOOK Category</span>
-                    </a>
-                </li>
-
+                    <li class="sidebar-item {{ request()->routeIs('ebook-category.view') ? 'active' : '' }}">
+                        <a href="{{ route('ebook-category.view') }}" class="sidebar-link">
+                            <i class="bi bi-stack"></i>
+                            <span>EBOOK Category</span>
+                        </a>
+                    </li>
+                @endif
                 <li class="sidebar-item {{ request()->routeIs('degree.show') ? 'active' : '' }}">
                     <a href="{{ route('degree.show') }}" class="sidebar-link">
                         <i class="bi bi-grid-fill"></i>

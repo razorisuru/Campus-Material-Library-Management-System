@@ -58,7 +58,7 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
-    'admin',
+    'teacher',
 ])->group(function () {
     Route::get('/degree-programmes', [AddSubjectDegController::class, 'show'])->name('degree.show');
     Route::get('/degree-programmes/add', [AddSubjectDegController::class, 'add'])->name('degree.add');
@@ -73,7 +73,7 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
-    'admin',
+    'teacher',
 ])->group(function () {
     Route::get('/upload', [LearningMaterialsController::class, 'index'])->name('upload.view');
     Route::get('/view', [LearningMaterialsController::class, 'view'])->name('upload.viewPage');
@@ -92,7 +92,7 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
-    'admin',
+    'teacher',
 ])->group(function () {
     Route::get('/ebook.manageview', [EbookController::class, 'ManageView'])->name('ebook.ManageView');
     Route::get('/ebook.uploadview', [EbookController::class, 'UploadView'])->name('ebook.UploadView');
