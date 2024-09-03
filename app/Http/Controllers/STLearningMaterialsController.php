@@ -13,8 +13,9 @@ class STLearningMaterialsController extends Controller
     public function index()
     {
         // $subjects = Subjects::all();
+        $pdfCategories = Category::get();
         $materials = LearningMaterial::with(['subjects', 'user'])->where('status', '=', 'approved')->get();
-        return view('studentView.index', compact('materials'));
+        return view('studentView.index', compact('materials', 'pdfCategories'));
     }
 
     public function upload(Request $request)

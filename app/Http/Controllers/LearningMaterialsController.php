@@ -87,9 +87,9 @@ class LearningMaterialsController extends Controller
             'subject_id' => $request->subject_id,
             'title' => $request->title,
             'description' => $request->description,
-            'category_id' => $request->category,
             'file_path' => $file_path,
             'uploaded_by' => Auth()->user()->id,
+            'category_id' => $request->category,
             'status' => 'approved',
         ]);
 

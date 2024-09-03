@@ -190,14 +190,14 @@
             </div>
         </section>
     </div>
-    <script src="{{ asset('assets/auth/jquery-3.6.0.min.js') }}"></script>
+
     <script>
         $(document).ready(function() {
             $('#degreeSelect').on('change', function() {
                 var degreeId = $(this).val();
                 if (degreeId) {
                     $.ajax({
-                        url: '/degree-programmes/' + degreeId + '/subjects',
+                        url: '/api/degree-programmes/' + degreeId + '/subjects',
                         type: 'GET',
                         dataType: 'json',
                         success: function(data) {

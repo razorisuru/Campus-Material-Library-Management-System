@@ -16,6 +16,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link href="{{ route('student.upload') }}" :active="request()->routeIs('student.upload')">
                         {{ __('Upload') }}
@@ -23,12 +24,12 @@
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link href="{{ route('ebook') }}" :active="request()->routeIs('ebook')">
-                        {{ __('Ebook') }}
+                        {{ __('Ebooks') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link href="{{ route('ai') }}" :active="request()->routeIs('ai')">
-                        {{ __('AI') }}
+                        {{ __('PDF Tools') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -172,10 +173,12 @@
                 {{ __('Upload') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('ebook') }}" :active="request()->routeIs('Ebook')">
-                {{ __('Ebook') }}
+                {{ __('Ebooks') }}
             </x-responsive-nav-link>
 
-
+            <x-responsive-nav-link href="{{ route('ai') }}" :active="request()->routeIs('ai')">
+                {{ __('PDF Tools') }}
+            </x-responsive-nav-link>
 
         </div>
 
