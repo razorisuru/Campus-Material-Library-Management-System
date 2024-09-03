@@ -2,7 +2,7 @@ process.noDeprecation = true;
 
 const OpenAI = require("openai");
 
-const pdfPath = process.argv[2];
+const prompt = process.argv[2];
 // const pdfPath = "./test.pdf"
 
 const openai = new OpenAI({
@@ -18,7 +18,7 @@ const summarizePdf = async () => {
         messages: [
             {
                 role: "user",
-                content: `${pdfPath}`,
+                content: `${prompt}`,
                 // content: "Teach me about CJS",
             },
         ],

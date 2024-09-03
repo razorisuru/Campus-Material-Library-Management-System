@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Smalot\PdfParser\Parser;
 use Illuminate\Support\Facades\Http;
@@ -87,6 +88,44 @@ class NodeJsAiPdfController extends Controller
 
         // Return the summary to the view for non-AJAX requests
         return view('PDF.summarize-pdf', ['summary' => $finalSummary]);
+    }
+
+
+    public function prompt(Request $request)
+    {
+        $prompt = $request->input('prompt');
+
+        // Initialize HTTP client
+        $client = new Client([
+            'base_uri' => 'https://api.pawan.krd/cosmosrp/v1/',
+        ]);
+
+        try {
+            // Send request to OpenAI API
+            $response = $client->post('chat/completions', [
+                'headers' => [
+                    'Authorization' => 'Bearer pk-FlcimbdWcfAEfryzTjywVXQQjpbRpjcjITIrmuBPKuTfdXQY',
+                    'Content-Type'  => 'application/json',
+                ],
+                'json' => [
+                    'model' => 'pai-001-light',
+                    'messages' => [
+                        [
+                            'role' => 'user',
+                            'content' => $prompt,
+                        ],
+                    ],
+                ],
+            ]);
+
+            $responseData = json_decode($response->getBody(), true);
+            $pageSummary = $responseData['choices'][0]['message']['content'];
+
+            return view('PDF.summarize-pdf', ['chat' => $pageSummary]);
+
+        } catch (\Exception $e) {
+            return back()->with('error', 'Failed to get summary: ' . $e->getMessage());
+        }
     }
 
 
