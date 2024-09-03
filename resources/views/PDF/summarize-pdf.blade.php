@@ -48,7 +48,7 @@
                     <p>Please wait...</p>
                 </div>
 
-                <div id="summary" class="mt-2">
+                <div id="summary" class="mt-2 p-4 rounded shadow-sm">
                     <!-- The summarized text will appear here -->
                     @isset($summary)
                         <p>{{ $summary }}</p>
