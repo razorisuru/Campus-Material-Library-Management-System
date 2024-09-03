@@ -59,15 +59,17 @@ class NodeJsAiPdfController extends Controller
             // Send the content to the OpenAI API
             $response = Http::withHeaders([
                 'Authorization' => '',
-            ])->post('https://api.pawan.krd/cosmosrp/v1/', [
-                        'model' => 'pai-001-light',
-                        'messages' => [
-                            [
-                                'role' => 'user',
-                                'content' => $content,
-                            ],
+            ])->timeout(300) // Increase timeout to 60 seconds
+                ->post('https://api.pawan.krd/cosmosrp/v1', [
+                    'model' => 'pai-001-light',
+                    'messages' => [
+                        [
+                            'role' => 'user',
+                            'content' => $content,
                         ],
-                    ]);
+                    ],
+                ]);
+
 
             $responseData = $response->json();
             $pageSummary = $responseData['choices'][0]['message']['content'] ?? 'No result available';
