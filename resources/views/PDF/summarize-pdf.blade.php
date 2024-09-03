@@ -20,29 +20,27 @@
                 </h5>
             </div>
             <div class="card-body">
-                <form id="pdfForm" enctype="multipart/form-data">
+                <form id="pdfForm" enctype="multipart/form-data" class="p-4 rounded shadow-sm">
                     @csrf
-                    <div>
-                        <label for="pdf">Upload PDF:</label>
-                        <input type="file" name="pdf" id="pdf" required>
+                    <div class="mb-3">
+                        <label for="pdf" class="form-label">Upload PDF:</label>
+                        <input type="file" name="pdf" id="pdf" class="form-control" required>
                     </div>
 
-
-
-                    <div>
-                        <label for="task">Select Task:</label>
-                        <select name="task" id="task" required>
+                    <div class="mb-3">
+                        <label for="task" class="form-label">Select Task:</label>
+                        <select name="task" id="task" class="form-select" required>
                             <option selected value="summarize">Summarize</option>
                             <option value="paraphrase">Paraphrase</option>
                             <option value="check_ai_written">Check AI-Written Content</option>
                             <option value="extract_text">Extract Text</option>
                             <option value="translate">Translate To Sinhala</option>
-                            <!-- Add more options as needed -->
                         </select>
                     </div>
 
-                    <button class="btn btn-warning" type="submit">Submit</button>
+                    <button class="btn btn-warning w-100" type="submit">Submit</button>
                 </form>
+
 
                 <div id="loader">
                     <img src="{{ asset('assets/auth/compiled/svg/rings.svg') }}" class="me-4" style="width: 3rem"
