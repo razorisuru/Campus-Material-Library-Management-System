@@ -20,7 +20,7 @@
                 </h5>
             </div>
             <div class="card-body">
-                <form id="pdfForm" method="POST" action="{{ route('Summarize.pdf') }}" enctype="multipart/form-data">
+                <form id="pdfForm"  enctype="multipart/form-data">
                     @csrf
                     <div>
                         <label for="pdf">Upload PDF:</label>
@@ -57,7 +57,7 @@
                     @endisset
                 </div>
 
-                {{-- <script>
+                <script>
                     $(document).ready(function() {
                         $('#pdfForm').on('submit', function(e) {
                             e.preventDefault();
@@ -86,7 +86,7 @@
                             });
                         });
                     });
-                </script> --}}
+                </script>
             </div>
         </div>
 
