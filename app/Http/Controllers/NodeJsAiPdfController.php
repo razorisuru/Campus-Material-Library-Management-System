@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Smalot\PdfParser\Parser;
+use Illuminate\Support\Facades\Http;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Exception\ProcessTimedOutException;
@@ -15,6 +17,78 @@ class NodeJsAiPdfController extends Controller
     }
 
     public function summarize(Request $request)
+    {
+        // Validate the inputs
+        $request->validate([
+            'pdf' => 'required|file|mimes:pdf',
+            'task' => 'required|string',
+        ]);
+
+        // Get the task and prompt from the request
+        $task = $request->input('task');
+
+        // Read the PDF file
+        $pdfPath = $request->file('pdf')->getRealPath();
+        $parser = new Parser();
+        $pdf = $parser->parseFile($pdfPath);
+        $text = $pdf->getText();
+        $pages = explode("\f", $text);
+
+        $summaries = [];
+
+        // Iterate through each page and perform the selected task
+        foreach ($pages as $pageText) {
+            // Default prompt message based on the selected task
+            $content = "Perform the task '$task' on this: $pageText";
+
+            if ($task === 'summarize') {
+                $content = "Summarize this: $pageText";
+            } elseif ($task === 'paraphrase') {
+                $content = "Paraphrase this: $pageText";
+            } elseif ($task === 'check_ai_written') {
+                $content = "Check if this content is AI-written: $pageText";
+            } elseif ($task === 'extract_text') {
+                $formattedpageText = nl2br($pageText);
+                return response()->json(['summary' => $formattedpageText]);
+            } elseif ($task === 'translate') {
+                $content = "Translate this to Sinhala : $pageText";
+            }
+            // elseif ($task === 'check_plagiarism') {
+
+
+            // Send the content to the OpenAI API
+            $response = Http::withHeaders([
+                'Authorization' => '',
+            ])->post('https://api.pawan.krd/cosmosrp/v1/', [
+                        'model' => 'pai-001-light',
+                        'messages' => [
+                            [
+                                'role' => 'user',
+                                'content' => $content,
+                            ],
+                        ],
+                    ]);
+
+            $responseData = $response->json();
+            $pageSummary = $responseData['choices'][0]['message']['content'] ?? 'No result available';
+            $summaries[] = $pageSummary;
+        }
+
+        // Combine all summaries into one text
+        $finalSummary = implode("\n\n", $summaries);
+
+        if ($request->ajax()) {
+            // Format the summary with line breaks for better display in HTML
+            $formattedSummary = nl2br($finalSummary);
+            return response()->json(['summary' => $formattedSummary]);
+        }
+
+        // Return the summary to the view for non-AJAX requests
+        return view('PDF.summarize-pdf', ['summary' => $finalSummary]);
+    }
+
+
+    public function summarizeNode(Request $request)
     {
         $request->validate([
             'pdf' => 'required|mimes:pdf|max:2048',

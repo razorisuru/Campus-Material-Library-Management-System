@@ -3,6 +3,12 @@
 @section('styles')
     <link rel="stylesheet" href="{{ asset('assets/auth/extensions/simple-datatables/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/auth/compiled/css/table-datatable.css') }}">
+    <style>
+        #loader {
+            display: none;
+            text-align: center;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -10,20 +16,77 @@
         <div class="card">
             <div class="card-header">
                 <h5 class="card-title">
-                   SUMMARIZE
+                    SUMMARIZE
                 </h5>
             </div>
             <div class="card-body">
-                <form action="{{ route('Summarize.pdf') }}" method="POST" enctype="multipart/form-data">
+                <form id="pdfForm" enctype="multipart/form-data">
                     @csrf
-                    <input type="file" name="pdf" required>
-                    <button type="submit">Summarize PDF</button>
+                    <div>
+                        <label for="pdf">Upload PDF:</label>
+                        <input type="file" name="pdf" id="pdf" required>
+                    </div>
+
+
+
+                    <div>
+                        <label for="task">Select Task:</label>
+                        <select name="task" id="task" required>
+                            <option value="summarize">Summarize</option>
+                            <option value="paraphrase">Paraphrase</option>
+                            <option value="check_ai_written">Check AI-Written Content</option>
+                            <option value="extract_text">Extract Text</option>
+                            <option value="translate">Translate To Sinhala</option>
+                            <!-- Add more options as needed -->
+                        </select>
+                    </div>
+
+                    <button class="btn btn-warning" type="submit">Submit</button>
                 </form>
 
-                @if (isset($summary))
-                    <h2>Summary:</h2>
-                    <pre>{{ $summary }}</pre>
-                @endif
+                <div id="loader">
+                    <img src="{{ asset('assets/auth/compiled/svg/rings.svg') }}" class="me-4" style="width: 3rem"
+                        alt="audio">
+                    <p>Please wait...</p>
+                </div>
+
+                <div id="summary" class="mt-2">
+                    <!-- The summarized text will appear here -->
+                    @isset($summary)
+                        <p>{{ $summary }}</p>
+                    @endisset
+                </div>
+
+                <script>
+                    $(document).ready(function() {
+                        $('#pdfForm').on('submit', function(e) {
+                            e.preventDefault();
+
+                            // Show the loader
+                            $('#loader').show();
+                            $('#summary').hide();
+
+                            var formData = new FormData(this);
+
+                            $.ajax({
+                                url: "{{ route('Summarize.pdf') }}",
+                                type: "POST",
+                                data: formData,
+                                contentType: false,
+                                processData: false,
+                                success: function(response) {
+                                    // Hide the loader and display the summary
+                                    $('#loader').hide();
+                                    $('#summary').html('<p>' + response.summary + '</p>').show();
+                                },
+                                error: function(xhr, status, error) {
+                                    $('#loader').hide();
+                                    alert('An error occurred: ' + error);
+                                }
+                            });
+                        });
+                    });
+                </script>
             </div>
         </div>
 
