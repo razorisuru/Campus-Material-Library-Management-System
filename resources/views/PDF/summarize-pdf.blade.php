@@ -20,7 +20,7 @@
                 </h5>
             </div>
             <div class="card-body">
-                <form id="pdfForm"  enctype="multipart/form-data">
+                <form id="pdfForm" enctype="multipart/form-data">
                     @csrf
                     <div>
                         <label for="pdf">Upload PDF:</label>
