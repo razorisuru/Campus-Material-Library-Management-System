@@ -141,6 +141,7 @@ Route::middleware([
     Route::get('/student-upload', [STLearningMaterialsController::class, 'view'])->name('student.upload');
     Route::post('/student-dashboard', [STLearningMaterialsController::class, 'upload'])->name('StUpload.store');
     Route::get('/ebook', [EbookController::class, 'index'])->name('ebook');
+    Route::get('/ai', [EbookController::class, 'ai'])->name('ai');
 });
 
 

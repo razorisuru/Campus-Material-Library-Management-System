@@ -16,7 +16,11 @@ class EbookController extends Controller
         return view('studentView.ebook', compact(['ebooks', 'ebookCategories']));
     }
 
+    public function ai()
+    {
 
+        return view('studentView.ai');
+    }
 
     public function UploadView()
     {

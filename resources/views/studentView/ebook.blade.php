@@ -5,6 +5,9 @@
         </h2>
     </x-slot>
 
+    <style>
+
+    </style>
     <!-- Modal Structure -->
     <div id="ebookModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center">
         <div class="bg-white rounded-lg shadow-lg  max-w-4xl p-6">
@@ -153,6 +156,49 @@
                 }
             });
         });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const categories = document.querySelectorAll('.category-button'); // Select all category buttons
+            const ebookItems = document.querySelectorAll('.ebook-item'); // Select all eBook items
+
+            categories.forEach(category => {
+                category.addEventListener('click', () => {
+                    const selectedCategory = category.textContent.trim().toLowerCase();
+
+                    ebookItems.forEach(ebook => {
+                        const ebookCategories = ebook.dataset.categories.toLowerCase()
+                            .split(',');
+
+                        if (ebookCategories.includes(selectedCategory)) {
+                            ebook.style.display =
+                                'flex'; // Show the eBook item if it matches the selected category
+                        } else {
+                            ebook.style.display =
+                                'none'; // Hide the eBook item if it doesn't match
+                        }
+                    });
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('searchInput');
+            const ebookItems = document.querySelectorAll('.ebook-item');
+
+            searchInput.addEventListener('input', () => {
+                const query = searchInput.value.toLowerCase().trim();
+
+                ebookItems.forEach(ebook => {
+                    const title = ebook.dataset.title.toLowerCase();
+
+                    if (title.includes(query)) {
+                        ebook.classList.remove('hidden');
+                    } else {
+                        ebook.classList.add('hidden');
+                    }
+                });
+            });
+        });
     </script>
 
 
@@ -185,22 +231,23 @@
                                             </path>
                                         </svg>
                                     </div>
-                                    <input placeholder="Search eBooks"
+                                    <input id="searchInput" placeholder="Search eBooks"
                                         class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#0e141b] focus:outline-0 focus:ring-0 border-none bg-[#e7edf3] focus:border-none h-full placeholder:text-[#4e7397] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
                                         value="" />
+
                                 </div>
                             </label>
                         </div>
                         <div class="flex gap-3 p-3 flex-wrap pr-4">
                             @foreach ($ebookCategories as $ebookCategory)
                                 <div
-                                    class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#e7edf3] pl-4 pr-4">
+                                    class="category-button flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#e7edf3] pl-4 pr-4 cursor-pointer">
                                     <p class="text-[#0e141b] text-sm font-medium leading-normal">
                                         {{ $ebookCategory->name }}</p>
                                 </div>
                             @endforeach
-
                         </div>
+
                         <h2
                             class="text-[#0e141b] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">
                             Just for you</h2>
@@ -209,8 +256,9 @@
                                 <div class="flex flex-col gap-3 pb-3 ebook-item" data-title="{{ $ebook->title }}"
                                     data-author="{{ $ebook->author }}" data-description="{{ $ebook->description }}"
                                     data-publication-date="{{ $ebook->publication_date }}"
-                                    data-isbn="{{ $ebook->isbn }}" data-cover-image="{{ asset('storage/' . $ebook->cover_image) }}"
-                                    data-file-path="{{ $ebook->file_path }}"
+                                    data-isbn="{{ $ebook->isbn }}"
+                                    data-cover-image="{{ asset('storage/' . $ebook->cover_image) }}"
+                                    data-file-path="{{ asset('storage/' . $ebook->file_path) }}"
                                     data-categories="{{ $ebook->categories->pluck('name')->implode(',') }}"
                                     style="cursor: pointer;">
                                     <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
@@ -220,78 +268,8 @@
                                     </p>
                                 </div>
                             @endforeach
-
-
-                            {{-- </div>
-                        <h2 class="text-[#0e141b] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">
-                            Popular New Releases</h2>
-                        <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
-                            <div class="flex flex-col gap-3 pb-3">
-                                <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
-                                    style='background-image: url("https://cdn.usegalileo.ai/stability/af0c2990-59a0-44df-be74-22e84afdae02.png");'>
-                                </div>
-                                <p class="text-[#0e141b] text-base font-medium leading-normal">The Four Winds</p>
-                            </div>
-                            <div class="flex flex-col gap-3 pb-3">
-                                <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
-                                    style='background-image: url("https://cdn.usegalileo.ai/stability/5d8df53b-b962-41ff-90cd-daed5a92833b.png");'>
-                                </div>
-                                <p class="text-[#0e141b] text-base font-medium leading-normal">The Sanatorium</p>
-                            </div>
-                            <div class="flex flex-col gap-3 pb-3">
-                                <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
-                                    style='background-image: url("https://cdn.usegalileo.ai/stability/84184fd2-391a-42ac-ac4e-b827d2cdbd63.png");'>
-                                </div>
-                                <p class="text-[#0e141b] text-base font-medium leading-normal">The Push</p>
-                            </div>
-                            <div class="flex flex-col gap-3 pb-3">
-                                <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
-                                    style='background-image: url("https://cdn.usegalileo.ai/stability/29b3c1d7-6f1f-460f-a1ba-e4206118c931.png");'>
-                                </div>
-                                <p class="text-[#0e141b] text-base font-medium leading-normal">The Wife Upstairs</p>
-                            </div>
-                            <div class="flex flex-col gap-3 pb-3">
-                                <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
-                                    style='background-image: url("https://cdn.usegalileo.ai/sdxl10/144dbf96-2b36-4388-a4f5-4edaef335a5d.png");'>
-                                </div>
-                                <p class="text-[#0e141b] text-base font-medium leading-normal">The Survivors</p>
-                            </div>
                         </div>
-                        <h2 class="text-[#0e141b] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">
-                            Top-selling eBooks</h2>
-                        <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
-                            <div class="flex flex-col gap-3 pb-3">
-                                <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
-                                    style='background-image: url("https://cdn.usegalileo.ai/stability/f1e474c5-e8fd-457c-95a1-b7adadc34d09.png");'>
-                                </div>
-                                <p class="text-[#0e141b] text-base font-medium leading-normal">The Four Winds</p>
-                            </div>
-                            <div class="flex flex-col gap-3 pb-3">
-                                <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
-                                    style='background-image: url("https://cdn.usegalileo.ai/stability/f7f2ebe8-cd69-44a5-88f8-a302d5aff04d.png");'>
-                                </div>
-                                <p class="text-[#0e141b] text-base font-medium leading-normal">The Sanatorium</p>
-                            </div>
-                            <div class="flex flex-col gap-3 pb-3">
-                                <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
-                                    style='background-image: url("https://cdn.usegalileo.ai/stability/92a482a8-fc17-46ba-909b-18164e6db882.png");'>
-                                </div>
-                                <p class="text-[#0e141b] text-base font-medium leading-normal">The Push</p>
-                            </div>
-                            <div class="flex flex-col gap-3 pb-3">
-                                <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
-                                    style='background-image: url("https://cdn.usegalileo.ai/stability/cb1a8f74-7ca3-4d2f-8dff-1d30da56c74c.png");'>
-                                </div>
-                                <p class="text-[#0e141b] text-base font-medium leading-normal">The Wife Upstairs</p>
-                            </div>
-                            <div class="flex flex-col gap-3 pb-3">
-                                <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
-                                    style='background-image: url("https://cdn.usegalileo.ai/stability/27702e0b-14f0-4a94-a382-abeaa1d5baf5.png");'>
-                                </div>
-                                <p class="text-[#0e141b] text-base font-medium leading-normal">The Survivors</p>
-                            </div>
-                        </div> --}}
-                        </div>
+
                     </div>
 
 
