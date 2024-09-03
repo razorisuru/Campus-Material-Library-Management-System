@@ -33,9 +33,7 @@ Route::middleware([
     'verified',
     'AdminRedirect',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 });
 
 #admin routes

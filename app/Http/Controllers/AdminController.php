@@ -3,13 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\EBook;
 use Illuminate\Http\Request;
 use App\Mail\newUserPasswordMail;
+use App\Models\LearningMaterial;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
 {
+    public function dashboard()
+    {
+        $userCount = User::count();
+        $EBookCount = EBook::count();
+        $pdfCount = LearningMaterial::count();
+        $ebooks = EBook::latest()->take(5)->get();
+        return view('dashboard', compact(['userCount',  'EBookCount', 'pdfCount', 'ebooks']));
+    }
+
     public function index()
     {
         $users = User::where('id', '>=', 2)->get();

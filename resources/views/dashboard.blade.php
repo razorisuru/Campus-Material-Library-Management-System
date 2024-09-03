@@ -19,8 +19,8 @@
                                         </div>
                                     </div>
                                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                        <h6 class="text-muted font-semibold">Profile Views</h6>
-                                        <h6 class="font-extrabold mb-0">112.000</h6>
+                                        <h6 class="text-muted font-semibold">Views</h6>
+                                        <h6 class="font-extrabold mb-0">112</h6>
                                     </div>
                                 </div>
                             </div>
@@ -36,8 +36,8 @@
                                         </div>
                                     </div>
                                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                        <h6 class="text-muted font-semibold">Followers</h6>
-                                        <h6 class="font-extrabold mb-0">183.000</h6>
+                                        <h6 class="text-muted font-semibold">Users</h6>
+                                        <h6 class="font-extrabold mb-0">{{ $userCount }}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -53,8 +53,8 @@
                                         </div>
                                     </div>
                                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                        <h6 class="text-muted font-semibold">Following</h6>
-                                        <h6 class="font-extrabold mb-0">80.000</h6>
+                                        <h6 class="text-muted font-semibold">PDF</h6>
+                                        <h6 class="font-extrabold mb-0">{{ $pdfCount }}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -70,8 +70,8 @@
                                         </div>
                                     </div>
                                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                        <h6 class="text-muted font-semibold">Saved Post</h6>
-                                        <h6 class="font-extrabold mb-0">112</h6>
+                                        <h6 class="text-muted font-semibold">EBOOKS</h6>
+                                        <h6 class="font-extrabold mb-0">{{ $EBookCount }}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -105,7 +105,7 @@
                                                 <use
                                                     xlink:href="{{ asset('assets/auth/static/images/bootstrap-icons.svg#circle-fill') }}" />
                                             </svg>
-                                            <h5 class="mb-0 ms-3">Student</h5>
+                                            <h5 class="mb-0 ms-3">PDF</h5>
                                         </div>
                                     </div>
                                     <div class="col-5">
@@ -123,7 +123,7 @@
                                                 <use
                                                     xlink:href="{{ asset('') }}assets/static/images/bootstrap-icons.svg#circle-fill" />
                                             </svg>
-                                            <h5 class="mb-0 ms-3">Teacher</h5>
+                                            <h5 class="mb-0 ms-3">EBOOKS</h5>
                                         </div>
                                     </div>
                                     <div class="col-5">
@@ -141,7 +141,7 @@
                                                 <use
                                                     xlink:href="{{ asset('') }}assets/static/images/bootstrap-icons.svg#circle-fill" />
                                             </svg>
-                                            <h5 class="mb-0 ms-3">Indonesia</h5>
+                                            <h5 class="mb-0 ms-3">AI</h5>
                                         </div>
                                     </div>
                                     <div class="col-5">
@@ -214,47 +214,29 @@
                             </div>
                             <div class="ms-3 name">
                                 <h5 class="font-bold">{{ Auth::user()->name }}</h5>
-                                <h6 class="text-muted mb-0">{{ Auth::user()->email }}</h6>
+                                <h6 class="text-muted mb-0">{{ Auth::user()->role }}</h6>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <h4>Recent Messages</h4>
+                        <h4>Recent Ebooks</h4>
                     </div>
                     <div class="card-content pb-4">
-                        <div class="recent-message d-flex px-4 py-3">
-                            <div class="avatar avatar-lg">
-                                <img src="{{ asset('assets/auth/compiled/jpg/4.jpg') }}">
+                        @foreach ($ebooks as $ebook)
+                            <div class="recent-message d-flex px-4 py-3">
+                                <div class="avatar avatar-lg">
+                                    <img src="{{ asset('storage/' . $ebook->cover_image) }}">
+                                </div>
+                                <div class="name ms-4">
+                                    <a href="{{ asset('storage/' . $ebook->file_path) }}">
+                                        <h5 class="mb-1">{{ $ebook->title }}</h5>
+                                    </a>
+                                    <h6 class="text-muted mb-0">{{ $ebook->author }}</h6>
+                                </div>
                             </div>
-                            <div class="name ms-4">
-                                <h5 class="mb-1">Hank Schrader</h5>
-                                <h6 class="text-muted mb-0">@johnducky</h6>
-                            </div>
-                        </div>
-                        <div class="recent-message d-flex px-4 py-3">
-                            <div class="avatar avatar-lg">
-                                <img src="{{ asset('assets/auth/compiled/jpg/5.jpg') }}">
-                            </div>
-                            <div class="name ms-4">
-                                <h5 class="mb-1">Dean Winchester</h5>
-                                <h6 class="text-muted mb-0">@imdean</h6>
-                            </div>
-                        </div>
-                        <div class="recent-message d-flex px-4 py-3">
-                            <div class="avatar avatar-lg">
-                                <img src="{{ asset('assets/auth/compiled/jpg/1.jpg') }}">
-                            </div>
-                            <div class="name ms-4">
-                                <h5 class="mb-1">John Dodol</h5>
-                                <h6 class="text-muted mb-0">@dodoljohn</h6>
-                            </div>
-                        </div>
-                        <div class="px-4">
-                            <button class='btn btn-block btn-xl btn-outline-primary font-bold mt-3'>Start
-                                Conversation</button>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
                 <div class="card">
@@ -271,7 +253,7 @@
 @endsection
 
 @section('scripts')
-<!-- Need: Apexcharts -->
-<script src="{{ asset('assets/auth/extensions/apexcharts/apexcharts.min.js') }}"></script>
-<script src="{{ asset('assets/auth/static/js/pages/dashboard.js') }}"></script>
+    <!-- Need: Apexcharts -->
+    <script src="{{ asset('assets/auth/extensions/apexcharts/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('assets/auth/static/js/pages/dashboard.js') }}"></script>
 @endsection
