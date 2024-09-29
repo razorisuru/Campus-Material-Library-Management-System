@@ -51,7 +51,7 @@ class EbookController extends Controller
             'author' => 'required|string|max:255',
             'description' => 'required|string',
             'publication_date' => 'required|string',
-            'isbn' => 'required|string',
+            'isbn' => 'required|string|unique:e_books,isbn',
 
             'ebookcategories' => 'required|array', // Validate categories as an array
             'ebookcategories.*' => 'required|exists:e_book_categories,id', // Ensure each category exists
