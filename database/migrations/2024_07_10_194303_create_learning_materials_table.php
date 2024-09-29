@@ -13,16 +13,15 @@ return new class extends Migration
     {
         Schema::create('learning_materials', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('subject_id')->constrained('subjects')->onDelete('cascade')->index();
-            $table->string('title')->index();
+            $table->foreignId('subject_id')->constrained('subjects')->onDelete('cascade');
+            $table->string('title');
             $table->text('description')->nullable();
             $table->string('file_path');
-            $table->foreignId('uploaded_by')->constrained('users')->onDelete('cascade')->index();
-            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade')->index();
-            $table->enum('status', ['pending', 'approved', 'rejected'])->index();
+            $table->foreignId('uploaded_by')->constrained('users')->onDelete('cascade');
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
+            $table->enum('status', ['pending', 'approved', 'rejected']);
             $table->timestamps();
         });
-
     }
 
     /**
