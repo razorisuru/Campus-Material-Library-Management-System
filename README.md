@@ -31,6 +31,7 @@
     ```bash
     copy .env.example .env
     php artisan key:generate
+    php artisan storage:link
     ```
 
 4. Set your database in .env
