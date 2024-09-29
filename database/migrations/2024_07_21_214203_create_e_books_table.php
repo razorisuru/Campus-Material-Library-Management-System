@@ -12,16 +12,15 @@ return new class extends Migration {
     {
         Schema::create('e_books', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title')->index();
-            $table->string('author')->index();
+            $table->string('title');
+            $table->string('author');
             $table->text('description')->nullable();
-            $table->date('publication_date')->nullable()->index();
+            $table->date('publication_date')->nullable();
             $table->string('isbn')->unique()->nullable();
             $table->string('cover_image')->nullable();
             $table->string('file_path');
             $table->timestamps();
         });
-
     }
 
     /**
