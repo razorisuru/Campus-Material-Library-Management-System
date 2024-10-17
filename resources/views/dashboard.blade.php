@@ -121,7 +121,7 @@
                                             <svg class="bi text-success" width="32" height="32" fill="blue"
                                                 style="width:10px">
                                                 <use
-                                                    xlink:href="{{ asset('') }}assets/static/images/bootstrap-icons.svg#circle-fill" />
+                                                    xlink:href="{{ asset('assets/auth/static/images/bootstrap-icons.svg#circle-fill') }}" />
                                             </svg>
                                             <h5 class="mb-0 ms-3">EBOOKS</h5>
                                         </div>
@@ -139,7 +139,7 @@
                                             <svg class="bi text-danger" width="32" height="32" fill="blue"
                                                 style="width:10px">
                                                 <use
-                                                    xlink:href="{{ asset('') }}assets/static/images/bootstrap-icons.svg#circle-fill" />
+                                                    xlink:href="{{ asset('assets/auth/static/images/bootstrap-icons.svg#circle-fill') }}" />
                                             </svg>
                                             <h5 class="mb-0 ms-3">AI</h5>
                                         </div>
