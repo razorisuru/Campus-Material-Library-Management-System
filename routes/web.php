@@ -43,12 +43,12 @@ Route::middleware([
     'verified',
     'admin',
 ])->group(function () {
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.view');
+    Route::get('/admin-view', [AdminController::class, 'index'])->name('admin.view');
     Route::get('/admin-add', [AdminController::class, 'AdminAdd'])->name('admin.add');
-    Route::post('/admin', [AdminController::class, 'store'])->name('admin.store');
+    Route::post('/admin-add', [AdminController::class, 'store'])->name('admin.store');
     Route::get('/admin-edit/{id}', [AdminController::class, 'AdminEditPage'])->name('admin.EditPage');
     Route::patch('/admin-edit/{id}', [AdminController::class, 'update'])->name('admin.update');
-    Route::delete('/admin/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
+    Route::delete('/admin-delete/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
 });
 
 // degreeEdit
@@ -58,10 +58,10 @@ Route::middleware([
     'verified',
     'teacher',
 ])->group(function () {
-    Route::get('/degree-programmes', [AddSubjectDegController::class, 'show'])->name('degree.show');
-    Route::get('/degree-programmes/add', [AddSubjectDegController::class, 'add'])->name('degree.add');
-    Route::post('/degree-programmes', [AddSubjectDegController::class, 'store'])->name('degree.store');
-    Route::post('/degree-programmes-subjects', [AddSubjectDegController::class, 'SubjectStore'])->name('degree.SubjectStore');
+    Route::get('/degree-programmes-view', [AddSubjectDegController::class, 'show'])->name('degree.show');
+    Route::get('/degree-programmes-add', [AddSubjectDegController::class, 'add'])->name('degree.add');
+    Route::post('/degree-programmes-add', [AddSubjectDegController::class, 'store'])->name('degree.store');
+    Route::post('/degree-programmes-subjects-add', [AddSubjectDegController::class, 'SubjectStore'])->name('degree.SubjectStore');
 
 });
 
@@ -73,11 +73,11 @@ Route::middleware([
     'verified',
     'teacher',
 ])->group(function () {
-    Route::get('/upload', [LearningMaterialsController::class, 'index'])->name('upload.view');
-    Route::get('/view', [LearningMaterialsController::class, 'view'])->name('upload.viewPage');
-    Route::post('/upload', [LearningMaterialsController::class, 'upload'])->name('upload.store');
-    Route::get('/view/edit/{id}', [LearningMaterialsController::class, 'EditView'])->name('upload.EditPage');
-    Route::patch('/view/edit/{id}', [LearningMaterialsController::class, 'update'])->name('upload.update');
+    Route::get('/pdf-upload', [LearningMaterialsController::class, 'index'])->name('upload.view');
+    Route::get('/pdf-view', [LearningMaterialsController::class, 'view'])->name('upload.viewPage');
+    Route::post('/pdf-upload', [LearningMaterialsController::class, 'upload'])->name('upload.store');
+    Route::get('/pdf-edit/{id}', [LearningMaterialsController::class, 'EditView'])->name('upload.EditPage');
+    Route::patch('/pdf-edit/{id}', [LearningMaterialsController::class, 'update'])->name('upload.update');
     Route::delete('/upload/{id}', [LearningMaterialsController::class, 'destroy'])->name('upload.destroy');
 
     Route::post('/materials/approve/{id}', [LearningMaterialsController::class, 'approve'])->name('materials.approve');
@@ -92,13 +92,15 @@ Route::middleware([
     'verified',
     'teacher',
 ])->group(function () {
-    Route::get('/ebook.manageview', [EbookController::class, 'ManageView'])->name('ebook.ManageView');
-    Route::get('/ebook.uploadview', [EbookController::class, 'UploadView'])->name('ebook.UploadView');
+    Route::get('/ebook-manage', [EbookController::class, 'ManageView'])->name('ebook.ManageView');
+    Route::get('/ebook-upload', [EbookController::class, 'UploadView'])->name('ebook.UploadView');
     Route::post('/ebook', [EbookController::class, 'store'])->name('ebook.store');
     Route::delete('/ebook/{id}', [EbookController::class, 'destroy'])->name('ebook.destroy');
     Route::patch('/ebook/{id}', [EbookController::class, 'update'])->name('ebook.update');
 
     Route::get('/ebook/edit/{id}', [EbookController::class, 'EditView'])->name('ebook.EditPage');
+    Route::post('/ebook/bulk-delete', [EbookController::class, 'bulkDelete'])->name('ebook.bulkDelete');
+
 });
 
 
@@ -109,10 +111,10 @@ Route::middleware([
     'verified',
     'admin',
 ])->group(function () {
-    Route::get('/category', [CategoryController::class, 'index'])->name('category.view');
-    Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
-    Route::put('/category/{id}', [CategoryController::class, 'update'])->name('category.update');
-    Route::delete('/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+    Route::get('/category-view', [CategoryController::class, 'index'])->name('category.view');
+    Route::post('/category-add', [CategoryController::class, 'store'])->name('category.store');
+    Route::put('/category-update/{id}', [CategoryController::class, 'update'])->name('category.update');
+    Route::delete('/category-delete/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
 });
 
 // EBOOK Category management routes
