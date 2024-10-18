@@ -55,7 +55,7 @@
                     @endisset
                 </div>
 
-                <script>
+                {{-- <script>
                     $(document).ready(function() {
                         $('#pdfForm').on('submit', function(e) {
                             e.preventDefault();
@@ -84,7 +84,115 @@
                             });
                         });
                     });
+                </script> --}}
+
+                <!-- Include pdfjs-dist -->
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const form = document.getElementById('pdfForm');
+                        const loader = document.getElementById('loader');
+                        const summaryDiv = document.getElementById('summary');
+
+                        // Hide loader initially
+                        loader.style.display = 'none';
+
+                        form.addEventListener('submit', function(event) {
+                            event.preventDefault();
+
+                            // Show loader and hide summary
+                            loader.style.display = 'block';
+                            summaryDiv.style.display = 'none';
+
+                            const fileInput = document.getElementById('pdf');
+                            const task = document.getElementById('task').value;
+
+                            if (fileInput.files.length === 0) {
+                                alert('Please upload a PDF file.');
+                                return;
+                            }
+
+                            const file = fileInput.files[0];
+                            const reader = new FileReader();
+
+                            // Read the PDF as binary data
+                            reader.readAsArrayBuffer(file);
+
+                            reader.onload = function() {
+                                const typedArray = new Uint8Array(reader.result);
+
+                                // Load the PDF
+                                pdfjsLib.getDocument(typedArray).promise.then(function(pdf) {
+                                    let pdfText = '';
+
+                                    // Read each page and extract the text
+                                    const promises = [];
+                                    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                                        promises.push(
+                                            pdf.getPage(pageNum).then(function(page) {
+                                                return page.getTextContent().then(function(
+                                                    textContent) {
+                                                    let pageText = textContent.items.map(
+                                                        item => item.str).join(' ');
+                                                    pdfText += pageText +
+                                                    '\n\n'; // Append the page text
+                                                });
+                                            })
+                                        );
+                                    }
+
+                                    // Once all pages are read, process the text
+                                    Promise.all(promises).then(function() {
+                                        sendToAPI(pdfText, task);
+                                    });
+                                });
+                            };
+                        });
+
+                        function sendToAPI(pdfText, task) {
+                            // Create the content to send to the API based on the task
+                            let content = `Perform the task '${task}' on this: ${pdfText}`;
+                            if (task === 'summarize') {
+                                content = `Summarize this: ${pdfText}`;
+                            } else if (task === 'paraphrase') {
+                                content = `Paraphrase this: ${pdfText}`;
+                            } else if (task === 'check_ai_written') {
+                                content = `Check if this content is AI-written: ${pdfText}`;
+                            } else if (task === 'translate') {
+                                content = `Translate this to Sinhala: ${pdfText}`;
+                            }
+
+                            // Send the content to the API (replace with your API key and URL)
+                            fetch('https://api.pawan.krd/cosmosrp/v1', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Authorization': 'Bearer YOUR_API_KEY_HERE'
+                                    },
+                                    body: JSON.stringify({
+                                        model: 'pai-001-light',
+                                        messages: [{
+                                            role: 'user',
+                                            content: content
+                                        }]
+                                    })
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    // Hide loader and display the summary
+                                    loader.style.display = 'none';
+                                    summaryDiv.innerHTML = `<p>${data.choices[0].message.content}</p>`;
+                                    summaryDiv.style.display = 'block';
+                                })
+                                .catch(error => {
+                                    loader.style.display = 'none';
+                                    alert('An error occurred: ' + error.message);
+                                });
+                        }
+                    });
                 </script>
+
             </div>
         </div>
 
