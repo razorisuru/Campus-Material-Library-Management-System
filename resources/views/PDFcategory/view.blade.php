@@ -36,6 +36,7 @@
                     <table class="table" id="table1">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>Option</th>
@@ -44,6 +45,8 @@
                         <tbody>
                             @foreach ($categories as $category)
                                 <tr>
+                                    <td><input class="form-check-input item-checkbox" type="checkbox"
+                                            value="{{ $category->id }}"></td>
                                     <td>{{ $category->id }}</td>
                                     <td>
                                         <span class="category-name">{{ $category->name }}</span>
@@ -64,9 +67,70 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <div class="d-flex justify-content-start">
+                        <input class="form-check-input ms-2" type="checkbox" id="select-all">
+                        <button id="bulk-delete" class="btn btn-sm btn-danger ms-2">Delete Selected</button>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <script>
+            // Select/Deselect all checkboxes
+            $('#select-all').click(function() {
+                $('.item-checkbox').prop('checked', this.checked);
+            });
+
+            // Handle bulk delete button click
+            $('#bulk-delete').click(function() {
+                let selected = [];
+
+                $('.item-checkbox:checked').each(function() {
+                    selected.push($(this).val());
+                });
+
+                if (selected.length > 0) {
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: '{{ route('category.bulkDelete') }}',
+                                method: 'POST',
+                                data: {
+                                    _token: '{{ csrf_token() }}',
+                                    ids: selected
+                                },
+                                success: function(response) {
+                                    location.reload();
+                                    Swal.fire({
+                                        icon: "success",
+                                        title: response.message,
+                                    });
+                                    // Reload the table after deletion
+                                },
+                                error: function(xhr) {
+                                    alert('An error occurred');
+                                }
+                            });
+
+                        }
+                    });
+
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "No Items Selected",
+                    });
+                }
+            });
+        </script>
 
         <script>
             function submitForm(form) {
@@ -105,10 +169,15 @@
                         const row = this.closest('tr');
                         const input = row.querySelector('.category-input');
                         const newName = input.value;
-                        const categoryId = row.querySelector('td:first-child').innerText;
+                        const categoryId = row.querySelector('td:nth-child(2)')
+                            .innerText; // Corrected ID selection
+
+                        // Disable input and buttons during request
+                        input.disabled = true;
+                        button.disabled = true;
 
                         // Make an AJAX request to update the category name
-                        fetch(`{{ url('/category-update') }}/${categoryId}`, {
+                        fetch(`{{ route('category.update', ':id') }}`.replace(':id', categoryId), {
                             method: 'PUT',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -122,18 +191,27 @@
                                 row.querySelector('.category-name').innerText = newName;
                                 row.querySelector('.category-name').classList.remove('d-none');
                                 row.querySelector('.category-input').classList.add('d-none');
-                                this.classList.add('d-none');
+                                button.classList.add('d-none');
                                 row.querySelector('.edit-btn').classList.remove('d-none');
                                 Swal.fire({
                                     icon: "success",
                                     title: "Update Success",
                                 });
                             } else {
-                                alert('Error updating category');
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Error",
+                                });
                             }
                         }).catch(error => {
-                            alert('Error updating category');
-                            console.error('Error:', error);
+                            Swal.fire({
+                                icon: "error",
+                                title: error.message || 'Error occurred!',
+                            });
+                        }).finally(() => {
+                            // Enable input and buttons after the request completes
+                            input.disabled = false;
+                            button.disabled = false;
                         });
                     });
                 });

@@ -36,7 +36,7 @@
                     <table class="table" id="table1">
                         <thead>
                             <tr>
-                                {{-- <th></th> --}}
+                                <th></th>
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>Option</th>
@@ -45,8 +45,8 @@
                         <tbody>
                             @foreach ($categories as $category)
                                 <tr>
-                                    {{-- <td><input class="form-check-input item-checkbox" type="checkbox"
-                                            value="{{ $category->id }}"></td> --}}
+                                    <td><input class="form-check-input item-checkbox" type="checkbox"
+                                            value="{{ $category->id }}"></td>
                                     <td>{{ $category->id }}</td>
                                     <td>
                                         <span class="category-name">{{ $category->name }}</span>
@@ -67,10 +67,10 @@
                             @endforeach
                         </tbody>
                     </table>
-                    {{-- <div class="d-flex justify-content-start">
+                    <div class="d-flex justify-content-start">
                         <input class="form-check-input ms-2" type="checkbox" id="select-all">
                         <button id="bulk-delete" class="btn btn-sm btn-danger ms-2">Delete Selected</button>
-                    </div> --}}
+                    </div>
                 </div>
             </div>
         </div>
@@ -169,10 +169,15 @@
                         const row = this.closest('tr');
                         const input = row.querySelector('.category-input');
                         const newName = input.value;
-                        const categoryId = row.querySelector('td:first-child').innerText;
+                        const categoryId = row.querySelector('td:nth-child(2)')
+                        .innerText; // Corrected ID selection
+
+                        // Disable input and buttons during request
+                        input.disabled = true;
+                        button.disabled = true;
 
                         // Make an AJAX request to update the category name
-                        fetch(`{{ url('/ebook-category') }}/${categoryId}`, {
+                        fetch(`{{ route('ebook-category.update', ':id') }}`.replace(':id', categoryId), {
                             method: 'PUT',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -186,7 +191,7 @@
                                 row.querySelector('.category-name').innerText = newName;
                                 row.querySelector('.category-name').classList.remove('d-none');
                                 row.querySelector('.category-input').classList.add('d-none');
-                                this.classList.add('d-none');
+                                button.classList.add('d-none');
                                 row.querySelector('.edit-btn').classList.remove('d-none');
                                 Swal.fire({
                                     icon: "success",
@@ -199,12 +204,14 @@
                                 });
                             }
                         }).catch(error => {
-                            // alert('Error updating category');
-                            // console.error('Error:', error);
                             Swal.fire({
                                 icon: "error",
-                                title: error,
+                                title: error.message || 'Error occurred!',
                             });
+                        }).finally(() => {
+                            // Enable input and buttons after the request completes
+                            input.disabled = false;
+                            button.disabled = false;
                         });
                     });
                 });
