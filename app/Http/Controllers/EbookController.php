@@ -179,4 +179,18 @@ class EbookController extends Controller
 
         // return $learningMaterial->file_path;
     }
+
+    public function bulkDelete(Request $request)
+    {
+        $ids = $request->ids;
+
+        if (!empty($ids)) {
+            EBook::whereIn('id', $ids)->delete();
+
+            return response()->json(['message' => 'Ebooks deleted successfully!']);
+        }
+
+        return response()->json(['message' => 'No items selected!'], 400);
+    }
+
 }
