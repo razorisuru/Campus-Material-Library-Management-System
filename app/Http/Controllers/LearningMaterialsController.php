@@ -176,4 +176,17 @@ class LearningMaterialsController extends Controller
         // return $reason.$uploaderMail;
         return redirect()->back()->with('status', 'Learning material rejected successfully.');
     }
+
+    public function bulkDelete(Request $request)
+    {
+        $ids = $request->ids;
+
+        if (!empty($ids)) {
+            LearningMaterial::whereIn('id', $ids)->delete();
+
+            return response()->json(['message' => 'PDFs deleted successfully!']);
+        }
+
+        return response()->json(['message' => 'No items selected!'], 400);
+    }
 }
