@@ -99,23 +99,11 @@ class LearningMaterialsController extends Controller
 
     public function destroy($id)
     {
-        // Find the file record in the database
         $learningMaterial = LearningMaterial::findOrFail($id);
 
-        // Delete the file from the storage
-        // if (Storage::exists('public/' . $learningMaterial->file_path)) {
         Storage::delete('public/' . $learningMaterial->file_path);
         $learningMaterial->delete();
         return redirect()->back()->with('status', 'File Deleted Successfully');
-        // } else {
-        //     return ('public/' . $learningMaterial->file_path);
-        // }
-
-        // Delete the database record
-        // $learningMaterial->delete();
-
-
-        // return $learningMaterial->file_path;
     }
 
 
@@ -182,11 +170,23 @@ class LearningMaterialsController extends Controller
         $ids = $request->ids;
 
         if (!empty($ids)) {
+            // Fetch the LearningMaterial records to get the file paths
+            $learningMaterials = LearningMaterial::whereIn('id', $ids)->get();
+
+            // Loop through the records and delete the associated files
+            foreach ($learningMaterials as $material) {
+                if ($material->file_path) {
+                    Storage::delete('public/' . $material->file_path);
+                }
+            }
+
+            // Now delete the records from the database
             LearningMaterial::whereIn('id', $ids)->delete();
 
-            return response()->json(['message' => 'PDFs deleted successfully!']);
+            return response()->json(['message' => 'PDFs and files deleted successfully!']);
         }
 
         return response()->json(['message' => 'No items selected!'], 400);
     }
+
 }

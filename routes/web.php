@@ -117,6 +117,8 @@ Route::middleware([
     Route::post('/category-add', [CategoryController::class, 'store'])->name('category.store');
     Route::put('/category-update/{id}', [CategoryController::class, 'update'])->name('category.update');
     Route::delete('/category-delete/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+
+    Route::post('/category/bulk-delete', [CategoryController::class, 'bulkDelete'])->name('category.bulkDelete');
 });
 
 // EBOOK Category management routes
@@ -130,6 +132,8 @@ Route::middleware([
     Route::post('/ebook-category', [EbookCategoryController::class, 'store'])->name('ebook-category.store');
     Route::put('/ebook-category/{id}', [EbookCategoryController::class, 'update'])->name('ebook-category.update');
     Route::delete('/ebook-category/{id}', [EbookCategoryController::class, 'destroy'])->name('ebook-category.destroy');
+
+    Route::post('/ebookCategory/bulk-delete', [EbookCategoryController::class, 'bulkDelete'])->name('ebookCategory.bulkDelete');
 });
 
 

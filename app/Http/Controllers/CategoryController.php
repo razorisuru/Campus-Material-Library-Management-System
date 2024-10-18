@@ -56,4 +56,17 @@ class CategoryController extends Controller
 
         return redirect()->back()->with('status', 'Category Deleted Successfully');
     }
+
+    public function bulkDelete(Request $request)
+    {
+        $ids = $request->ids;
+
+        if (!empty($ids)) {
+            Category::whereIn('id', $ids)->delete();
+
+            return response()->json(['message' => 'Categories deleted successfully!']);
+        }
+
+        return response()->json(['message' => 'No items selected!'], 400);
+    }
 }

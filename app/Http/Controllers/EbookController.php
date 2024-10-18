@@ -160,24 +160,12 @@ class EbookController extends Controller
 
     public function destroy($id)
     {
-        // Find the file record in the database
         $ebook = EBook::findOrFail($id);
 
-        // Delete the file from the storage
-        // if (Storage::exists('public/' . $learningMaterial->file_path)) {
         Storage::delete('public/' . $ebook->file_path);
         Storage::delete('public/' . $ebook->cover_image);
         $ebook->delete();
         return redirect()->back()->with('status', 'File Deleted Successfully');
-        // } else {
-        //     return ('public/' . $learningMaterial->file_path);
-        // }
-
-        // Delete the database record
-        // $learningMaterial->delete();
-
-
-        // return $learningMaterial->file_path;
     }
 
     public function bulkDelete(Request $request)
@@ -185,12 +173,27 @@ class EbookController extends Controller
         $ids = $request->ids;
 
         if (!empty($ids)) {
+            // Fetch the EBook records to get the file paths
+            $ebooks = EBook::whereIn('id', $ids)->get();
+
+            // Loop through the records and delete the associated files
+            foreach ($ebooks as $ebook) {
+                if ($ebook->file_path) {
+                    Storage::delete('public/' . $ebook->file_path);
+                }
+                if ($ebook->cover_image) {
+                    Storage::delete('public/' . $ebook->cover_image);
+                }
+            }
+
+            // Now delete the records from the database
             EBook::whereIn('id', $ids)->delete();
 
-            return response()->json(['message' => 'Ebooks deleted successfully!']);
+            return response()->json(['message' => 'EBooks and associated files deleted successfully!']);
         }
 
         return response()->json(['message' => 'No items selected!'], 400);
     }
+
 
 }
