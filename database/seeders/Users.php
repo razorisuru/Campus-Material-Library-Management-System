@@ -18,7 +18,7 @@ class Users extends Seeder
             'name' => 'Isuru Bandara',
             'email' => 'isuru@mail.com',
             'role' => 'admin',
-            'email_verified_at' => null,
+            'email_verified_at' => now(),
             'password' => Hash::make('Isuru@123'),
             'remember_token' => null,
             'current_team_id' => null,

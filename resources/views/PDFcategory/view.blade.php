@@ -172,33 +172,34 @@
                         const categoryId = row.querySelector('td:first-child').innerText;
 
                         // Make an AJAX request to update the category name
-                        fetch(`{{ url('/category') }}/${categoryId}`, {
-                            method: 'PUT',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                            },
-                            body: JSON.stringify({
-                                name: newName
+                        fetch(`/category-update/${categoryId}`, {
+                                method: 'put',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: JSON.stringify({
+                                    name: newName
+                                })
                             })
-                        }).then(response => response.json()).then(data => {
-                            if (data.success) {
-                                row.querySelector('.category-name').innerText = newName;
-                                row.querySelector('.category-name').classList.remove('d-none');
-                                row.querySelector('.category-input').classList.add('d-none');
-                                this.classList.add('d-none');
-                                row.querySelector('.edit-btn').classList.remove('d-none');
-                                Swal.fire({
-                                    icon: "success",
-                                    title: "Update Success",
-                                });
-                            } else {
-                                alert('Error updating category');
-                            }
-                        }).catch(error => {
-                            alert('Error updating category');
-                            console.error('Error:', error);
-                        });
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                if (data.success) {
+                                    // Update UI
+                                } else {
+                                    alert('Error updating category');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('There has been a problem with your fetch operation:',
+                                    error);
+                            });
+
                     });
                 });
             });

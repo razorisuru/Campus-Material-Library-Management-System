@@ -203,7 +203,7 @@
                             // console.error('Error:', error);
                             Swal.fire({
                                 icon: "error",
-                                title: "Server Error",
+                                title: error,
                             });
                         });
                     });
