@@ -36,7 +36,7 @@
                     <table class="table" id="table1">
                         <thead>
                             <tr>
-                                <th></th>
+                                {{-- <th></th> --}}
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>Option</th>
@@ -45,8 +45,8 @@
                         <tbody>
                             @foreach ($categories as $category)
                                 <tr>
-                                    <td><input class="form-check-input item-checkbox" type="checkbox"
-                                            value="{{ $category->id }}"></td>
+                                    {{-- <td><input class="form-check-input item-checkbox" type="checkbox"
+                                            value="{{ $category->id }}"></td> --}}
                                     <td>{{ $category->id }}</td>
                                     <td>
                                         <span class="category-name">{{ $category->name }}</span>
@@ -67,10 +67,10 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <div class="d-flex justify-content-start">
+                    {{-- <div class="d-flex justify-content-start">
                         <input class="form-check-input ms-2" type="checkbox" id="select-all">
                         <button id="bulk-delete" class="btn btn-sm btn-danger ms-2">Delete Selected</button>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
