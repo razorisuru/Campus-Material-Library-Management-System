@@ -1,6 +1,6 @@
 # Campus-Material-Library-Management
 
-# USing Laravel 10
+# Using Laravel 10
 
 # Dashboard and Frontend
 
@@ -8,7 +8,7 @@
 
 1. Clone this project
     ```bash
-    git clone clone https://github.com/razorisuru/Campus-Material-Library-Management-System
+    git clone https://github.com/razorisuru/Campus-Material-Library-Management-System
     ```
 2. Install dependencies
 
