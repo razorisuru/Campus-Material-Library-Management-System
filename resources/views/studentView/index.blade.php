@@ -49,13 +49,17 @@
                                     <div class="flex items-stretch justify-between gap-4 rounded-xl">
                                         <div class="flex flex-[2_2_0px] flex-col gap-4">
                                             <div class="flex flex-col gap-1">
-                                                <p class="text-[#4e6597] text-sm font-normal leading-normal">
-                                                    {{ $material->category->name }}</p>
+                                                <p class="bg-[#6a5acd] text-white text-xs font-semibold px-2 py-1 rounded-full inline-block w-max">
+                                                    {{ $material->category->name }}
+                                                </p>
                                                 <p class="text-[#0e121b] text-base font-bold leading-tight">
-                                                    {{ basename($material->file_path) }}</p>
+                                                    {{ basename($material->file_path) }}
+                                                </p>
                                                 <p class="text-[#4e6597] text-sm font-normal leading-normal">
-                                                    {{ $material->user->name }}</p>
+                                                    {{ $material->user->name }}
+                                                </p>
                                             </div>
+
                                             <a href="{{ asset('storage/' . $material->file_path) }}"
                                                 class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 flex-row-reverse bg-[#e7ebf3] text-[#0e121b] pr-2 gap-1 text-sm font-medium leading-normal w-fit">
                                                 <div class="text-[#0e121b]" data-icon="ArrowRight" data-size="18px"
