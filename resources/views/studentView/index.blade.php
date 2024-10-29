@@ -28,37 +28,68 @@
                 </div>
 
                 <div class="max-w-7xl mx-auto p-6 lg:p-8">
-                    <div class="flex gap-3 p-3 flex-wrap pr-4">
-                        <div class="category-button flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#e7edf3] pl-4 pr-4 cursor-pointer"
-                            data-category="all">
-                            <p class="text-[#0e141b] text-sm font-medium leading-normal">All</p>
-                        </div>
-                        @foreach ($pdfCategories as $pdfCategory)
-                            <div class="category-button flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#e7edf3] pl-4 pr-4 cursor-pointer"
-                                data-category="{{ $pdfCategory->name }}">
-                                <p class="text-[#0e141b] text-sm font-medium leading-normal">{{ $pdfCategory->name }}
-                                </p>
+                    <div class="flex flex-col gap-4 p-3">
+
+                        <!-- Category Filter Row -->
+                        <div class="flex flex-wrap gap-3 pr-4 w-full">
+                            <div id="allCategoryButton"
+                                class="all-category-button flex h-8 items-center justify-center gap-x-2 rounded-xl bg-[#e7edf3] px-4 cursor-pointer">
+                                <p class="text-[#0e141b] text-sm font-medium leading-normal">All Categories</p>
                             </div>
-                        @endforeach
+                            @foreach ($pdfCategories as $pdfCategory)
+                                <div class="category-button flex h-8 items-center justify-center gap-x-2 rounded-xl bg-[#e7edf3] px-4 cursor-pointer"
+                                    data-category="{{ $pdfCategory->name }}">
+                                    <p class="text-[#0e141b] text-sm font-medium leading-normal">{{ $pdfCategory->name }}</p>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <!-- Degree Filter Row -->
+                        <div class="flex flex-wrap gap-3 pr-4 w-full">
+                            <div id="allDegreeButton"
+                                class="all-degree-button flex h-8 items-center justify-center gap-x-2 rounded-xl bg-[#3cb371] px-4 cursor-pointer">
+                                <p class="text-[#0e141b] text-sm font-medium leading-normal">All Degrees</p>
+                            </div>
+                            @foreach ($degrees as $degree)
+                                <div class="degree-button flex h-8 items-center justify-center gap-x-2 rounded-xl bg-[#3cb371] px-4 cursor-pointer"
+                                    data-degree="{{ $degree->name }}">
+                                    <p class="text-[#0e141b] text-sm font-medium leading-normal">{{ $degree->name }}</p>
+                                </div>
+                            @endforeach
+                        </div>
+
                     </div>
+
 
                     <div id="materialList" class="mt-16">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
                             @foreach ($materials as $material)
-                                <div class="material-item mb-2" data-category="{{ $material->category->name }}">
+                                <div class="material-item mb-2" data-category="{{ $material->category->name }}"
+                                    data-degree="{{ $material->degree->name }}">
                                     <div class="flex items-stretch justify-between gap-4 rounded-xl">
                                         <div class="flex flex-[2_2_0px] flex-col gap-4">
                                             <div class="flex flex-col gap-1">
-                                                <p
-                                                    class="bg-[#6a5acd] text-white text-xs font-semibold px-2 py-1 rounded-full inline-block w-max">
-                                                    {{ $material->category->name }}
-                                                </p>
+
                                                 <p class="text-[#0e121b] text-base font-bold leading-tight">
                                                     {{ basename($material->file_path) }}
                                                 </p>
                                                 <p class="text-[#4e6597] text-sm font-normal leading-normal">
                                                     {{ $material->user->name }}
                                                 </p>
+                                                <p
+                                                    class="bg-[#6a5acd] text-white text-xs font-semibold px-2 py-1 rounded-full inline-block w-max">
+                                                    {{ $material->category->name }}
+                                                </p>
+                                                <div class="flex flex-row gap-1">
+                                                    <p
+                                                        class="bg-[#3cb371] text-white text-xs font-semibold px-2 py-1 rounded-full inline-block w-max">
+                                                        {{ $material->degree->name }}
+                                                    </p>
+                                                    <p
+                                                        class="bg-[#bebebe] text-white text-xs font-semibold px-2 py-1 rounded-full inline-block w-max">
+                                                        {{ $material->subject->name }}
+                                                    </p>
+                                                </div>
                                             </div>
 
                                             <a href="{{ asset('storage/' . $material->file_path) }}"
@@ -76,7 +107,7 @@
                                             </a>
                                         </div>
                                         <div onclick="window.location.href='{{ asset('storage/' . $material->file_path) }}';"
-                                            class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex-1 cursor-pointer"
+                                            class="w-full bg-center bg-no-repeat bg-contain flex-1 cursor-pointer"
                                             style='background-image: url("/img/pdf.png");'>
                                         </div>
 
@@ -118,25 +149,86 @@
             });
 
             const categoryButtons = document.querySelectorAll('.category-button');
+            const degreeButtons = document.querySelectorAll('.degree-button');
+            const allCategoryButton = document.getElementById('allCategoryButton');
+            const allDegreeButton = document.getElementById('allDegreeButton');
             const materials = document.querySelectorAll('.material-item');
 
+            let selectedCategory = 'all';
+            let selectedDegree = 'all';
+
+            // Function to filter materials based on selected category and degree
+            function filterMaterials() {
+                materials.forEach(material => {
+                    const materialCategory = material.getAttribute('data-category');
+                    const materialDegree = material.getAttribute('data-degree');
+
+                    const matchesCategory = (selectedCategory === 'all' || materialCategory === selectedCategory);
+                    const matchesDegree = (selectedDegree === 'all' || materialDegree === selectedDegree);
+
+                    if (matchesCategory && matchesDegree) {
+                        material.style.display = '';
+                    } else {
+                        material.style.display = 'none';
+                    }
+                });
+            }
+
+            // Event listener for "All Categories" button
+            allCategoryButton.addEventListener('click', () => {
+                selectedCategory = 'all';
+                filterMaterials();
+
+                // Toggle styling
+                allCategoryButton.classList.add('bg-[#4e7397]', 'text-white');
+                categoryButtons.forEach(btn => btn.classList.remove('bg-[#4e7397]', 'text-white'));
+            });
+
+            // Event listener for "All Degrees" button
+            allDegreeButton.addEventListener('click', () => {
+                selectedDegree = 'all';
+                filterMaterials();
+
+                // Toggle styling
+                allDegreeButton.classList.add('bg-[#2c9f5b]', 'text-white');
+                degreeButtons.forEach(btn => btn.classList.remove('bg-[#2c9f5b]', 'text-white'));
+            });
+
+            // Toggle category button click event
             categoryButtons.forEach(button => {
                 button.addEventListener('click', () => {
-                    const selectedCategory = button.getAttribute('data-category');
+                    const category = button.getAttribute('data-category');
 
-                    materials.forEach(material => {
-                        const materialCategory = material.getAttribute('data-category');
+                    if (selectedCategory === category) {
+                        selectedCategory = 'all';
+                        button.classList.remove('bg-[#4e7397]', 'text-white');
+                        allCategoryButton.classList.add('bg-[#4e7397]', 'text-white');
+                    } else {
+                        selectedCategory = category;
+                        categoryButtons.forEach(btn => btn.classList.remove('bg-[#4e7397]', 'text-white'));
+                        button.classList.add('bg-[#4e7397]', 'text-white');
+                        allCategoryButton.classList.remove('bg-[#4e7397]', 'text-white');
+                    }
+                    filterMaterials();
+                });
+            });
 
-                        if (selectedCategory === 'all' || materialCategory === selectedCategory) {
-                            material.style.display = '';
-                        } else {
-                            material.style.display = 'none';
-                        }
-                    });
+            // Toggle degree button click event
+            degreeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const degree = button.getAttribute('data-degree');
 
-                    // Highlight the selected category
-                    categoryButtons.forEach(btn => btn.classList.remove('bg-[#4e7397]', 'text-white'));
-                    button.classList.add('bg-[#4e7397]', 'text-white');
+                    if (selectedDegree === degree) {
+                        selectedDegree = 'all';
+                        button.classList.remove('bg-[#2c9f5b]', 'text-white');
+                        allDegreeButton.classList.add('bg-[#2c9f5b]', 'text-white');
+                    } else {
+                        selectedDegree = degree;
+                        degreeButtons.forEach(btn => btn.classList.remove('bg-[#2c9f5b]', 'text-white'));
+                        button.classList.add('bg-[#2c9f5b]', 'text-white');
+                        allDegreeButton.classList.remove('bg-[#2c9f5b]', 'text-white');
+                    }
+                    filterMaterials();
                 });
             });
         </script>

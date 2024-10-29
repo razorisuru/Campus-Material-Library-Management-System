@@ -15,8 +15,14 @@ class Degrees extends Seeder
     {
         $degreeProgrammes = [
             [
-                'name' => 'BSC',
-                'description' => 'bsc',
+                'name' => 'BSc',
+                'description' => 'Bachelor of Science in Information Technology',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'B-Tech',
+                'description' => 'B. Tech. in Information Technology & Communication',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
