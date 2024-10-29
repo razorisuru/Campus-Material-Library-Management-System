@@ -49,7 +49,8 @@
                                     <div class="flex items-stretch justify-between gap-4 rounded-xl">
                                         <div class="flex flex-[2_2_0px] flex-col gap-4">
                                             <div class="flex flex-col gap-1">
-                                                <p class="bg-[#6a5acd] text-white text-xs font-semibold px-2 py-1 rounded-full inline-block w-max">
+                                                <p
+                                                    class="bg-[#6a5acd] text-white text-xs font-semibold px-2 py-1 rounded-full inline-block w-max">
                                                     {{ $material->category->name }}
                                                 </p>
                                                 <p class="text-[#0e121b] text-base font-bold leading-tight">
@@ -74,9 +75,11 @@
                                                 <span class="truncate">View</span>
                                             </a>
                                         </div>
-                                        <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex-1"
-                                            style='background-image: url("https://cdn.usegalileo.ai/stability/951eae0b-ed7a-422e-9603-57219e3801c1.png");'>
+                                        <div onclick="window.location.href='{{ asset('storage/' . $material->file_path) }}';"
+                                            class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex-1 cursor-pointer"
+                                            style='background-image: url("/img/pdf.png");'>
                                         </div>
+
                                     </div>
                                 </div>
                             @endforeach
