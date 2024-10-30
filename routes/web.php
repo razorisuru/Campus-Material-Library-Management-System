@@ -85,6 +85,10 @@ Route::middleware([
     Route::post('/materials/pending/{id}', [LearningMaterialsController::class, 'pending'])->name('materials.pending');
 
     Route::post('/material/bulk-delete', [LearningMaterialsController::class, 'bulkDelete'])->name('material.bulkDelete');
+
+    Route::post('/material/bulk-approve', [LearningMaterialsController::class, 'bulkApprove'])->name('material.bulkApprove');
+    Route::post('/material/bulk-pending', [LearningMaterialsController::class, 'bulkPending'])->name('material.bulkPending');
+    Route::post('/material/bulk-reject', [LearningMaterialsController::class, 'bulkReject'])->name('material.bulkReject');
 });
 
 // ebook routes

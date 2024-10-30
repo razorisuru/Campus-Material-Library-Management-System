@@ -47,29 +47,70 @@
                                             {{ basename($material->file_path) }}
                                         </a></td>
 
-                                    @if ($material->status == 'approved')
-                                        <td>
+                                    @php
+                                        $statusConfig = [
+                                            'approved' => [
+                                                'bgClass' => 'bg-success',
+                                                'actions' => [
+                                                    [
+                                                        'route' => 'materials.pending',
+                                                        'buttonClass' => 'btn-warning',
+                                                        'label' => 'Pending',
+                                                    ],
+                                                    [
+                                                        'route' => 'materials.reject',
+                                                        'buttonClass' => 'btn-danger',
+                                                        'label' => 'Reject',
+                                                        'hasReason' => true,
+                                                    ],
+                                                ],
+                                            ],
+                                            'pending' => [
+                                                'bgClass' => 'bg-warning',
+                                                'actions' => [
+                                                    [
+                                                        'route' => 'materials.approve',
+                                                        'buttonClass' => 'btn-success',
+                                                        'label' => 'Approve',
+                                                    ],
+                                                    [
+                                                        'route' => 'materials.reject',
+                                                        'buttonClass' => 'btn-danger',
+                                                        'label' => 'Reject',
+                                                        'hasReason' => true,
+                                                    ],
+                                                ],
+                                            ],
+                                            'rejected' => [
+                                                'bgClass' => 'bg-danger',
+                                                'actions' => [
+                                                    [
+                                                        'route' => 'materials.approve',
+                                                        'buttonClass' => 'btn-success',
+                                                        'label' => 'Approve',
+                                                    ],
+                                                    [
+                                                        'route' => 'materials.pending',
+                                                        'buttonClass' => 'btn-warning',
+                                                        'label' => 'Pending',
+                                                    ],
+                                                ],
+                                            ],
+                                        ];
+                                        $config = $statusConfig[$material->status];
+                                    @endphp
 
-                                            <div class="dropdown">
-                                                <button class="badge bg-success border-0 dropdown-toggle me-1"
-                                                    type="button" id="dropdownMenuButton5" data-bs-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                    {{ $material->status }}
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton5"
-                                                    style="">
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="badge {{ $config['bgClass'] }} border-0 dropdown-toggle me-1"
+                                                type="button" id="dropdownMenuButton5" data-bs-toggle="dropdown"
+                                                aria-haspopup="true" aria-expanded="false">
+                                                {{ $material->status }}
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton5">
+                                                @foreach ($config['actions'] as $action)
                                                     <div class="dropdown-item">
-                                                        <form action="{{ route('materials.pending', $material->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            <input name="uploaderMail" type="text"
-                                                                value="{{ $material->user->email }}" hidden>
-                                                            <button type="submit"
-                                                                class="btn btn-warning btn-sm">Pending</button>
-                                                        </form>
-                                                    </div>
-                                                    <div class="dropdown-item">
-                                                        <form action="{{ route('materials.reject', $material->id) }}"
+                                                        <form action="{{ route($action['route'], $material->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             <input name="uploaderMail" type="text"
@@ -78,102 +119,19 @@
                                                                 value="{{ $material->user->name }}" hidden>
                                                             <input name="pdfName" type="text"
                                                                 value="{{ basename($material->file_path) }}" hidden>
-                                                            <input type="text" class="form-control" name="rejectReason"
-                                                                placeholder="Reason">
+                                                            @if (!empty($action['hasReason']))
+                                                                <input type="text" class="form-control"
+                                                                    name="rejectReason" placeholder="Reason">
+                                                            @endif
                                                             <button type="submit"
-                                                                class="btn btn-danger btn-sm mt-1">Reject</button>
+                                                                class="btn {{ $action['buttonClass'] }} btn-sm mt-1">{{ $action['label'] }}</button>
                                                         </form>
                                                     </div>
-                                                </div>
+                                                @endforeach
                                             </div>
+                                        </div>
+                                    </td>
 
-
-                                        </td>
-                                    @elseif ($material->status == 'pending')
-                                        <td>
-
-                                            <div class="dropdown">
-                                                <button class="badge bg-warning border-0 dropdown-toggle me-1"
-                                                    type="button" id="dropdownMenuButton5" data-bs-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                    {{ $material->status }}
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton5"
-                                                    style="">
-                                                    <div class="dropdown-item">
-                                                        <form action="{{ route('materials.approve', $material->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            <input name="uploaderMail" type="text"
-                                                                value="{{ $material->user->email }}" hidden>
-                                                            <input name="UserName" type="text"
-                                                                value="{{ $material->user->name }}" hidden>
-                                                            <input name="pdfName" type="text"
-                                                                value="{{ basename($material->file_path) }}" hidden>
-                                                            <button type="submit"
-                                                                class="btn btn-success btn-sm">Approve</button>
-                                                        </form>
-                                                    </div>
-                                                    <div class="dropdown-item">
-                                                        <form action="{{ route('materials.reject', $material->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            <input name="uploaderMail" type="text"
-                                                                value="{{ $material->user->email }}" hidden>
-                                                            <input name="UserName" type="text"
-                                                                value="{{ $material->user->name }}" hidden>
-                                                            <input name="pdfName" type="text"
-                                                                value="{{ basename($material->file_path) }}" hidden>
-                                                            <input type="text" class="form-control" name="rejectReason"
-                                                                placeholder="Reason">
-                                                            <button type="submit"
-                                                                class="btn btn-danger btn-sm mt-1">Reject</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </td>
-                                    @else
-                                        <td>
-
-                                            <div class="dropdown">
-                                                <button class="badge bg-danger border-0 dropdown-toggle me-1"
-                                                    type="button" id="dropdownMenuButton5" data-bs-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                    {{ $material->status }}
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton5"
-                                                    style="">
-                                                    <div class="dropdown-item">
-                                                        <form action="{{ route('materials.approve', $material->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            <input name="uploaderMail" type="text"
-                                                                value="{{ $material->user->email }}" hidden>
-                                                            <input name="UserName" type="text"
-                                                                value="{{ $material->user->name }}" hidden>
-                                                            <input name="pdfName" type="text"
-                                                                value="{{ basename($material->file_path) }}" hidden>
-                                                            <button type="submit"
-                                                                class="btn btn-success btn-sm">Approve</button>
-                                                        </form>
-                                                    </div>
-                                                    <div class="dropdown-item">
-                                                        <form action="{{ route('materials.pending', $material->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            <input name="uploaderMail" type="text"
-                                                                value="{{ $material->user->email }}" hidden>
-                                                            <button type="submit"
-                                                                class="btn btn-warning btn-sm">Pending</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </td>
-                                    @endif
 
 
 
@@ -198,6 +156,9 @@
                     <div class="d-flex justify-content-start">
                         <input class="form-check-input ms-2" type="checkbox" id="select-all">
                         <button id="bulk-delete" class="btn btn-sm btn-danger ms-2">Delete Selected</button>
+                        <button id="bulk-approve" class="btn btn-sm btn-success ms-2">Approve Selected</button>
+                        <button id="bulk-pending" class="btn btn-sm btn-warning ms-2">Pending Selected</button>
+                        <button id="bulk-reject" class="btn btn-sm btn-info ms-2">Reject Selected</button>
                     </div>
                 </div>
             </div>
@@ -245,6 +206,153 @@
                                 },
                                 error: function(xhr) {
                                     alert('An error occurred');
+                                }
+                            });
+
+                        }
+                    });
+
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "No Items Selected",
+                    });
+                }
+            });
+
+            $('#bulk-approve').click(function() {
+                let selected = [];
+
+                $('.item-checkbox:checked').each(function() {
+                    selected.push($(this).val());
+                });
+
+                if (selected.length > 0) {
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, approve it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: '{{ route('material.bulkApprove') }}',
+                                method: 'POST',
+                                data: {
+                                    _token: '{{ csrf_token() }}',
+                                    ids: selected
+                                },
+                                success: function(response) {
+                                    location.reload();
+                                    Swal.fire({
+                                        icon: "success",
+                                        title: response.message,
+                                    });
+                                    // Reload the table after deletion
+                                },
+                                error: function(xhr) {
+                                    alert('An error occurred');
+                                }
+                            });
+
+                        }
+                    });
+
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "No Items Selected",
+                    });
+                }
+            });
+
+            $('#bulk-pending').click(function() {
+                let selected = [];
+
+                $('.item-checkbox:checked').each(function() {
+                    selected.push($(this).val());
+                });
+
+                if (selected.length > 0) {
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, pending it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: '{{ route('material.bulkPending') }}',
+                                method: 'POST',
+                                data: {
+                                    _token: '{{ csrf_token() }}',
+                                    ids: selected
+                                },
+                                success: function(response) {
+                                    location.reload();
+                                    Swal.fire({
+                                        icon: "success",
+                                        title: response.message,
+                                    });
+                                    // Reload the table after deletion
+                                },
+                                error: function(xhr) {
+                                    alert('An error occurred');
+                                }
+                            });
+
+                        }
+                    });
+
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "No Items Selected",
+                    });
+                }
+            });
+
+            $('#bulk-reject').click(function() {
+                let selected = [];
+
+                $('.item-checkbox:checked').each(function() {
+                    selected.push($(this).val());
+                });
+
+                if (selected.length > 0) {
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, reject it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: '{{ route('material.bulkReject') }}',
+                                method: 'POST',
+                                data: {
+                                    _token: '{{ csrf_token() }}',
+                                    ids: selected
+                                },
+                                success: function(response) {
+                                    location.reload();
+                                    Swal.fire({
+                                        icon: "success",
+                                        title: response.message,
+                                    });
+                                    // Reload the table after deletion
+                                },
+                                error: function(xhr) {
+                                    alert(xhr.error);
                                 }
                             });
 

@@ -189,4 +189,70 @@ class LearningMaterialsController extends Controller
         return response()->json(['message' => 'No items selected!'], 400);
     }
 
+    public function bulkApprove(Request $request)
+    {
+        $ids = $request->ids;
+
+        if (!empty($ids)) {
+            // Fetch the LearningMaterial records to get the file paths
+            $learningMaterials = LearningMaterial::whereIn('id', $ids)->get();
+
+            // Loop through the records and delete the associated files
+            foreach ($learningMaterials as $material) {
+
+                $material->status = 'approved';
+                $material->save();
+            }
+
+
+            return response()->json(['message' => 'PDFs and files approved successfully!']);
+        }
+
+        return response()->json(['message' => 'No items selected!'], 400);
+    }
+
+    public function bulkPending(Request $request)
+    {
+        $ids = $request->ids;
+
+        if (!empty($ids)) {
+            // Fetch the LearningMaterial records to get the file paths
+            $learningMaterials = LearningMaterial::whereIn('id', $ids)->get();
+
+            // Loop through the records and delete the associated files
+            foreach ($learningMaterials as $material) {
+
+                $material->status = 'pending';
+                $material->save();
+            }
+
+
+            return response()->json(['message' => 'PDFs and files pending successfully!']);
+        }
+
+        return response()->json(['message' => 'No items selected!'], 400);
+    }
+
+    public function bulkReject(Request $request)
+    {
+        $ids = $request->ids;
+
+        if (!empty($ids)) {
+            // Fetch the LearningMaterial records to get the file paths
+            $learningMaterials = LearningMaterial::whereIn('id', $ids)->get();
+
+            // Loop through the records and delete the associated files
+            foreach ($learningMaterials as $material) {
+
+                $material->status = 'rejected';
+                $material->save();
+            }
+
+
+            return response()->json(['message' => 'PDFs and files rejected successfully!']);
+        }
+
+        return response()->json(['message' => 'No items selected!'], 400);
+    }
+
 }

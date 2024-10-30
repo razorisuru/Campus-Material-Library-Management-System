@@ -69,4 +69,5 @@ class EbookCategoryController extends Controller
 
         return response()->json(['message' => 'No items selected!'], 400);
     }
+
 }
