@@ -39,7 +39,8 @@
                             @foreach ($pdfCategories as $pdfCategory)
                                 <div class="category-button flex h-8 items-center justify-center gap-x-2 rounded-xl bg-[#e7edf3] px-4 cursor-pointer"
                                     data-category="{{ $pdfCategory->name }}">
-                                    <p class="text-[#0e141b] text-sm font-medium leading-normal">{{ $pdfCategory->name }}</p>
+                                    <p class="text-[#0e141b] text-sm font-medium leading-normal">
+                                        {{ $pdfCategory->name }}</p>
                                 </div>
                             @endforeach
                         </div>
@@ -130,108 +131,98 @@
         </div>
 
         <script>
-            document.getElementById('searchInput').addEventListener('input', function() {
-                const searchValue = this.value.toLowerCase();
-                const materials = document.querySelectorAll('.material-item');
-
-                materials.forEach(material => {
-                    const materialName = material.querySelector('.text-base.font-bold').textContent
-                        .toLowerCase();
-                    const materialCategory = material.querySelector('.text-sm.font-normal').textContent
-                        .toLowerCase();
+            $('#searchInput').on('input', function() {
+                const searchValue = $(this).val().toLowerCase();
+                $('.material-item').each(function() {
+                    const materialName = $(this).find('.text-base.font-bold').text().toLowerCase();
+                    const materialCategory = $(this).find('.text-sm.font-normal').text().toLowerCase();
 
                     if (materialName.includes(searchValue) || materialCategory.includes(searchValue)) {
-                        material.style.display = '';
+                        $(this).show();
                     } else {
-                        material.style.display = 'none';
+                        $(this).hide();
                     }
                 });
             });
 
-            const categoryButtons = document.querySelectorAll('.category-button');
-            const degreeButtons = document.querySelectorAll('.degree-button');
-            const allCategoryButton = document.getElementById('allCategoryButton');
-            const allDegreeButton = document.getElementById('allDegreeButton');
-            const materials = document.querySelectorAll('.material-item');
+            const categoryButtons = $('.category-button');
+            const degreeButtons = $('.degree-button');
+            const allCategoryButton = $('#allCategoryButton');
+            const allDegreeButton = $('#allDegreeButton');
+            const materials = $('.material-item');
 
             let selectedCategory = 'all';
             let selectedDegree = 'all';
 
-            // Function to filter materials based on selected category and degree
             function filterMaterials() {
-                materials.forEach(material => {
-                    const materialCategory = material.getAttribute('data-category');
-                    const materialDegree = material.getAttribute('data-degree');
+                materials.each(function() {
+                    const materialCategory = $(this).data('category');
+                    const materialDegree = $(this).data('degree');
 
                     const matchesCategory = (selectedCategory === 'all' || materialCategory === selectedCategory);
                     const matchesDegree = (selectedDegree === 'all' || materialDegree === selectedDegree);
 
                     if (matchesCategory && matchesDegree) {
-                        material.style.display = '';
+                        $(this).show();
                     } else {
-                        material.style.display = 'none';
+                        $(this).hide();
                     }
                 });
             }
 
-            // Event listener for "All Categories" button
-            allCategoryButton.addEventListener('click', () => {
+            allCategoryButton.on('click', function() {
                 selectedCategory = 'all';
                 filterMaterials();
 
-                // Toggle styling
-                allCategoryButton.classList.add('bg-[#4e7397]', 'text-white');
-                categoryButtons.forEach(btn => btn.classList.remove('bg-[#4e7397]', 'text-white'));
+                allCategoryButton.addClass('bg-[#4e7397] text-white');
+                categoryButtons.removeClass('bg-[#4e7397] text-white');
             });
 
-            // Event listener for "All Degrees" button
-            allDegreeButton.addEventListener('click', () => {
+            allDegreeButton.on('click', function() {
                 selectedDegree = 'all';
                 filterMaterials();
 
-                // Toggle styling
-                allDegreeButton.classList.add('bg-[#2c9f5b]', 'text-white');
-                degreeButtons.forEach(btn => btn.classList.remove('bg-[#2c9f5b]', 'text-white'));
+                allDegreeButton.addClass('bg-[#2c9f5b] text-white');
+                degreeButtons.removeClass('bg-[#2c9f5b] text-white');
             });
 
-            // Toggle category button click event
-            categoryButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const category = button.getAttribute('data-category');
+            categoryButtons.each(function() {
+                $(this).on('click', function() {
+                    const category = $(this).data('category');
 
                     if (selectedCategory === category) {
                         selectedCategory = 'all';
-                        button.classList.remove('bg-[#4e7397]', 'text-white');
-                        allCategoryButton.classList.add('bg-[#4e7397]', 'text-white');
+                        $(this).removeClass('bg-[#4e7397] text-white');
+                        allCategoryButton.addClass('bg-[#4e7397] text-white');
                     } else {
                         selectedCategory = category;
-                        categoryButtons.forEach(btn => btn.classList.remove('bg-[#4e7397]', 'text-white'));
-                        button.classList.add('bg-[#4e7397]', 'text-white');
-                        allCategoryButton.classList.remove('bg-[#4e7397]', 'text-white');
+                        categoryButtons.removeClass('bg-[#4e7397] text-white');
+                        $(this).addClass('bg-[#4e7397] text-white');
+                        allCategoryButton.removeClass('bg-[#4e7397] text-white');
                     }
                     filterMaterials();
                 });
             });
 
-            // Toggle degree button click event
-            degreeButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const degree = button.getAttribute('data-degree');
+            degreeButtons.each(function() {
+                $(this).on('click', function() {
+                    const degree = $(this).data('degree');
 
                     if (selectedDegree === degree) {
                         selectedDegree = 'all';
-                        button.classList.remove('bg-[#2c9f5b]', 'text-white');
-                        allDegreeButton.classList.add('bg-[#2c9f5b]', 'text-white');
+                        $(this).removeClass('bg-[#2c9f5b] text-white');
+                        allDegreeButton.addClass('bg-[#2c9f5b] text-white');
                     } else {
                         selectedDegree = degree;
-                        degreeButtons.forEach(btn => btn.classList.remove('bg-[#2c9f5b]', 'text-white'));
-                        button.classList.add('bg-[#2c9f5b]', 'text-white');
-                        allDegreeButton.classList.remove('bg-[#2c9f5b]', 'text-white');
+                        degreeButtons.removeClass('bg-[#2c9f5b] text-white');
+                        $(this).addClass('bg-[#2c9f5b] text-white');
+                        allDegreeButton.removeClass('bg-[#2c9f5b] text-white');
                     }
                     filterMaterials();
                 });
             });
         </script>
+
 
     </div>
 
