@@ -155,10 +155,10 @@
                     </table>
                     <div class="d-flex justify-content-start">
                         <input class="form-check-input ms-2" type="checkbox" id="select-all">
-                        <button id="bulk-delete" class="btn btn-sm btn-danger ms-2">Delete Selected</button>
                         <button id="bulk-approve" class="btn btn-sm btn-success ms-2">Approve Selected</button>
                         <button id="bulk-pending" class="btn btn-sm btn-warning ms-2">Pending Selected</button>
                         <button id="bulk-reject" class="btn btn-sm btn-info ms-2">Reject Selected</button>
+                        <button id="bulk-delete" class="btn btn-sm btn-danger ms-2">Delete Selected</button>
                     </div>
                 </div>
             </div>
