@@ -105,7 +105,7 @@ class NodeJsAiPdfController extends Controller
             $response = $client->post('chat/completions', [
                 'headers' => [
                     'Authorization' => 'Bearer pk-FlcimbdWcfAEfryzTjywVXQQjpbRpjcjITIrmuBPKuTfdXQY',
-                    'Content-Type'  => 'application/json',
+                    'Content-Type' => 'application/json',
                 ],
                 'json' => [
                     'model' => 'pai-001-light',
