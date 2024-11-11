@@ -103,17 +103,17 @@ class EbookController extends Controller
         $ebook = Ebook::findOrFail($id);
 
         $request->validate([
-            'title' => 'required|string|max:255',
+           'title' => 'required|string|max:255',
             'author' => 'required|string|max:255',
             'description' => 'required|string',
             'publication_date' => 'required|string',
-            'isbn' => 'required|string',
+            'isbn' => 'required|string|unique:e_books,isbn',
 
             'ebookcategories' => 'required|array', // Validate categories as an array
             'ebookcategories.*' => 'required|exists:e_book_categories,id', // Ensure each category exists
 
-            'cover_image' => 'nullable|mimes:png,jpg,jpeg|max:51200',
-            'ebook_file' => 'nullable|mimes:pdf,docx|max:51200',
+            'cover_image' => 'required|mimes:png,jpg,jpeg|max:51200',
+            'ebook_file' => 'required|mimes:pdf,docx|max:51200',
         ]);
 
         $cover_image_filename = $ebook->cover_image;
