@@ -40,7 +40,7 @@
                         <div class="card-content">
                             <div class="card-body">
 
-                                @if ($errors->any())
+                                {{-- @if ($errors->any())
                                     <div class="alert alert-danger alert-dismissible fade show px-4 py-3 mb-4"
                                         role="alert">
                                         <ul class="mb-0">
@@ -51,7 +51,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="alert"
                                             aria-label="Close"></button>
                                     </div>
-                                @endif
+                                @endif --}}
 
                                 <form method="POST" action="{{ route('ebook.update', $ebook->id) }}"
                                     enctype="multipart/form-data">

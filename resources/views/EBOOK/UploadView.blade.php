@@ -39,7 +39,7 @@
                         <div class="card-content">
                             <div class="card-body">
 
-                                @if ($errors->any())
+                                {{-- @if ($errors->any())
                                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                         <strong>Whoops! Something went wrong.</strong>
                                         <ul class="mt-2 mb-0">
@@ -50,7 +50,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="alert"
                                             aria-label="Close"></button>
                                     </div>
-                                @endif
+                                @endif --}}
 
                                 <form method="POST" action="{{ route('ebook.store') }}" enctype="multipart/form-data">
                                     @csrf
@@ -58,7 +58,7 @@
                                     <div class="form-group">
                                         <label for="title">Title</label>
                                         <input type="text" id="title" name="title"
-                                            class="form-control @error('title') is-invalid @enderror" placeholder="Name">
+                                            class="form-control @error('title') is-invalid @enderror" placeholder="Name" value="{{old('title')}}">
                                         @error('title')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -69,7 +69,7 @@
                                     <div class="form-group">
                                         <label for="author">Author</label>
                                         <input type="text" id="author" name="author"
-                                            class="form-control @error('author') is-invalid @enderror" placeholder="Author">
+                                            class="form-control @error('author') is-invalid @enderror" placeholder="Author" value="{{old('author')}}">
                                         @error('author')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -79,7 +79,7 @@
 
                                     <div class="form-group with-title mt-2 mb-3">
                                         <textarea class="form-control @error('description') is-invalid @enderror" name="description"
-                                            id="exampleFormControlTextarea1" rows="3"></textarea>
+                                            id="exampleFormControlTextarea1" rows="3">{{old('description')}}</textarea>
                                         <label>Enter a Description</label>
                                         @error('description')
                                             <div class="invalid-feedback">
@@ -92,7 +92,7 @@
                                         <label for="publication_date">Publication Date</label>
                                         <input type="text" name="publication_date"
                                             class="form-control mb-3 flatpickr-date flatpickr-input active @error('publication_date') is-invalid @enderror"
-                                            placeholder="Select date.." readonly="readonly">
+                                            placeholder="Select date.." readonly="readonly" value="{{old('publication_date')}}">
                                         @error('publication_date')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -111,7 +111,7 @@
                                     <div class="form-group mb-2">
                                         <label for="isbn">ISBN</label>
                                         <input type="text" id="isbn" name="isbn"
-                                            class="form-control @error('isbn') is-invalid @enderror" placeholder="ISBN">
+                                            class="form-control @error('isbn') is-invalid @enderror" placeholder="ISBN" value="{{old('isbn')}}">
                                         @error('isbn')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
