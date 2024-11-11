@@ -104,15 +104,19 @@ class NodeJsAiPdfController extends Controller
             // Send request to OpenAI API
             $response = $client->post('chat/completions', [
                 'headers' => [
-                    'Authorization' => 'Bearer pk-FlcimbdWcfAEfryzTjywVXQQjpbRpjcjITIrmuBPKuTfdXQY',
+                    'Authorization' => 'pk-FlcimbdWcfAEfryzTjywVXQQjpbRpjcjITIrmuBPKuTfdXQY',
                     'Content-Type'  => 'application/json',
                 ],
                 'json' => [
                     'model' => 'pai-001-light',
                     'messages' => [
                         [
+                            'role' => 'system',
+                            'content' => 'Powered by RaZoR.',
+                        ],
+                        [
                             'role' => 'user',
-                            'content' => $prompt,
+                            'content' => $prompt, // Ensure $content is a defined string
                         ],
                     ],
                 ],
