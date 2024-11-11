@@ -22,7 +22,7 @@
                                 <div class="row">
                                     <div class="col-md-12 col-12">
                                         <div class="form-group">
-                                            @if ($errors->any())
+                                            {{-- @if ($errors->any())
                                                 <div class="alert alert-danger alert-dismissible fade show px-4 py-3 mb-4"
                                                     role="alert">
                                                     <strong>Whoops! Something went wrong.</strong>
@@ -34,7 +34,7 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="alert"
                                                         aria-label="Close"></button>
                                                 </div>
-                                            @endif
+                                            @endif --}}
                                         </div>
                                     </div>
 

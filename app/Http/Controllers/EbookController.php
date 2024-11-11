@@ -103,11 +103,11 @@ class EbookController extends Controller
         $ebook = Ebook::findOrFail($id);
 
         $request->validate([
-           'title' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'author' => 'required|string|max:255',
             'description' => 'required|string',
             'publication_date' => 'required|string',
-            'isbn' => 'required|string|unique:e_books,isbn',
+            'isbn' => 'required|string',
 
             'ebookcategories' => 'required|array', // Validate categories as an array
             'ebookcategories.*' => 'required|exists:e_book_categories,id', // Ensure each category exists
