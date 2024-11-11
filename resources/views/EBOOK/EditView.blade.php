@@ -179,6 +179,9 @@
                                             <fieldset class="filepond--data"></fieldset>
                                             <div class="filepond--drip"></div>
                                         </div>
+                                        @error('cover_image')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
 
 
@@ -225,6 +228,9 @@
                                                 <div class="filepond--drip"></div>
                                             </div>
                                         </div>
+                                        @error('ebook_file')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
 
                                     <div class="flex justify-start">

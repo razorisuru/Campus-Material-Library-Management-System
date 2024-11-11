@@ -112,8 +112,8 @@ class EbookController extends Controller
             'ebookcategories' => 'required|array', // Validate categories as an array
             'ebookcategories.*' => 'required|exists:e_book_categories,id', // Ensure each category exists
 
-            'cover_image' => 'required|mimes:png,jpg,jpeg|max:51200',
-            'ebook_file' => 'required|mimes:pdf,docx|max:51200',
+            'cover_image' => 'nullable|mimes:png,jpg,jpeg|max:51200',
+            'ebook_file' => 'nullable|mimes:pdf,docx|max:51200',
         ]);
 
         $cover_image_filename = $ebook->cover_image;

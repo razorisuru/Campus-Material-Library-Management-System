@@ -248,7 +248,6 @@
                                     </script>
                                 @endif
 
-
                                 <script>
                                     // Add event listeners to input fields to remove 'is-invalid' class on user input
                                     document.querySelectorAll('.form-control').forEach(function(input) {
