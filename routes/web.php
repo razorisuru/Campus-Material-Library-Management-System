@@ -162,8 +162,9 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/summarize-pdf', [NodeJsAiPdfController::class, 'index'])->name('summarize.pdf');
+    Route::get('/chat', [NodeJsAiPdfController::class, 'chat'])->name('chat');
     Route::get('/summarize-pdf/{arg}', [NodeJsAiPdfController::class, 'arg']);
-    Route::get('/chat/{arg}', [NodeJsAiPdfController::class, 'chat']);
+    // Route::get('/chat/{arg}', [NodeJsAiPdfController::class, 'chat']);
     Route::post('/summarize-pdf', [NodeJsAiPdfController::class, 'summarize'])->name('Summarize.pdf');
     Route::post('/openai-chat', [NodeJsAiPdfController::class, 'prompt'])->name('openai.chat');
 });
