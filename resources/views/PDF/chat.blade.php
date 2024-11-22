@@ -36,7 +36,7 @@
     </div>
 
     <!-- Chat Input -->
-    <div id="chat-input-container" class="container-fluid mt-3">
+    <div id="chat-input-container" class="container-fluid mt-3 mb-3">
         <div class="input-group">
             <input type="text" id="chat-input" class="form-control" placeholder="Type your message here...">
             <button id="send-button" class="btn btn-primary">Send</button>
