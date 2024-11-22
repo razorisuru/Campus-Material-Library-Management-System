@@ -102,6 +102,13 @@
                     </a>
                 </li>
 
+                <li class="sidebar-item {{ request()->routeIs('chat') ? 'active' : '' }}">
+                    <a href="{{ route('chat') }}" class="sidebar-link">
+                        <i class="bi bi-grid-fill"></i>
+                        <span>Chat</span>
+                    </a>
+                </li>
+
                 <li class="sidebar-item">
                     <a href="{{ route('student.dashboard') }}" class="sidebar-link">
                         <i class="bi bi-grid-fill"></i>

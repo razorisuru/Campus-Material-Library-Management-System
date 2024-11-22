@@ -88,45 +88,7 @@
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title">
-                    CHAT
-                </h5>
-            </div>
 
-            @if (session('error'))
-                <p style="color: red;">{{ session('error') }}</p>
-            @endif
-            <div class="card-body">
-                <form action="{{ route('openai.chat') }}" method="POST" class="p-4 rounded shadow-sm">
-                    @csrf
-                    <div class="mb-3">
-                        <label for="prompt" class="form-label">Enter Prompt:</label>
-                        <textarea name="prompt" id="prompt" rows="5" class="form-control" placeholder="Type your prompt here..."
-                            required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Chat</button>
-                </form>
-
-
-
-                <div id="loader">
-                    <img src="{{ asset('assets/auth/compiled/svg/rings.svg') }}" class="me-4" style="width: 3rem"
-                        alt="audio">
-                    <p>Please wait...</p>
-                </div>
-
-                <div id="summary" class="mt-2 p-4 rounded shadow-sm">
-                    <!-- The summarized text will appear here -->
-                    @isset($chat)
-                        <p>{{ $chat }}</p>
-                    @endisset
-                </div>
-
-
-            </div>
-        </div>
 
 
 

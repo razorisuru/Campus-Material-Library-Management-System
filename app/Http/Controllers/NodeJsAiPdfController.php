@@ -17,6 +17,11 @@ class NodeJsAiPdfController extends Controller
         return view('PDF.summarize-pdf');
     }
 
+    public function chat()
+    {
+        return view('PDF.chat');
+    }
+
     public function summarize(Request $request)
     {
         // Validate the inputs
@@ -58,6 +63,7 @@ class NodeJsAiPdfController extends Controller
 
 
             // Send the content to the OpenAI API
+            // put the api key to env
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
             ])->timeout(300) // Increase timeout to 300 seconds
@@ -214,33 +220,5 @@ class NodeJsAiPdfController extends Controller
         return $output;
     }
 
-    public function chat($arg)
-    {
-        $nodeScriptPath = base_path('node_scripts/test.cjs');
-        $process = new Process(['C:\Program Files\nodejs\node.exe', $nodeScriptPath, $arg]);
-        $process->run();
 
-        // Check if the process was successful
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
-
-        // Get the output from the Node.js script
-        $output = $process->getOutput();
-
-        // Return the output to the view
-        return $output;
-    }
-
-    // public function chat($arg)
-    // {
-    //     $nodeScriptPath = base_path('node_scripts/chat.cjs');
-    //     $process = shell_exec('C:\Program Files\nodejs\node.exe'.' '. $nodeScriptPath.' '. $arg);
-
-    //     while($process != null){
-
-    //     }
-
-    //     return view('PDF.summarize-pdf', ['summary' => $process]);
-    // }
 }
