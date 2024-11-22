@@ -59,22 +59,38 @@ class NodeJsAiPdfController extends Controller
 
             // Send the content to the OpenAI API
             $response = Http::withHeaders([
-                'Authorization' => '',
-            ])->timeout(300) // Increase timeout to 60 seconds
-                ->post('https://api.pawan.krd/cosmosrp/v1', [
-                    'model' => 'pai-001-light',
-                    'messages' => [
+                'Content-Type' => 'application/json',
+            ])->timeout(300) // Increase timeout to 300 seconds
+                ->post('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyCuQ6OaoFlJITu9e2_1rIEbGVpFGyIUOxI', [
+                    'contents' => [
                         [
-                            'role' => 'user',
-                            'content' => $content,
+                            'parts' => [
+                                [
+                                    'text' => $content,
+                                ],
+                            ],
                         ],
                     ],
                 ]);
 
 
-            $responseData = $response->json();
-            $pageSummary = $responseData['choices'][0]['message']['content'] ?? 'No result available';
-            $summaries[] = $pageSummary;
+
+                $responseData = $response->json();
+
+                // Map the new structure to extract the content parts
+                $pageSummary = '';
+                if (!empty($responseData['candidates'][0]['content']['parts'])) {
+                    $parts = $responseData['candidates'][0]['content']['parts'];
+                    foreach ($parts as $part) {
+                        $pageSummary .= $part['text'] ?? '';
+                    }
+                } else {
+                    $pageSummary = 'No result available';
+                }
+
+                // Store the summary
+                $summaries[] = $pageSummary;
+
         }
 
         // Combine all summaries into one text
@@ -105,7 +121,7 @@ class NodeJsAiPdfController extends Controller
             $response = $client->post('chat/completions', [
                 'headers' => [
                     'Authorization' => 'pk-FlcimbdWcfAEfryzTjywVXQQjpbRpjcjITIrmuBPKuTfdXQY',
-                    'Content-Type'  => 'application/json',
+                    'Content-Type' => 'application/json',
                 ],
                 'json' => [
                     'model' => 'pai-001-light',
