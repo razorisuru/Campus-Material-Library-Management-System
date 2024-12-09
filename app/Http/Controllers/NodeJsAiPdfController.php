@@ -61,13 +61,14 @@ class NodeJsAiPdfController extends Controller
             }
             // elseif ($task === 'check_plagiarism') {
 
-
+            $apiKey = config('services.google.api_key');
+            $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=" . $apiKey;
             // Send the content to the OpenAI API
             // put the api key to env
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
             ])->timeout(300) // Increase timeout to 300 seconds
-                ->post('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyCuQ6OaoFlJITu9e2_1rIEbGVpFGyIUOxI', [
+                ->post($url, [
                     'contents' => [
                         [
                             'parts' => [
@@ -81,21 +82,21 @@ class NodeJsAiPdfController extends Controller
 
 
 
-                $responseData = $response->json();
+            $responseData = $response->json();
 
-                // Map the new structure to extract the content parts
-                $pageSummary = '';
-                if (!empty($responseData['candidates'][0]['content']['parts'])) {
-                    $parts = $responseData['candidates'][0]['content']['parts'];
-                    foreach ($parts as $part) {
-                        $pageSummary .= $part['text'] ?? '';
-                    }
-                } else {
-                    $pageSummary = 'No result available';
+            // Map the new structure to extract the content parts
+            $pageSummary = '';
+            if (!empty($responseData['candidates'][0]['content']['parts'])) {
+                $parts = $responseData['candidates'][0]['content']['parts'];
+                foreach ($parts as $part) {
+                    $pageSummary .= $part['text'] ?? '';
                 }
+            } else {
+                $pageSummary = 'No result available';
+            }
 
-                // Store the summary
-                $summaries[] = $pageSummary;
+            // Store the summary
+            $summaries[] = $pageSummary;
 
         }
 
