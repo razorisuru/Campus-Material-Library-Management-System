@@ -93,7 +93,7 @@
 
                     // Simulate AI response with AJAX
                     $.ajax({
-                        url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyDbbJhi51djngrozsQ6bJppfqio3KE0C_s",
+                        url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=",
                         type: "POST",
                         contentType: "application/json",
                         data: JSON.stringify({
