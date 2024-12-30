@@ -73,7 +73,7 @@
                         </div>
                         <div class="user-img d-flex align-items-center">
                             <div class="avatar avatar-md">
-                                <img src="{{ asset('assets/auth/compiled/jpg/1.jpg') }}">
+                                <img src="{{ asset('storage/' . Auth::user()->profile_photo_path) }}">
                             </div>
                         </div>
                     </div>
