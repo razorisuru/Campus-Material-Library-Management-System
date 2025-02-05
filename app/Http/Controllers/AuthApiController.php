@@ -23,7 +23,7 @@ class AuthApiController extends Controller
         $user = User::where('email', $request->email)->first();
         $token = $user->createToken($request->device_name)->plainTextToken;
 
-        if(!$user || !Hash::check($request->password, $user->password)) {
+        if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
         return response()->json(['success' => 'Login Approved', 'user' => $user, 'token' => $token], 200);
@@ -36,6 +36,7 @@ class AuthApiController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
+            'device_name' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -51,7 +52,7 @@ class AuthApiController extends Controller
             ]);
 
             // Generate API token
-            $token = $user->createToken('auth_token')->plainTextToken;
+            $token = $user->createToken($request->device_name)->plainTextToken;
 
             // Return success response
             return response()->json([
