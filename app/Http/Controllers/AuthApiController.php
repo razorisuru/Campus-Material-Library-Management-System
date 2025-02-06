@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class AuthApiController extends Controller
 {
@@ -21,12 +22,16 @@ class AuthApiController extends Controller
             'device_name' => 'required',
         ]);
         $user = User::where('email', $request->email)->first();
-        $token = $user->createToken($request->device_name)->plainTextToken;
 
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            throw ValidationException::withMessages([
+                'email' => ['The provided credentials are incorrect.'],
+            ]);
+            // return response()->json(['error' => 'Unauthorized'], 401);
         }
-        return response()->json(['success' => 'Login Approved', 'user' => $user, 'token' => $token], 200);
+        $token = $user->createToken($request->device_name)->plainTextToken;
+
+        return response()->json(['token' => $token], 200);
     }
 
     public function register(Request $request)
