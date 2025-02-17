@@ -20,6 +20,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::middleware('auth:sanctum')->get('/logout', function (Request $request) {
+    $request->user()->currentAccessToken()->delete();
+    return response()->noContent();
+});
+
 // Degree API
 Route::get('/degree-programmes/{id}/subjects', [DegreeProgrammeController::class, 'getSubjects']);
 
