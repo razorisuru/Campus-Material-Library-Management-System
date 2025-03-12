@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthApiController;
 use App\Http\Controllers\DegreeProgrammeController;
+use App\Http\Controllers\PdfApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +31,11 @@ Route::get('/degree-programmes/{id}/subjects', [DegreeProgrammeController::class
 
 Route::post('/login', [AuthApiController::class, 'login']);
 Route::post('/register', [AuthApiController::class, 'register']);
+
+
+Route::get('/degree/category', [PdfApiController::class, 'degreeCategory']);
+Route::get('/pdf/category', [PdfApiController::class, 'pdfCategory']);
+Route::get('/ebook/category', [PdfApiController::class, 'ebookCategory']);
+Route::get('/ebooks', [PdfApiController::class, 'ebooks']);
+Route::get('/ebook/{id}', [PdfApiController::class, 'ebook']);
+
