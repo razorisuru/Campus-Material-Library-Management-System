@@ -29,7 +29,7 @@ class GeminiAPI
 
         if ($response->failed()) {
             // Handle the error
-            return response()->json(['error' => 'API request failed'], 500);
+            return $response;
         }
         return $response->json();
 
