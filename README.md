@@ -53,7 +53,8 @@
 7. Serve the application
 
     ```bash
-    php artisan serve
+    php artisan serve or php artisan serve --host=0.0.0.0 --port=8000
+    php artisan queue:work
     ```
 
 8. Login credentials
@@ -61,5 +62,5 @@
     ````bash
     Email: isuru@mail.com
 
-    Password: Isuru@123
+    Password: 123456789
     ````
