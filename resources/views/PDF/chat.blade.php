@@ -13,7 +13,7 @@
 
         #chat-input-container {
             /* position: fixed;
-                        bottom: 0; */
+                            bottom: 0; */
         }
 
         .chat-message {
@@ -93,18 +93,18 @@
 
                     // Simulate AI response with AJAX
                     $.ajax({
-                        url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=KEY",
+                        url: "{{ route('chatBot') }}",
                         type: "POST",
                         contentType: "application/json",
                         data: JSON.stringify({
-                            contents: {
-                                parts: {
-                                    text: userInput,
-                                },
-                            },
+
+                            text: userInput,
+                            _token: "{{ csrf_token() }}",
+
                         }),
                         success: function(response) {
-                            const responseText = response.candidates[0].content.parts[0].text;
+                            const responseText = response.message;
+                            console.log("AI Response:", response.message);
                             const formattedResponse = formatAIResponse(responseText);
                             addMessage(formattedResponse, false); // Add formatted AI message
                         },

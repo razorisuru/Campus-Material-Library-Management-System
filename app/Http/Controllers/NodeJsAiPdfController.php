@@ -96,6 +96,16 @@ class NodeJsAiPdfController extends Controller
         return view('PDF.summarize-pdf', ['summary' => $finalSummary]);
     }
 
+    // public  function chatBot(Request $request){
+    //     $prompt = $request->input('text');
+
+    //     $response = GeminiAPI::calAPI($prompt);
+
+    //     $responseData = $response['candidates'][0]['content']['parts'];
+
+    //     return response()->json(['message' => $responseData]);
+    // }
+
 
     public function prompt(Request $request)
     {
