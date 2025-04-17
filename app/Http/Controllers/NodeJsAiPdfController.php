@@ -6,10 +6,8 @@ use App\Services\GeminiAPI;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Smalot\PdfParser\Parser;
-use Illuminate\Support\Facades\Http;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Exception\ProcessTimedOutException;
 
 class NodeJsAiPdfController extends Controller
 {
