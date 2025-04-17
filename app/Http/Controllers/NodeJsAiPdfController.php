@@ -61,8 +61,8 @@ class NodeJsAiPdfController extends Controller
             }
             // elseif ($task === 'check_plagiarism') {
 
-            $apiKey = config('services.google.api_key');
-            $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=" . $apiKey;
+            $apiKey = env('GEMINI_API_KEY');
+            $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" . $apiKey;
             // Send the content to the OpenAI API
             // put the api key to env
             $response = Http::withHeaders([
@@ -92,7 +92,7 @@ class NodeJsAiPdfController extends Controller
                     $pageSummary .= $part['text'] ?? '';
                 }
             } else {
-                $pageSummary = 'No result available';
+                $pageSummary = $response;
             }
 
             // Store the summary

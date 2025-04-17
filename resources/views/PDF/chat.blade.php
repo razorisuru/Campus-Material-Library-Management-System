@@ -13,7 +13,7 @@
 
         #chat-input-container {
             /* position: fixed;
-                    bottom: 0; */
+                        bottom: 0; */
         }
 
         .chat-message {
@@ -93,7 +93,7 @@
 
                     // Simulate AI response with AJAX
                     $.ajax({
-                        url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=",
+                        url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key={{ env('GOOGLE_API_KEY') }}",
                         type: "POST",
                         contentType: "application/json",
                         data: JSON.stringify({
@@ -108,8 +108,20 @@
                             const formattedResponse = formatAIResponse(responseText);
                             addMessage(formattedResponse, false); // Add formatted AI message
                         },
-                        error: function() {
-                            addMessage("Error: Unable to get response.", false);
+                        error: function(xhr, status, error) {
+                            let errorMessage = "Error: " + xhr.status + " " + xhr.statusText;
+                            if (xhr.responseText) {
+                                try {
+                                    const responseJson = JSON.parse(xhr.responseText);
+                                    if (responseJson.error && responseJson.error.message) {
+                                        errorMessage += " - " + responseJson.error.message;
+                                    }
+                                } catch (e) {
+                                    errorMessage += " - " + xhr.responseText;
+                                }
+                            }
+                            addMessage(errorMessage, false);
+                            console.error("Detailed error:", xhr);
                         },
                     });
                 }

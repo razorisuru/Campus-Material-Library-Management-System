@@ -169,3 +169,5 @@ Route::middleware([
     Route::post('/openai-chat', [NodeJsAiPdfController::class, 'prompt'])->name('openai.chat');
 });
 
+// php artisan serve --host=0.0.0.0 --port=8000
+
