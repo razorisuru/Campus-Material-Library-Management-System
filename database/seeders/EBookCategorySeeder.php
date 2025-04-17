@@ -3,8 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\EBookCategory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\EBookCategoryJoin;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class EBookCategorySeeder extends Seeder
 {
@@ -28,6 +29,62 @@ class EBookCategorySeeder extends Seeder
 
         foreach ($categories as $category) {
             EBookCategory::create($category);
+        }
+
+
+        $ebook_categories = [
+            [
+                'ebook_id' => 1,
+                'category_id' => 1,
+            ],
+            [
+                'ebook_id' => 2,
+                'category_id' => 2,
+            ],
+            [
+                'ebook_id' => 3,
+                'category_id' => 3,
+            ],
+            [
+                'ebook_id' => 1,
+                'category_id' => 2,
+            ],
+            [
+                'ebook_id' => 2,
+                'category_id' => 3,
+            ],
+            [
+                'ebook_id' => 3,
+                'category_id' => 1,
+            ],
+            [
+                'ebook_id' => 1,
+                'category_id' => 3,
+            ],
+            [
+                'ebook_id' => 2,
+                'category_id' => 1,
+            ],
+            [
+                'ebook_id' => 3,
+                'category_id' => 2,
+            ],
+            [
+                'ebook_id' => 1,
+                'category_id' => 4,
+            ],
+            [
+                'ebook_id' => 2,
+                'category_id' => 5,
+            ],
+            [
+                'ebook_id' => 3,
+                'category_id' => 6,
+            ],
+        ];
+
+        foreach ($ebook_categories as $ebook_category) {
+            EBookCategoryJoin::create($ebook_category);
         }
     }
 }

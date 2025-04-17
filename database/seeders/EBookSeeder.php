@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\EBook;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class EBookSeeder extends Seeder
 {
@@ -43,8 +42,13 @@ class EBookSeeder extends Seeder
             ],
         ];
 
+
+
+
         foreach ($ebooks as $ebook) {
             EBook::create($ebook);
         }
+
+
     }
 }
