@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\GeminiAPI;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Smalot\PdfParser\Parser;
@@ -61,28 +62,10 @@ class NodeJsAiPdfController extends Controller
             }
             // elseif ($task === 'check_plagiarism') {
 
-            $apiKey = env('GEMINI_API_KEY');
-            $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" . $apiKey;
-            // Send the content to the OpenAI API
-            // put the api key to env
-            $response = Http::withHeaders([
-                'Content-Type' => 'application/json',
-            ])->timeout(300) // Increase timeout to 300 seconds
-                ->post($url, [
-                    'contents' => [
-                        [
-                            'parts' => [
-                                [
-                                    'text' => $content,
-                                ],
-                            ],
-                        ],
-                    ],
-                ]);
 
 
 
-            $responseData = $response->json();
+            $responseData = GeminiAPI::calAPI($content);
 
             // Map the new structure to extract the content parts
             $pageSummary = '';
@@ -92,7 +75,7 @@ class NodeJsAiPdfController extends Controller
                     $pageSummary .= $part['text'] ?? '';
                 }
             } else {
-                $pageSummary = $response;
+                $pageSummary = $responseData ;
             }
 
             // Store the summary
