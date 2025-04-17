@@ -61,9 +61,9 @@ class NodeJsAiPdfController extends Controller
             // elseif ($task === 'check_plagiarism') {
 
 
+            $gpi = new GeminiAPI();
 
-
-            $responseData = GeminiAPI::calAPI($content);
+            $responseData = $gpi->calAPI($content);
 
             // Map the new structure to extract the content parts
             $pageSummary = '';
@@ -73,7 +73,7 @@ class NodeJsAiPdfController extends Controller
                     $pageSummary .= $part['text'] ?? '';
                 }
             } else {
-                $pageSummary = $responseData ;
+                $pageSummary = $responseData;
             }
 
             // Store the summary
@@ -94,6 +94,20 @@ class NodeJsAiPdfController extends Controller
         return view('PDF.summarize-pdf', ['summary' => $finalSummary]);
     }
 
+    public function chatBot(Request $request)
+    {
+        $text = $request->input(key: 'text');
+
+        $gpi = new GeminiAPI();
+
+        $response = $gpi->calAPI($text);
+
+        $responseData = $response['candidates'][0]['content']['parts'][0]['text'];
+
+        return response()->json([
+            'message' => $responseData
+        ]);
+    }
 
     public function prompt(Request $request)
     {

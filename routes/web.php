@@ -167,6 +167,9 @@ Route::middleware([
     // Route::get('/chat/{arg}', [NodeJsAiPdfController::class, 'chat']);
     Route::post('/summarize-pdf', [NodeJsAiPdfController::class, 'summarize'])->name('Summarize.pdf');
     Route::post('/openai-chat', [NodeJsAiPdfController::class, 'prompt'])->name('openai.chat');
+
+    Route::post('/chat-bot', [NodeJsAiPdfController::class, 'chatBot'])->name('chat.bot');
+
 });
 
 // php artisan serve --host=0.0.0.0 --port=8000
