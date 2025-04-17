@@ -164,7 +164,7 @@ Route::middleware([
     Route::get('/summarize-pdf', [NodeJsAiPdfController::class, 'index'])->name('summarize.pdf');
     Route::get('/chat', [NodeJsAiPdfController::class, 'chat'])->name('chat');
     Route::get('/summarize-pdf/{arg}', [NodeJsAiPdfController::class, 'arg']);
-    Route::post('/chat', [NodeJsAiPdfController::class, 'chatBot'])->name('chatBot');
+    Route::post('/chat-bot', [NodeJsAiPdfController::class, 'chatBot'])->name('chatBot');
     Route::post('/summarize-pdf', [NodeJsAiPdfController::class, 'summarize'])->name('Summarize.pdf');
     Route::post('/openai-chat', [NodeJsAiPdfController::class, 'prompt'])->name('openai.chat');
 });
