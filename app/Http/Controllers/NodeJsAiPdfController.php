@@ -63,7 +63,7 @@ class NodeJsAiPdfController extends Controller
 
             $gpi = new GeminiAPI();
 
-            $responseData = $gpi->calAPI($content);
+            $responseData = $gpi->callAPI($content);
 
             // Map the new structure to extract the content parts
             $pageSummary = '';
@@ -100,7 +100,7 @@ class NodeJsAiPdfController extends Controller
 
         $gpi = new GeminiAPI();
 
-        $response = $gpi->calAPI($text);
+        $response = $gpi->callAPI($text);
 
         $responseData = $response['candidates'][0]['content']['parts'][0]['text'];
 

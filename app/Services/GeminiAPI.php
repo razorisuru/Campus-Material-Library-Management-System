@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http;
 
 class GeminiAPI
 {
-    public function calAPI($prompt)
+    public function callAPI($prompt)
     {
         $apiKey = env('GEMINI_API_KEY');
         $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" . $apiKey;
