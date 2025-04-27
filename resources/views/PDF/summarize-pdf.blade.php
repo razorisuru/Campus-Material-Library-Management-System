@@ -22,24 +22,29 @@
             <div class="card-body">
                 <form id="pdfForm" enctype="multipart/form-data" class="p-4 rounded shadow-sm">
                     @csrf
-                    <div class="mb-3">
-                        <label for="pdf" class="form-label">Upload PDF:</label>
-                        <input type="file" name="pdf" id="pdf" class="form-control" required>
-                    </div>
+                    <div class="row align-items-end">
+                        <div class="col-md-5 mb-3">
+                            <label for="pdf" class="form-label">Upload PDF:</label>
+                            <input type="file" name="pdf" id="pdf" class="form-control" required>
+                        </div>
 
-                    <div class="mb-3">
-                        <label for="task" class="form-label">Select Task:</label>
-                        <select name="task" id="task" class="form-select" required>
-                            <option selected value="summarize">Summarize</option>
-                            <option value="paraphrase">Paraphrase</option>
-                            <option value="check_ai_written">Check AI-Written Content</option>
-                            <option value="extract_text">Extract Text</option>
-                            <option value="translate">Translate To Sinhala</option>
-                        </select>
-                    </div>
+                        <div class="col-md-5 mb-3">
+                            <label for="task" class="form-label">Select Task:</label>
+                            <select name="task" id="task" class="form-select" required>
+                                <option selected value="summarize">Summarize</option>
+                                <option value="paraphrase">Paraphrase</option>
+                                <option value="check_ai_written">Check AI-Written Content</option>
+                                <option value="extract_text">Extract Text</option>
+                                <option value="translate">Translate To Sinhala</option>
+                            </select>
+                        </div>
 
-                    <button class="btn btn-warning w-100" type="submit">Submit</button>
+                        <div class="col-md-2 mb-3 d-grid">
+                            <button class="btn btn-warning" type="submit">Submit</button>
+                        </div>
+                    </div>
                 </form>
+
 
 
                 <div id="loader">
