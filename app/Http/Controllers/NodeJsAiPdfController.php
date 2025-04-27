@@ -63,6 +63,11 @@ class NodeJsAiPdfController extends Controller
 
             $gpi = new GeminiAPI();
 
+            // if this class does not work, run this and dont ask why
+            // run this command when the AI IS NOT WORKING
+            // if anyhing is not working, run this command
+            // php artisan config:clear
+
             $responseData = $gpi->callAPI($content);
 
             // Map the new structure to extract the content parts
