@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EbookController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\NodeJsAiPdfController;
+use App\Http\Controllers\AiFeatureController;
 use App\Http\Controllers\AddSubjectDegController;
 use App\Http\Controllers\EbookCategoryController;
 use App\Http\Controllers\DegreeProgrammeController;
@@ -161,14 +161,14 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/summarize-pdf', [NodeJsAiPdfController::class, 'index'])->name('summarize.pdf');
-    Route::get('/chat', [NodeJsAiPdfController::class, 'chat'])->name('chat');
-    Route::get('/summarize-pdf/{arg}', [NodeJsAiPdfController::class, 'arg']);
-    // Route::get('/chat/{arg}', [NodeJsAiPdfController::class, 'chat']);
-    Route::post('/summarize-pdf', [NodeJsAiPdfController::class, 'summarize'])->name('Summarize.pdf');
-    Route::post('/openai-chat', [NodeJsAiPdfController::class, 'prompt'])->name('openai.chat');
+    Route::get('/summarize-pdf', [AiFeatureController::class, 'index'])->name('summarize.pdf');
+    Route::get('/chat', [AiFeatureController::class, 'chat'])->name('chat');
+    Route::get('/summarize-pdf/{arg}', [AiFeatureController::class, 'arg']);
+    // Route::get('/chat/{arg}', [AiFeatureController::class, 'chat']);
+    Route::post('/summarize-pdf', [AiFeatureController::class, 'summarize'])->name('Summarize.pdf');
+    Route::post('/openai-chat', [AiFeatureController::class, 'prompt'])->name('openai.chat');
 
-    Route::post('/chat-bot', [NodeJsAiPdfController::class, 'chatBot'])->name('chat.bot');
+    Route::post('/chat-bot', [AiFeatureController::class, 'chatBot'])->name('chat.bot');
 
 });
 

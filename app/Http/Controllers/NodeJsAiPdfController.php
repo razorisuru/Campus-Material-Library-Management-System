@@ -9,7 +9,7 @@ use Smalot\PdfParser\Parser;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
-class NodeJsAiPdfController extends Controller
+class AiFeatureController extends Controller
 {
     public function index()
     {
