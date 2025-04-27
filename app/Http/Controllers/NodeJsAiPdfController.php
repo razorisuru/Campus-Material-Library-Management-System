@@ -21,6 +21,13 @@ class NodeJsAiPdfController extends Controller
         return view('PDF.chat');
     }
 
+    protected $gpi;
+
+    public function __construct()
+    {
+        $this->gpi = new GeminiAPI();
+    }
+
     public function summarize(Request $request)
     {
         // Validate the inputs
@@ -61,14 +68,12 @@ class NodeJsAiPdfController extends Controller
             // elseif ($task === 'check_plagiarism') {
 
 
-            $gpi = new GeminiAPI();
-
             // if this class does not work, run this and dont ask why
             // run this command when the AI IS NOT WORKING
             // if anyhing is not working, run this command
             // php artisan config:clear
 
-            $responseData = $gpi->callAPI($content);
+            $responseData = $this->gpi->callAPI($content);
 
             // Map the new structure to extract the content parts
             $pageSummary = '';
@@ -103,9 +108,9 @@ class NodeJsAiPdfController extends Controller
     {
         $text = $request->input(key: 'text');
 
-        $gpi = new GeminiAPI();
+        // $gpi = new GeminiAPI();
 
-        $response = $gpi->callAPI($text);
+        $response = $this->gpi->callAPI($text);
 
         $responseData = $response['candidates'][0]['content']['parts'][0]['text'];
 
