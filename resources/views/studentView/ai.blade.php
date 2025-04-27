@@ -113,7 +113,7 @@
                     <div class="layout-content-container flex flex-col flex-1">
                         <div class="flex flex-wrap justify-between gap-3 p-4">
                             <p class="text-[#0e141b] tracking-light text-[32px] font-bold leading-tight min-w-72">
-                                PDF TOOLS</p>
+                                AI Help</p>
                         </div>
 
 
