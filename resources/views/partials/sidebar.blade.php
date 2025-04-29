@@ -46,6 +46,14 @@
         <div class="sidebar-menu">
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
+                <li class="sidebar-item  {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                    <a href="{{ route('dashboard') }}" class="sidebar-link">
+                        <i class="bi bi-stack"></i>
+                        <span>Dashboard</span>
+                    </a>
+
+                </li>
+
                 @if (Auth::user()->role == 'admin')
                     <li class="sidebar-item {{ request()->routeIs('admin.view') ? 'active' : '' }}">
                         <a href="{{ route('admin.view') }}" class="sidebar-link">
@@ -115,6 +123,15 @@
                         <span>Student</span>
                     </a>
                 </li>
+
+                @if (Auth::user()->role == 'admin')
+                    <li class="sidebar-item {{ request()->routeIs('admin.view') ? 'active' : '' }}">
+                        <a href="{{ route('admin.view') }}" class="sidebar-link">
+                            <i class="bi bi-grid-fill"></i>
+                            <span>Manage Dashboard</span>
+                        </a>
+                    </li>
+                @endif
 
 
                 {{-- <li class="sidebar-item  has-sub">
