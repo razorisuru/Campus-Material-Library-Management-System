@@ -24,21 +24,21 @@
                 <!-- Filters -->
                 <div class="mb-4">
                     <div class="mb-2 d-flex flex-wrap gap-2">
-                        <div id="allCategoryButton" class="all-category-button btn btn-light text-dark">
+                        <div id="allCategoryButton" class="all-category-button btn btn-info btn-sm">
                             All Categories
                         </div>
                         @foreach ($pdfCategories as $pdfCategory)
-                            <div class="category-button btn btn-light" data-category="{{ $pdfCategory->name }}">
+                            <div class="category-button btn btn-info btn-sm" data-category="{{ $pdfCategory->name }}">
                                 {{ $pdfCategory->name }}
                             </div>
                         @endforeach
                     </div>
                     <div class="mb-2 d-flex flex-wrap gap-2">
-                        <div id="allDegreeButton" class="all-degree-button btn btn-success ">
+                        <div id="allDegreeButton" class="all-degree-button btn btn-success btn-sm">
                             All Degrees
                         </div>
                         @foreach ($degrees as $degree)
-                            <div class="degree-button btn btn-success " data-degree="{{ $degree->name }}">
+                            <div class="degree-button btn btn-success btn-sm" data-degree="{{ $degree->name }}">
                                 {{ $degree->name }}
                             </div>
                         @endforeach
