@@ -23,7 +23,7 @@ class STLearningMaterialsController extends Controller
             [
                 'label' => 'Users',
                 'value' => User::count(),
-                'route' => route('student.dashboard'),
+                'route' => route('admin.view'),
             ],
             [
                 'label' => 'PDFs',
@@ -43,7 +43,7 @@ class STLearningMaterialsController extends Controller
             [
                 'label' => 'Upload PDF',
                 'value' => 1,
-                'route' => route('student.upload'),
+                'route' => route('upload.view'),
             ],
             [
                 'label' => 'GPA Cal',
