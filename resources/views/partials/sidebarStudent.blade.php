@@ -47,10 +47,16 @@
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
 
+                <li class="sidebar-item  {{ request()->routeIs('student.dashboard') ? 'active' : '' }}">
+                    <a href="{{ route('student.dashboard') }}" class="sidebar-link">
+                        <i class="bi bi-stack"></i>
+                        <span>Dashboard</span>
+                    </a>
+
+                </li>
 
 
-
-                <li class="sidebar-item  {{ request()->routeIs('upload.view', 'student.pdf') ? 'active' : '' }}">
+                <li class="sidebar-item  {{ request()->routeIs('student.pdf') ? 'active' : '' }}">
                     <a href="{{ route('student.pdf') }}" class="sidebar-link">
                         <i class="bi bi-stack"></i>
                         <span>PDF</span>
@@ -59,8 +65,8 @@
                 </li>
 
                 <li
-                    class="sidebar-item  {{ request()->routeIs('ebook.UploadView', 'ebook.ManageView') ? 'active' : '' }}">
-                    <a href="{{ route('ebook.ManageView') }}" class="sidebar-link">
+                    class="sidebar-item  {{ request()->routeIs('student.ebook') ? 'active' : '' }}">
+                    <a href="{{ route('student.ebook') }}" class="sidebar-link">
                         <i class="bi bi-stack"></i>
                         <span>EBOOK</span>
                     </a>
@@ -68,18 +74,26 @@
                 </li>
 
                 <li
-                    class="sidebar-item  {{ request()->routeIs('ebook.UploadView', 'ai') ? 'active' : '' }}">
-                    <a href="{{ route('ai') }}" class="sidebar-link">
+                    class="sidebar-item  {{ request()->routeIs('student.ai') ? 'active' : '' }}">
+                    <a href="{{ route('student.ai') }}" class="sidebar-link">
                         <i class="bi bi-stack"></i>
                         <span>AI </span>
                     </a>
 
                 </li>
 
-                <li class="sidebar-item  {{ request()->routeIs('upload.view', 'student.upload') ? 'active' : '' }}">
+                <li class="sidebar-item  {{ request()->routeIs( 'student.upload') ? 'active' : '' }}">
                     <a href="{{ route('student.upload') }}" class="sidebar-link">
                         <i class="bi bi-stack"></i>
                         <span>PDF Upload</span>
+                    </a>
+
+                </li>
+
+                <li class="sidebar-item  {{ request()->routeIs( 'student.upload') ? 'active' : '' }}">
+                    <a href="{{ route('student.upload') }}" class="sidebar-link">
+                        <i class="bi bi-stack"></i>
+                        <span>GPA Cal</span>
                     </a>
 
                 </li>

@@ -33,17 +33,22 @@ class STLearningMaterialsController extends Controller
             [
                 'label' => 'EBooks',
                 'value' => EBook::count(),
-                'route' => route('ebook'),
+                'route' => route('student.ebook'),
             ],
             [
                 'label' => 'AI',
                 'value' => 2,
-                'route' => route('ai'), // Replace with your actual route name
+                'route' => route('student.ai'),
             ],
             [
                 'label' => 'Upload PDF',
                 'value' => 1,
-                'route' => route('student.upload'), // Replace with your actual route name
+                'route' => route('student.upload'),
+            ],
+            [
+                'label' => 'GPA Cal',
+                'value' => 1,
+                'route' => route('student.upload'),
             ],
 
         ];
@@ -104,4 +109,12 @@ class STLearningMaterialsController extends Controller
         $categories = Category::all();
         return view('studentDashboard.upload', compact(['subjects', 'degrees', 'categories']));
     }
+
+    public function viewAI()
+    {
+        return view('studentDashboard.pdf-ai');
+    }
+
+
+
 }

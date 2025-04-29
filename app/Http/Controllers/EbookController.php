@@ -13,7 +13,8 @@ class EbookController extends Controller
     {
         $ebooks = EBook::with('categories')->get(); // Load categories with ebooks
         $ebookCategories = EBookCategory::all(); // Load categories with ebooks
-        return view('studentView.ebook', compact(['ebooks', 'ebookCategories']));
+        return view('studentDashboard.ebook', compact(['ebooks', 'ebookCategories']));
+        // return($ebookCategories);
     }
 
     public function ai()
