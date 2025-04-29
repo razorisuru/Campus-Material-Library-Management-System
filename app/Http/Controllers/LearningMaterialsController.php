@@ -33,6 +33,11 @@ class LearningMaterialsController extends Controller
             'category' => 'required',
         ]);
 
+        $status = 'approved';
+        if (auth()->user()->role == 'student') {
+            $status = 'pending';
+        }
+
         if ($files = $request->file('files')) {
             foreach ($files as $key => $file) {
                 // $extension = $file->getClientOriginalExtension();
@@ -46,7 +51,7 @@ class LearningMaterialsController extends Controller
                     'category_id' => $request->category,
                     'file_path' => $path . $filename,
                     'uploaded_by' => Auth()->user()->id,
-                    'status' => 'approved',
+                    'status' => $status,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];

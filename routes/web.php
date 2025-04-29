@@ -79,7 +79,6 @@ Route::middleware([
 ])->group(function () {
     Route::get('/pdf-upload', [LearningMaterialsController::class, 'index'])->name('upload.view');
     Route::get('/pdf-view', [LearningMaterialsController::class, 'view'])->name('upload.viewPage');
-    Route::post('/pdf-upload', [LearningMaterialsController::class, 'upload'])->name('upload.store');
     Route::get('/pdf-edit/{id}', [LearningMaterialsController::class, 'EditView'])->name('upload.EditPage');
     Route::patch('/pdf-edit/{id}', [LearningMaterialsController::class, 'update'])->name('upload.update');
     Route::delete('/upload/{id}', [LearningMaterialsController::class, 'destroy'])->name('upload.destroy');
@@ -154,9 +153,11 @@ Route::middleware([
     Route::get('/student/dashboard', [STLearningMaterialsController::class, 'stDashboard'])->name('student.dashboard');
     Route::get('/student/pdf', [STLearningMaterialsController::class, 'index'])->name('student.pdf');
     Route::get('/student-upload', [STLearningMaterialsController::class, 'view'])->name('student.upload');
-    Route::post('/student-dashboard', [STLearningMaterialsController::class, 'upload'])->name('StUpload.store');
+    // Route::post('/student-dashboard', [STLearningMaterialsController::class, 'upload'])->name('StUpload.store');
     Route::get('/ebook', [EbookController::class, 'index'])->name('ebook');
     Route::get('/ai', [EbookController::class, 'ai'])->name('ai');
+
+    Route::post('/pdf-upload', [LearningMaterialsController::class, 'upload'])->name('upload.store');
 });
 
 

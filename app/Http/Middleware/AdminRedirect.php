@@ -19,7 +19,7 @@ class AdminRedirect
         if (Auth()->user()->role == 'admin' || Auth()->user()->role == 'teacher') {
             return $next($request);
         } else if (Auth()->user()->role == 'student') {
-            return redirect('/student-dashboard');
+            return redirect()->route('student.dashboard');
         }
         abort(401);
     }

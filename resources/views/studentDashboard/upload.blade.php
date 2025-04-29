@@ -52,7 +52,7 @@
                                     </div>
                                 @endif
 
-                                <form method="POST" action="{{ route('StUpload.store') }}" enctype="multipart/form-data">
+                                <form method="POST" action="{{ route('upload.store') }}" enctype="multipart/form-data">
                                     @csrf
                                     <fieldset class="form-group">
                                         <label for="degreeSelect" class="mb-2">Select Degree Programme</label>
