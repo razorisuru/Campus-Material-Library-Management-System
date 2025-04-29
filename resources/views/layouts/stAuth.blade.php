@@ -29,7 +29,7 @@
     <script src="{{ asset('assets/auth/static/js/pages/sweetalert2.js') }}"></script>
     <script src="{{ asset('assets/auth/jquery-3.6.0.min.js') }}"></script>
     <div id="app">
-        @include('partials.sidebar')
+        @include('partials.sidebarStudent')
         <div id="main">
             <header>
                 @include('partials.navbar')
