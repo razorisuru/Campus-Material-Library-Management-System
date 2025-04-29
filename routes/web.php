@@ -152,7 +152,7 @@ Route::middleware([
 ])->group(function () {
     Route::get('/student/dashboard', [STLearningMaterialsController::class, 'stDashboard'])->name('student.dashboard');
     Route::get('/student/pdf', [STLearningMaterialsController::class, 'index'])->name('student.pdf');
-    Route::get('/student-upload', [STLearningMaterialsController::class, 'view'])->name('student.upload');
+    Route::get('/student/upload', [STLearningMaterialsController::class, 'view'])->name('student.upload');
     Route::get('/student/ai', [STLearningMaterialsController::class, 'viewAI'])->name('student.ai');
     // Route::post('/student-dashboard', [STLearningMaterialsController::class, 'upload'])->name('StUpload.store');
     Route::get('/stdent/ebook', [EbookController::class, 'index'])->name('student.ebook');
