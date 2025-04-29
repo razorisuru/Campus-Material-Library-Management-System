@@ -10,13 +10,18 @@ use App\Models\LearningMaterial;
 
 class STLearningMaterialsController extends Controller
 {
+    public function stDashboard()
+    {
+        return view('studentDashboard.index');
+    }
+
     public function index()
     {
         // $subjects = Subjects::all();
         $pdfCategories = Category::get();
         $materials = LearningMaterial::with(['subjects', 'user'])->where('status', '=', 'approved')->get();
         $degrees = DegreeProgramme::all();
-        return view('studentView.index', compact(['materials', 'pdfCategories', 'degrees']));
+        return view('studentDashboard.pdf', compact(['materials', 'pdfCategories', 'degrees']));
     }
 
     public function upload(Request $request)

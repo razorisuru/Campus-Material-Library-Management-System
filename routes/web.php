@@ -151,7 +151,8 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/student-dashboard', [STLearningMaterialsController::class, 'index'])->name('student.dashboard');
+    Route::get('/student/dashboard', [STLearningMaterialsController::class, 'stDashboard'])->name('student.dashboard');
+    Route::get('/student/pdf', [STLearningMaterialsController::class, 'index'])->name('student.pdf');
     Route::get('/student-upload', [STLearningMaterialsController::class, 'view'])->name('student.upload');
     Route::post('/student-dashboard', [STLearningMaterialsController::class, 'upload'])->name('StUpload.store');
     Route::get('/ebook', [EbookController::class, 'index'])->name('ebook');
