@@ -210,7 +210,7 @@
                     <div class="card-body py-4 px-4">
                         <div class="d-flex align-items-center">
                             <div class="avatar avatar-xl">
-                                <img src="{{ asset('assets/auth/compiled/jpg/1.jpg') }}" alt="Face 1">
+                                <img src="{{ asset('storage/' . Auth::user()->profile_photo_path) }}">
                             </div>
                             <div class="ms-3 name">
                                 <h5 class="font-bold">{{ Auth::user()->name }}</h5>

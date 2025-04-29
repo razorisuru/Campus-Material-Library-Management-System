@@ -14,6 +14,7 @@ class Subject extends Model
         'subject_code',
         'name',
         'description',
+        'credits',
     ];
 
     public function learningMaterials()

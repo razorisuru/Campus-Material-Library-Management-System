@@ -3,7 +3,7 @@
         <div class="sidebar-header position-relative">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="logo">
-                    <a href="{{ route('dashboard') }}"> <img class="img"
+                    <a href="{{ route('student.dashboard') }}"> <img class="img"
                             src="{{ asset('assets/auth/static/images/logo/logo.png') }}" alt=""
                             style="width: 150px; height: auto;">
                     </a>
@@ -46,27 +46,18 @@
         <div class="sidebar-menu">
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
-                <li class="sidebar-item  {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-                    <a href="{{ route('dashboard') }}" class="sidebar-link">
+
+                <li class="sidebar-item  {{ request()->routeIs('student.dashboard') ? 'active' : '' }}">
+                    <a href="{{ route('student.dashboard') }}" class="sidebar-link">
                         <i class="bi bi-stack"></i>
                         <span>Dashboard</span>
                     </a>
 
                 </li>
 
-                @if (Auth::user()->role == 'admin')
-                    <li class="sidebar-item {{ request()->routeIs('admin.view') ? 'active' : '' }}">
-                        <a href="{{ route('admin.view') }}" class="sidebar-link">
-                            <i class="bi bi-grid-fill"></i>
-                            <span>Admin</span>
-                        </a>
-                    </li>
-                @endif
 
-
-
-                <li class="sidebar-item  {{ request()->routeIs('upload.view', 'upload.viewPage') ? 'active' : '' }}">
-                    <a href="{{ route('upload.viewPage') }}" class="sidebar-link">
+                <li class="sidebar-item  {{ request()->routeIs('student.pdf') ? 'active' : '' }}">
+                    <a href="{{ route('student.pdf') }}" class="sidebar-link">
                         <i class="bi bi-stack"></i>
                         <span>PDF</span>
                     </a>
@@ -74,64 +65,40 @@
                 </li>
 
                 <li
-                    class="sidebar-item  {{ request()->routeIs('ebook.UploadView', 'ebook.ManageView') ? 'active' : '' }}">
-                    <a href="{{ route('ebook.ManageView') }}" class="sidebar-link">
+                    class="sidebar-item  {{ request()->routeIs('student.ebook') ? 'active' : '' }}">
+                    <a href="{{ route('student.ebook') }}" class="sidebar-link">
                         <i class="bi bi-stack"></i>
                         <span>EBOOK</span>
                     </a>
 
                 </li>
-                @if (Auth::user()->role == 'admin')
-                    <li class="sidebar-item {{ request()->routeIs('category.view') ? 'active' : '' }}">
-                        <a href="{{ route('category.view') }}" class="sidebar-link">
-                            <i class="bi bi-stack"></i>
-                            <span>PDF Category</span>
-                        </a>
-                    </li>
 
-                    <li class="sidebar-item {{ request()->routeIs('ebook-category.view') ? 'active' : '' }}">
-                        <a href="{{ route('ebook-category.view') }}" class="sidebar-link">
-                            <i class="bi bi-stack"></i>
-                            <span>EBOOK Category</span>
-                        </a>
-                    </li>
-                @endif
-                <li class="sidebar-item {{ request()->routeIs('degree.show') ? 'active' : '' }}">
-                    <a href="{{ route('degree.show') }}" class="sidebar-link">
-                        <i class="bi bi-grid-fill"></i>
-                        <span>Manage Sub</span>
+                <li
+                    class="sidebar-item  {{ request()->routeIs('student.ai') ? 'active' : '' }}">
+                    <a href="{{ route('student.ai') }}" class="sidebar-link">
+                        <i class="bi bi-stack"></i>
+                        <span>AI </span>
                     </a>
+
                 </li>
 
-                <li class="sidebar-item {{ request()->routeIs('summarize.pdf') ? 'active' : '' }}">
-                    <a href="{{ route('summarize.pdf') }}" class="sidebar-link">
-                        <i class="bi bi-grid-fill"></i>
-                        <span>Summerize</span>
+                <li class="sidebar-item  {{ request()->routeIs( 'student.upload') ? 'active' : '' }}">
+                    <a href="{{ route('student.upload') }}" class="sidebar-link">
+                        <i class="bi bi-stack"></i>
+                        <span>PDF Upload</span>
                     </a>
+
                 </li>
 
-                <li class="sidebar-item {{ request()->routeIs('chat') ? 'active' : '' }}">
-                    <a href="{{ route('chat') }}" class="sidebar-link">
-                        <i class="bi bi-grid-fill"></i>
-                        <span>Chat</span>
+                <li class="sidebar-item  {{ request()->routeIs( 'student.upload') ? 'active' : '' }}">
+                    <a href="{{ route('student.upload') }}" class="sidebar-link">
+                        <i class="bi bi-stack"></i>
+                        <span>GPA Cal</span>
                     </a>
+
                 </li>
 
-                <li class="sidebar-item">
-                    <a href="{{ route('student.dashboard') }}" class="sidebar-link">
-                        <i class="bi bi-grid-fill"></i>
-                        <span>Student</span>
-                    </a>
-                </li>
 
-                @if (Auth::user()->role == 'admin')
-                    <li class="sidebar-item {{ request()->routeIs('admin.view') ? 'active' : '' }}">
-                        <a href="{{ route('admin.view') }}" class="sidebar-link">
-                            <i class="bi bi-grid-fill"></i>
-                            <span>Manage Dashboard</span>
-                        </a>
-                    </li>
-                @endif
 
 
                 {{-- <li class="sidebar-item  has-sub">

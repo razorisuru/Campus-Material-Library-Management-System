@@ -5,33 +5,12 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('student.dashboard') }}">
+                    <a href="{{ route('dashboard') }}">
                         <x-application-mark class="block h-9 w-auto" />
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="{{ route('student.dashboard') }}" :active="request()->routeIs('student.dashboard')">
-                        {{ __('PDF View ') }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="{{ route('ebook') }}" :active="request()->routeIs('ebook')">
-                        {{ __('Ebooks') }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="{{ route('student.upload') }}" :active="request()->routeIs('student.upload')">
-                        {{ __('Upload') }}
-                    </x-nav-link>
-                </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="{{ route('ai') }}" :active="request()->routeIs('ai')">
-                        {{ __('PDF Tools') }}
-                    </x-nav-link>
-                </div>
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -166,20 +145,7 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link href="{{ route('student.dashboard') }}" :active="request()->routeIs('student.dashboard')">
-                {{ __('PDF View') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ route('ebook') }}" :active="request()->routeIs('Ebook')">
-                {{ __('Ebooks') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ route('student.upload') }}" :active="request()->routeIs('student.upload')">
-                {{ __('Upload') }}
-            </x-responsive-nav-link>
 
-
-            <x-responsive-nav-link href="{{ route('ai') }}" :active="request()->routeIs('ai')">
-                {{ __('PDF Tools') }}
-            </x-responsive-nav-link>
 
         </div>
 

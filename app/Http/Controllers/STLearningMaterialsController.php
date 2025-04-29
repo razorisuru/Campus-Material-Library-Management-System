@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\EBook;
 use App\Models\Subject;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -10,13 +12,58 @@ use App\Models\LearningMaterial;
 
 class STLearningMaterialsController extends Controller
 {
+    public function stDashboard()
+    {
+        $userCount = User::count();
+        $EBookCount = EBook::count();
+        $pdfCount = LearningMaterial::count();
+        $ebooks = EBook::latest()->take(5)->get();
+
+        $cardData = [
+            [
+                'label' => 'Users',
+                'value' => User::count(),
+                'route' => route('student.dashboard'),
+            ],
+            [
+                'label' => 'PDFs',
+                'value' => LearningMaterial::count(),
+                'route' => route('student.pdf'),
+            ],
+            [
+                'label' => 'EBooks',
+                'value' => EBook::count(),
+                'route' => route('student.ebook'),
+            ],
+            [
+                'label' => 'AI',
+                'value' => 2,
+                'route' => route('student.ai'),
+            ],
+            [
+                'label' => 'Upload PDF',
+                'value' => 1,
+                'route' => route('student.upload'),
+            ],
+            [
+                'label' => 'GPA Cal',
+                'value' => 1,
+                'route' => route('student.upload'),
+            ],
+
+        ];
+
+        return view('studentDashboard.index', compact(['ebooks', 'cardData']));
+        // dd($cardData);
+    }
+
     public function index()
     {
         // $subjects = Subjects::all();
         $pdfCategories = Category::get();
         $materials = LearningMaterial::with(['subjects', 'user'])->where('status', '=', 'approved')->get();
         $degrees = DegreeProgramme::all();
-        return view('studentView.index', compact(['materials', 'pdfCategories', 'degrees']));
+        return view('studentDashboard.pdf', compact(['materials', 'pdfCategories', 'degrees']));
     }
 
     public function upload(Request $request)
@@ -60,6 +107,14 @@ class STLearningMaterialsController extends Controller
         $subjects = Subject::all();
         $degrees = DegreeProgramme::all();
         $categories = Category::all();
-        return view('studentView.stdUpload', compact(['subjects', 'degrees', 'categories']));
+        return view('studentDashboard.upload', compact(['subjects', 'degrees', 'categories']));
     }
+
+    public function viewAI()
+    {
+        return view('studentDashboard.pdf-ai');
+    }
+
+
+
 }
