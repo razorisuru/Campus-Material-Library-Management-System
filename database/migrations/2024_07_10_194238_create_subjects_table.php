@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('subject_code');
             $table->string('name');
             $table->text('description')->nullable();
+            $table->integer('credits')->default(0);
             $table->timestamps();
         });
     }
