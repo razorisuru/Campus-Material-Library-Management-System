@@ -18,7 +18,61 @@ class AdminController extends Controller
         $EBookCount = EBook::count();
         $pdfCount = LearningMaterial::count();
         $ebooks = EBook::latest()->take(5)->get();
-        return view('dashboard', compact(['userCount',  'EBookCount', 'pdfCount', 'ebooks']));
+
+        $cardData = [
+            [
+                'label' => 'Users',
+                'value' => User::count(),
+                'route' => route('dashboard'),
+            ],
+            [
+                'label' => 'PDFs',
+                'value' => LearningMaterial::count(),
+                'route' => route('upload.viewPage'),
+            ],
+            [
+                'label' => 'EBooks',
+                'value' => EBook::count(),
+                'route' => route('ebook.ManageView'),
+            ],
+            [
+                'label' => 'AI',
+                'value' => 2,
+                'route' => route('summarize.pdf'),
+            ],
+            [
+                'label' => 'Upload PDF',
+                'value' => 1,
+                'route' => route('upload.view'),
+            ],
+            [
+                'label' => 'Upload EBOOK',
+                'value' => 1,
+                'route' => route('ebook.UploadView'),
+            ],
+            [
+                'label' => 'PDF Category',
+                'value' => 1,
+                'route' => route('category.view'),
+            ],
+            [
+                'label' => 'EBOOK Category',
+                'value' => 1,
+                'route' => route('ebook-category.view'),
+            ],
+            [
+                'label' => 'Manage Dashboard',
+                'value' => 1,
+                'route' => route('ebook-category.view'),
+            ],
+            [
+                'label' => 'GPA Cal',
+                'value' => 1,
+                'route' => route('student.upload'),
+            ],
+
+        ];
+        return view('dashboard', compact(['cardData', 'ebooks']));
     }
 
     public function index()
