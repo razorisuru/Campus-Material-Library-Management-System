@@ -114,7 +114,7 @@
                 </style>
 
                 <!-- Chat Popup -->
-                <div id="chat-popup" class="d-flex flex-column">
+                {{-- <div id="chat-popup" class="d-flex flex-column">
                     <div class=" p-3 d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">AI Chatbot</h5>
                         <button id="close-chat" class="btn btn-light btn-sm">X</button>
@@ -127,7 +127,7 @@
                             <button id="send-button" class="btn btn-primary">Send</button>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <!-- Floating Button -->
                 <button id="chat-toggle" class="btn btn-primary rounded-circle p-3">
                     💬
