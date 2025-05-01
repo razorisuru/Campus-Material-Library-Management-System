@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\EBookCategory;
 use App\Models\DegreeProgramme;
+use App\Models\LearningMaterial;
 
 class PdfApiController extends Controller
 {
@@ -33,5 +34,10 @@ class PdfApiController extends Controller
     public function ebook($id) {
         $ebooks = EBook::with('categories')->findOrFail($id);
         return response()->json($ebooks);
+    }
+
+    public function pdf() {
+        $materials = LearningMaterial::with(['subjects', 'user', 'category', 'degree'])->get();
+        return response()->json($materials);
     }
 }

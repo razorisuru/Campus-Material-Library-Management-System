@@ -38,4 +38,5 @@ Route::get('/pdf/category', [PdfApiController::class, 'pdfCategory']);
 Route::get('/ebook/category', [PdfApiController::class, 'ebookCategory']);
 Route::get('/ebooks', [PdfApiController::class, 'ebooks']);
 Route::get('/ebook/{id}', [PdfApiController::class, 'ebook']);
+Route::get('/pdf', [PdfApiController::class, 'pdf']);
 
