@@ -27,10 +27,6 @@ Route::redirect('/', destination: 'login');
 //     return view('layouts.auth');
 // });
 
-Route::get('/test/ai', function () {
-    return view('PDF.aitest');
-});
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
