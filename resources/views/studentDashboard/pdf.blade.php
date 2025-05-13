@@ -117,11 +117,7 @@
                                             <div class="d-flex align-items-center gap-3 mb-3">
                                                 <div class="file-preview-modern">
                                                     @if (strtolower($fileExtension) === 'pdf')
-                                                        <embed src="{{ asset('storage/' . $material->file_path) }}#toolbar=0&navpanes=0&scrollbar=0"
-                                                            type="application/pdf"
-                                                            class="pdf-thumb-modern"
-                                                            alt="PDF preview"
-                                                            />
+                                                        <img src="{{ $iconPath }}" class="file-icon-modern" alt="PDF icon">
                                                     @else
                                                         <img src="{{ $iconPath }}" class="file-icon-modern" alt="File icon">
                                                     @endif
