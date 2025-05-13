@@ -66,6 +66,13 @@
                         z-index: 9999;
                         opacity: 0;
                         transition: opacity 0.3s ease-in-out;
+                        pointer-events: none;
+                        /* Add this line */
+                    }
+
+                    #chat-popup.active {
+                        pointer-events: all;
+                        /* Add this class */
                     }
 
                     #chat-container {
@@ -187,17 +194,20 @@
                             chatPopup.toggle();
                             if (chatPopup.is(":visible")) {
                                 chatPopup.css("opacity", "1");
+                                chatPopup.addClass("active"); // Add active class when visible
                             } else {
                                 chatPopup.css("opacity", "0");
+                                chatPopup.removeClass("active"); // Remove active class when hidden
                             }
                         });
 
                         // Close button inside popup
                         $("#close-chat").click(function() {
                             chatPopup.css("opacity", "0");
+                            chatPopup.removeClass("active"); // Remove active class when closing
                             setTimeout(function() {
                                 chatPopup.hide();
-                            }, 300); // Wait for animation to complete
+                            }, 300);
                         });
                     });
                 </script>
