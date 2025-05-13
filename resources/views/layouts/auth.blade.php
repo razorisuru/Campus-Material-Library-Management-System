@@ -66,6 +66,11 @@
                         z-index: 9999;
                         opacity: 0;
                         transition: opacity 0.3s ease-in-out;
+                        pointer-events: none; /* Add this line */
+                    }
+
+                    #chat-popup.active {
+                        pointer-events: all; /* Add this class */
                     }
 
                     #chat-container {
@@ -113,8 +118,8 @@
                     }
                 </style>
 
-                <!-- Chat Popup -->
-                {{-- <div id="chat-popup" class="d-flex flex-column">
+                <!-- ChatBot Popup -->
+                <div id="chat-popup" class="d-flex flex-column">
                     <div class=" p-3 d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">AI Chatbot</h5>
                         <button id="close-chat" class="btn btn-light btn-sm">X</button>
@@ -127,7 +132,7 @@
                             <button id="send-button" class="btn btn-primary">Send</button>
                         </div>
                     </div>
-                </div> --}}
+                </div>
                 <!-- Floating Button -->
                 <button id="chat-toggle" class="btn btn-primary rounded-circle p-3">
                     💬
@@ -187,17 +192,20 @@
                             chatPopup.toggle();
                             if (chatPopup.is(":visible")) {
                                 chatPopup.css("opacity", "1");
+                                chatPopup.addClass("active"); // Add active class when visible
                             } else {
                                 chatPopup.css("opacity", "0");
+                                chatPopup.removeClass("active"); // Remove active class when hidden
                             }
                         });
 
                         // Close button inside popup
                         $("#close-chat").click(function() {
                             chatPopup.css("opacity", "0");
+                            chatPopup.removeClass("active"); // Remove active class when closing
                             setTimeout(function() {
                                 chatPopup.hide();
-                            }, 300); // Wait for animation to complete
+                            }, 300);
                         });
                     });
                 </script>
