@@ -4,90 +4,136 @@
     <section class="section">
         <div class="card shadow rounded">
             <div class="card-body">
-                <!-- Top Controls -->
-                <div class="d-flex flex-column flex-md-row gap-3 mb-4 align-items-center">
-                    <!-- Search -->
-                    <div class="search-container flex-grow-1 w-100">
-                        <div class="input-group">
-                            <span class="input-group-text  border-end-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                    viewBox="0 0 256 256">
-                                    <path
-                                        d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z">
-                                    </path>
-                                </svg>
-                            </span>
-                            <input id="searchInput" type="search" class="form-control border-start-0"
-                                placeholder="Search materials...">
+                <!-- Mobile Header -->
+                <div class="d-block d-md-none mb-3">
+                    <h5 class="fw-bold mb-3">Study Materials</h5>
+                    <div class="accordion mb-3" id="mobileFiltersAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#filterCollapse">
+                                    <i class="bi bi-funnel me-2"></i> Filters & Sort
+                                </button>
+                            </h2>
+                            <div id="filterCollapse" class="accordion-collapse collapse"
+                                data-bs-parent="#mobileFiltersAccordion">
+                                <div class="accordion-body">
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <label class="form-label">Category</label>
+                                            <select class="form-select" id="mobileCategorySelect">
+                                                <option value="all">All Categories</option>
+                                                @foreach ($pdfCategories as $pdfCategory)
+                                                    <option value="{{ $pdfCategory->name }}">{{ $pdfCategory->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label">Degree</label>
+                                            <select class="form-select" id="mobileDegreeSelect">
+                                                <option value="all">All Degrees</option>
+                                                @foreach ($degrees as $degree)
+                                                    <option value="{{ $degree->name }}">{{ $degree->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label">Sort By</label>
+                                            <select class="form-select" id="mobileSortSelect">
+                                                <option value="name">Name (A-Z)</option>
+                                                <option value="nameDesc">Name (Z-A)</option>
+                                                <option value="dateNewest">Date (Newest)</option>
+                                                <option value="dateOldest">Date (Oldest)</option>
+                                                <option value="sizeSmallest">Size (Smallest)</option>
+                                                <option value="sizeLargest">Size (Largest)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- View Toggle & Sort -->
+                <!-- Search -->
+                <div class="search-container w-100 mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text border-end-0">
+                            <i class="bi bi-search"></i>
+                        </span>
+                        <input id="searchInput" type="search" class="form-control border-start-0"
+                            placeholder="Search materials by name, category, subject...">
+                    </div>
+                </div>
+
+                <!-- Desktop Header Controls -->
+                <div class="d-none d-md-flex justify-content-between align-items-center mb-4">
+                    <h5 class="fw-bold mb-0">Study Materials</h5>
                     <div class="d-flex gap-2">
                         <div class="btn-group">
-                            <button class="btn btn-outline-primary view-toggle" data-view="grid">
-                                <i class="bi bi-grid"></i>
+                            <button class="btn btn-outline-primary view-toggle active" data-view="grid">
+                                <i class="bi bi-grid-3x3-gap-fill"></i>
                             </button>
                             <button class="btn btn-outline-primary view-toggle" data-view="list">
                                 <i class="bi bi-list-ul"></i>
                             </button>
                         </div>
-                        <select class="form-select w-auto" id="sortSelect">
-                            <option value="name">Name</option>
-                            <option value="date">Date</option>
-                            <option value="size">Size</option>
+                        <select class="form-select" id="sortSelect">
+                            <option value="name">Name (A-Z)</option>
+                            <option value="nameDesc">Name (Z-A)</option>
+                            <option value="dateNewest">Date (Newest)</option>
+                            <option value="dateOldest">Date (Oldest)</option>
+                            <option value="sizeSmallest">Size (Smallest)</option>
+                            <option value="sizeLargest">Size (Largest)</option>
                         </select>
-                    </div>
-                </div>
-
-                <!-- Filters for Mobile -->
-                <div class="d-md-none mb-3">
-                    <div class="row g-2">
-                        <div class="col-6">
-                            <select class="form-select" id="mobileCategorySelect">
-                                <option value="all">All Categories</option>
-                                @foreach ($pdfCategories as $pdfCategory)
-                                    <option value="{{ $pdfCategory->name }}">{{ $pdfCategory->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-6">
-                            <select class="form-select" id="mobileDegreeSelect">
-                                <option value="all">All Degrees</option>
-                                @foreach ($degrees as $degree)
-                                    <option value="{{ $degree->name }}">{{ $degree->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
                     </div>
                 </div>
 
                 <!-- Desktop Filters -->
                 <div class="d-none d-md-block mb-4">
-                    <div class="mb-2 d-flex flex-wrap gap-2">
-                        <div id="allCategoryButton" class="all-category-button btn btn-info btn-sm">
-                            All Categories
+                    <div class="filter-section">
+                        <span class="filter-label">Category:</span>
+                        <div class="filter-pills">
+                            <button id="allCategoryButton" class="filter-pill active" data-filter="category"
+                                data-value="all" type="button">
+                                All
+                            </button>
+                            @foreach ($pdfCategories as $pdfCategory)
+                                <button class="filter-pill" data-filter="category" data-value="{{ $pdfCategory->name }}"
+                                    type="button">
+                                    {{ $pdfCategory->name }}
+                                </button>
+                            @endforeach
                         </div>
-                        @foreach ($pdfCategories as $pdfCategory)
-                            <div class="category-button btn btn-info btn-sm" data-category="{{ $pdfCategory->name }}">
-                                {{ $pdfCategory->name }}
-                            </div>
-                        @endforeach
                     </div>
-                    <div class="mb-2 d-flex flex-wrap gap-2">
-                        <div id="allDegreeButton" class="all-degree-button btn btn-success btn-sm">
-                            All Degrees
+                    <div class="filter-section mt-2">
+                        <span class="filter-label">Degree:</span>
+                        <div class="filter-pills">
+                            <button id="allDegreeButton" class="filter-pill active" data-filter="degree" data-value="all"
+                                type="button">
+                                All
+                            </button>
+                            @foreach ($degrees as $degree)
+                                <button class="filter-pill" data-filter="degree" data-value="{{ $degree->name }}"
+                                    type="button">
+                                    {{ $degree->name }}
+                                </button>
+                            @endforeach
                         </div>
-                        @foreach ($degrees as $degree)
-                            <div class="degree-button btn btn-success btn-sm" data-degree="{{ $degree->name }}">
-                                {{ $degree->name }}
-                            </div>
-                        @endforeach
                     </div>
                 </div>
 
-                <!-- Material List -->
-                <div id="materialList" class="mt-4">
+                <!-- Materials Container -->
+                <div id="materialList">
+                    <div id="noResultsMessage" class="text-center py-5 d-none">
+                        <div class="mb-3">
+                            <i class="bi bi-search fs-1 text-muted"></i>
+                        </div>
+                        <h5>No materials found</h5>
+                        <p class="text-muted">Try adjusting your search or filters</p>
+                    </div>
+
                     <div class="row g-3" id="materialsContainer">
                         @foreach ($materials as $material)
                             @php
@@ -105,44 +151,49 @@
                                     'rar' => 'rar.png',
                                 ];
                                 $iconPath = '/img/' . ($fileIcons[strtolower($fileExtension)] ?? 'file.png');
+                                $fileName = basename($material->file_path);
+                                $fileSize = round(filesize('storage/' . $material->file_path) / 1000000, 2);
                             @endphp
                             <div class="col-12 col-md-6 col-lg-4 material-item"
                                 data-category="{{ $material->category->name }}"
-                                data-degree="{{ $material->degree->name }}"
-                                data-date="{{ $material->created_at }}"
-                                data-name="{{ basename($material->file_path) }}">
-                                <div class="material-card-modern h-100">
+                                data-degree="{{ $material->degree->name }}" data-date="{{ $material->created_at }}"
+                                data-name="{{ $fileName }}" data-size="{{ $fileSize }}">
+                                <div class="material-card h-100">
                                     <div class="card border-0 shadow-sm h-100">
                                         <div class="card-body d-flex flex-column">
                                             <div class="d-flex align-items-center gap-3 mb-3">
-                                                <div class="file-preview-modern">
-                                                    @if (strtolower($fileExtension) === 'pdf')
-                                                        <img src="{{ $iconPath }}" class="file-icon-modern" alt="PDF icon">
-                                                    @else
-                                                        <img src="{{ $iconPath }}" class="file-icon-modern" alt="File icon">
-                                                    @endif
-                                                    <span class="file-ext-modern">{{ strtoupper($fileExtension) }}</span>
+                                                <div class="file-preview">
+                                                    <img src="{{ $iconPath }}" class="file-icon"
+                                                        alt="{{ strtoupper($fileExtension) }} icon">
+                                                    <span class="file-ext">{{ strtoupper($fileExtension) }}</span>
                                                 </div>
-                                                <div class="flex-grow-1">
-                                                    <h6 class="file-name-modern mb-1">{{ basename($material->file_path) }}</h6>
+                                                <div class="flex-grow-1 overflow-hidden">
+                                                    <h6 class="file-name text-truncate mb-1" title="{{ $fileName }}">
+                                                        {{ $fileName }}</h6>
                                                     <div class="d-flex flex-wrap gap-1 mb-1">
-                                                        <span class="badge bg-gradient-primary">{{ $material->category->name }}</span>
-                                                        <span class="badge bg-gradient-success">{{ $material->degree->name }}</span>
-                                                        <span class="badge bg-gradient-secondary">{{ $material->subject->name }}</span>
+                                                        <span
+                                                            class="badge bg-primary">{{ $material->category->name }}</span>
+                                                        <span
+                                                            class="badge bg-success">{{ $material->degree->name }}</span>
+                                                        <span
+                                                            class="badge bg-secondary">{{ $material->subject->name }}</span>
                                                     </div>
-                                                    <div class="file-meta-modern text-muted small">
-                                                        <span><i class="bi bi-calendar"></i> {{ $material->created_at->format('M d, Y') }}</span>
-                                                        <span><i class="bi bi-file-earmark"></i> {{ round(filesize('storage/' . $material->file_path)/1000000, 2) }} MB</span>
+                                                    <div class="file-meta text-muted small">
+                                                        <span><i
+                                                                class="bi bi-calendar me-1"></i>{{ $material->created_at->format('M d, Y') }}</span>
+                                                        <span><i class="bi bi-file-earmark me-1"></i>{{ $fileSize }}
+                                                            MB</span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="mt-auto">
                                                 <div class="d-flex align-items-center justify-content-between mb-2">
-                                                    <span class="text-muted small"><i class="bi bi-person"></i> {{ $material->user->name }}</span>
+                                                    <span class="text-muted small"><i
+                                                            class="bi bi-person me-1"></i>{{ $material->user->name }}</span>
                                                 </div>
-                                                <a href="{{ asset('storage/' . $material->file_path) }}"
-                                                    class="btn btn-modern w-100">
-                                                    <i class="bi bi-eye"></i> View Document
+                                                <a href="{{ asset('storage/' . $material->file_path) }}" target="_blank"
+                                                    class="btn btn-primary w-100">
+                                                    <i class="bi bi-eye me-1"></i> View Document
                                                 </a>
                                             </div>
                                         </div>
@@ -156,25 +207,52 @@
         </div>
     </section>
 
-
     <style>
+        /* Base Styles */
+        .card {
+            border-radius: 0.75rem;
+            transition: all 0.25s ease;
+        }
+
+        /* Material Card Styling */
         .material-card {
-            transition: all 0.3s ease;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-radius: 0.75rem;
         }
 
         .material-card:hover {
-            transform: translateY(-2px);
+            transform: translateY(-4px);
         }
 
-        .file-icon-wrapper {
+        .material-card .card {
+            border-radius: 0.75rem;
+            overflow: hidden;
+            height: 100%;
+            border: 1px solid var(--bs-border-color);
+        }
+
+        .material-card:hover .card {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        /* File Preview */
+        .file-preview {
             position: relative;
-            width: 60px;
-            height: 60px;
+            width: 56px;
+            height: 70px;
+            flex-shrink: 0;
+            border-radius: 0.5rem;
+            background: var(--bs-tertiary-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
 
         .file-icon {
-            width: 100%;
-            height: 100%;
+            width: 40px;
+            height: 40px;
             object-fit: contain;
         }
 
@@ -184,278 +262,359 @@
             left: 0;
             right: 0;
             background: rgba(0, 0, 0, 0.6);
-            color: white;
+            color: #fff;
             font-size: 10px;
             text-align: center;
-            padding: 2px;
+            padding: 2px 0;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .file-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            line-height: 1.3;
         }
 
         .file-meta span {
             margin-right: 1rem;
+            display: inline-flex;
+            align-items: center;
         }
 
-        .hover-shadow:hover {
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        /* Button Styling */
+        .btn-primary {
+            background: linear-gradient(45deg, #4f8cff, #38c6ff);
+            border: none;
+            box-shadow: 0 2px 5px rgba(79, 140, 255, 0.3);
+            transition: all 0.2s;
         }
 
-        .transition-all {
-            transition: all 0.3s ease;
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #38c6ff, #4f8cff);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(79, 140, 255, 0.4);
         }
 
-        @media (max-width: 768px) {
-            .file-icon-wrapper {
-                width: 40px;
-                height: 40px;
-            }
-        }
-
-        .material-card-modern {
-            transition: box-shadow 0.2s, transform 0.2s;
-            border-radius: 1.2rem;
-            overflow: hidden;
-            border: 2px solid #000; /* Add this line for a black border around the whole card */
-        }
-        .material-card-modern .card {
-            border-radius: 1.2rem;
-            background: #fff;
-            box-shadow: 0 2px 16px 0 rgba(60,72,88,0.07);
-            transition: box-shadow 0.2s, transform 0.2s;
-        }
-        .material-card-modern:hover .card {
-            box-shadow: 0 8px 32px 0 rgba(60,72,88,0.18);
-            transform: translateY(-4px) scale(1.02);
-        }
-        .file-preview-modern {
-            position: relative;
-            width: 56px;
-            height: 72px;
-            flex-shrink: 0;
-            border-radius: 0.5rem;
-            background: #f8f9fa;
+        /* Filter Pills */
+        .filter-section {
             display: flex;
             align-items: center;
-            justify-content: center;
-            overflow: hidden;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
-        .pdf-thumb-modern {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 0.5rem;
-            background: #f2f2f2;
+
+        .filter-label {
+            font-weight: 600;
+            font-size: 0.9rem;
         }
-        .file-icon-modern {
-            width: 48px;
-            height: 48px;
-            object-fit: contain;
-            opacity: 0.85;
+
+        .filter-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
-        .file-ext-modern {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0,0,0,0.7);
-            color: #fff;
-            font-size: 11px;
+
+        .filter-pill {
+            border: 1px solid var(--bs-border-color);
+            background: var(--bs-body-bg);
+            color: var(--bs-body-color);
+            font-size: 0.85rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 50rem !important;
+            /* Force pill shape */
+            transition: all 0.2s;
+            cursor: pointer;
+            display: inline-block;
             text-align: center;
-            padding: 2px 0;
-            border-radius: 0 0 0.5rem 0.5rem;
-            letter-spacing: 1px;
+            text-decoration: none;
+            vertical-align: middle;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
         }
-        .file-name-modern {
-            font-weight: 600;
-            font-size: 1rem;
-            color: #2d3748;
-            margin-bottom: 0.25rem;
-            word-break: break-all;
+
+        .filter-pill:hover {
+            background: var(--bs-tertiary-bg);
         }
-        .file-meta-modern span {
-            margin-right: 1rem;
-            font-size: 0.92em;
-        }
-        .btn-modern {
-            background: linear-gradient(90deg, #4f8cff 0%, #38c6ff 100%);
+
+        .filter-pill.active[data-filter="category"] {
+            background: #4f8cff;
+            border-color: #4f8cff;
             color: #fff;
-            border: none;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            transition: background 0.2s, box-shadow 0.2s;
-            box-shadow: 0 2px 8px 0 rgba(60,72,88,0.08);
         }
-        .btn-modern:hover, .btn-modern:focus {
-            background: linear-gradient(90deg, #38c6ff 0%, #4f8cff 100%);
+
+        .filter-pill.active[data-filter="degree"] {
+            background: #42e695;
+            border-color: #42e695;
             color: #fff;
-            box-shadow: 0 4px 16px 0 rgba(60,72,88,0.12);
         }
-        .bg-gradient-primary {
-            background: linear-gradient(90deg, #4f8cff 0%, #38c6ff 100%) !important;
-            color: #fff !important;
+
+        /* List View Styles */
+        .list-view .material-item {
+            width: 100%;
         }
-        .bg-gradient-success {
-            background: linear-gradient(90deg, #42e695 0%, #3bb2b8 100%) !important;
-            color: #fff !important;
+
+        .list-view .file-name {
+            font-size: 1.1rem;
         }
-        .bg-gradient-secondary {
-            background: linear-gradient(90deg, #a18cd1 0%, #fbc2eb 100%) !important;
-            color: #fff !important;
-        }
-        @media (max-width: 768px) {
-            .file-preview-modern {
-                width: 40px;
-                height: 52px;
+
+        /* Mobile Optimizations */
+        @media (max-width: 767.98px) {
+            .card-body {
+                padding: 1rem;
             }
-            .file-icon-modern {
+
+            .file-preview {
+                width: 46px;
+                height: 58px;
+            }
+
+            .file-icon {
                 width: 32px;
                 height: 32px;
             }
-            .material-card-modern .card-body {
-                padding: 1rem 0.75rem;
+
+            .file-name {
+                font-size: 0.9rem;
+            }
+
+            .badge {
+                font-size: 0.7rem;
+            }
+
+            .file-meta {
+                font-size: 0.75rem !important;
+            }
+
+            .file-meta span {
+                margin-right: 0.5rem;
+            }
+        }
+
+        /* Accordion Customizations */
+        .accordion-button:not(.collapsed) {
+            background-color: rgba(79, 140, 255, 0.1);
+            color: var(--bs-primary);
+        }
+
+        .accordion-button:focus {
+            box-shadow: 0 0 0 0.25rem rgba(79, 140, 255, 0.25);
+        }
+
+        /* Dark Mode Compatibility */
+        @media (prefers-color-scheme: dark) {
+            .btn-primary {
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            }
+
+            .btn-primary:hover {
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            }
+
+            .filter-pill.active[data-filter="category"],
+            .filter-pill.active[data-filter="degree"] {
+                box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
+            }
+
+            .file-preview {
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             }
         }
     </style>
 
-
-
     <script>
-        $('#searchInput').on('input', function() {
-            const searchValue = $(this).val().toLowerCase();
-            $('.material-item').each(function() {
-                const materialTitle = $(this).find('.file-name').text().toLowerCase();
-                const materialUser = $(this).find('.text-muted').text().toLowerCase();
-                const materialCategory = $(this).find('.badge').text().toLowerCase();
+        document.addEventListener('DOMContentLoaded', function() {
+            // Variables
+            const materialsContainer = document.getElementById('materialsContainer');
+            const searchInput = document.getElementById('searchInput');
+            const materialItems = document.querySelectorAll('.material-item');
+            const noResultsMessage = document.getElementById('noResultsMessage');
+            const viewToggles = document.querySelectorAll('.view-toggle');
+            const sortSelect = document.getElementById('sortSelect');
+            const mobileSortSelect = document.getElementById('mobileSortSelect');
+            const filterPills = document.querySelectorAll('.filter-pill');
+            const mobileCategorySelect = document.getElementById('mobileCategorySelect');
+            const mobileDegreeSelect = document.getElementById('mobileDegreeSelect');
 
-                if (materialTitle.includes(searchValue) ||
-                    materialUser.includes(searchValue) ||
-                    materialCategory.includes(searchValue)) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
+            // Filter state
+            let filters = {
+                category: 'all',
+                degree: 'all',
+                search: '',
+                sort: 'name'
+            };
+
+            // Search functionality
+            searchInput.addEventListener('input', function() {
+                filters.search = this.value.toLowerCase().trim();
+                applyFilters();
             });
-        });
 
-        const categoryButtons = $('.category-button');
-        const degreeButtons = $('.degree-button');
-        const allCategoryButton = $('#allCategoryButton');
-        const allDegreeButton = $('#allDegreeButton');
-        const materials = $('.material-item');
+            // Filter pills click handling
+            filterPills.forEach(pill => {
+                pill.addEventListener('click', function() {
+                    const filterType = this.dataset.filter;
+                    const filterValue = this.dataset.value;
 
-        let selectedCategory = 'all';
-        let selectedDegree = 'all';
+                    // Update active state visually
+                    document.querySelectorAll(`.filter-pill[data-filter="${filterType}"]`).forEach(
+                        p => {
+                            p.classList.remove('active');
+                        });
+                    this.classList.add('active');
 
-        function filterMaterials() {
-            materials.each(function() {
-                const materialCategory = $(this).data('category');
-                const materialDegree = $(this).data('degree');
+                    // Update filter state
+                    filters[filterType] = filterValue;
 
-                const matchesCategory = (selectedCategory === 'all' || materialCategory === selectedCategory);
-                const matchesDegree = (selectedDegree === 'all' || materialDegree === selectedDegree);
+                    // Update mobile selects to match
+                    if (filterType === 'category') {
+                        mobileCategorySelect.value = filterValue;
+                    } else if (filterType === 'degree') {
+                        mobileDegreeSelect.value = filterValue;
+                    }
 
-                if (matchesCategory && matchesDegree) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
+                    applyFilters();
+                });
             });
-        }
 
-        allCategoryButton.on('click', function() {
-            selectedCategory = 'all';
-            filterMaterials();
+            // Mobile filter selects
+            mobileCategorySelect.addEventListener('change', function() {
+                filters.category = this.value;
+                applyFilters();
 
-            allCategoryButton.addClass('bg-[#4e7397] text-white');
-            categoryButtons.removeClass('bg-[#4e7397] text-white');
-        });
-
-        allDegreeButton.on('click', function() {
-            selectedDegree = 'all';
-            filterMaterials();
-
-            allDegreeButton.addClass('bg-[#2c9f5b] text-white');
-            degreeButtons.removeClass('bg-[#2c9f5b] text-white');
-        });
-
-        categoryButtons.each(function() {
-            $(this).on('click', function() {
-                const category = $(this).data('category');
-
-                if (selectedCategory === category) {
-                    selectedCategory = 'all';
-                    $(this).removeClass('bg-[#4e7397] text-white');
-                    allCategoryButton.addClass('bg-[#4e7397] text-white');
-                } else {
-                    selectedCategory = category;
-                    categoryButtons.removeClass('bg-[#4e7397] text-white');
-                    $(this).addClass('bg-[#4e7397] text-white');
-                    allCategoryButton.removeClass('bg-[#4e7397] text-white');
-                }
-                filterMaterials();
+                // Update desktop filter pills
+                document.querySelectorAll('.filter-pill[data-filter="category"]').forEach(pill => {
+                    pill.classList.remove('active');
+                    if (pill.dataset.value === this.value) {
+                        pill.classList.add('active');
+                    }
+                });
             });
-        });
 
-        degreeButtons.each(function() {
-            $(this).on('click', function() {
-                const degree = $(this).data('degree');
+            mobileDegreeSelect.addEventListener('change', function() {
+                filters.degree = this.value;
+                applyFilters();
 
-                if (selectedDegree === degree) {
-                    selectedDegree = 'all';
-                    $(this).removeClass('bg-[#2c9f5b] text-white');
-                    allDegreeButton.addClass('bg-[#2c9f5b] text-white');
-                } else {
-                    selectedDegree = degree;
-                    degreeButtons.removeClass('bg-[#2c9f5b] text-white');
-                    $(this).addClass('bg-[#2c9f5b] text-white');
-                    allDegreeButton.removeClass('bg-[#2c9f5b] text-white');
-                }
-                filterMaterials();
+                // Update desktop filter pills
+                document.querySelectorAll('.filter-pill[data-filter="degree"]').forEach(pill => {
+                    pill.classList.remove('active');
+                    if (pill.dataset.value === this.value) {
+                        pill.classList.add('active');
+                    }
+                });
             });
-        });
 
-        // View Toggle
-        $('.view-toggle').click(function() {
-            const view = $(this).data('view');
-            const container = $('#materialsContainer');
+            // Sort functionality
+            sortSelect.addEventListener('change', function() {
+                filters.sort = this.value;
+                applyFilters();
 
-            $('.view-toggle').removeClass('active');
-            $(this).addClass('active');
+                // Keep mobile sort in sync
+                mobileSortSelect.value = this.value;
+            });
 
-            if (view === 'list') {
-                container.find('.col-md-6').removeClass('col-md-6 col-lg-4').addClass('col-12');
-            } else {
-                container.find('.col-12').removeClass('col-12').addClass('col-md-6 col-lg-4');
+            mobileSortSelect.addEventListener('change', function() {
+                filters.sort = this.value;
+                applyFilters();
+
+                // Keep desktop sort in sync
+                sortSelect.value = this.value;
+            });
+
+            // View toggles (grid/list)
+            viewToggles.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const view = this.dataset.view;
+
+                    // Update active state
+                    viewToggles.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Apply view
+                    if (view === 'list') {
+                        materialsContainer.classList.add('list-view');
+                        document.querySelectorAll('#materialsContainer > .col-md-6').forEach(
+                        col => {
+                            col.classList.remove('col-md-6', 'col-lg-4');
+                            col.classList.add('col-12');
+                        });
+                    } else {
+                        materialsContainer.classList.remove('list-view');
+                        document.querySelectorAll('#materialsContainer > .col-12').forEach(col => {
+                            col.classList.remove('col-12');
+                            col.classList.add('col-md-6', 'col-lg-4');
+                        });
+                    }
+                });
+            });
+
+            // Main filter application function
+            function applyFilters() {
+                let visibleCount = 0;
+
+                // Process each material item
+                materialItems.forEach(item => {
+                    const category = item.dataset.category;
+                    const degree = item.dataset.degree;
+                    const name = item.dataset.name.toLowerCase();
+                    const date = new Date(item.dataset.date);
+                    const size = parseFloat(item.dataset.size);
+                    const itemContent = item.textContent.toLowerCase();
+
+                    // Match category and degree
+                    const matchCategory = filters.category === 'all' || category === filters.category;
+                    const matchDegree = filters.degree === 'all' || degree === filters.degree;
+
+                    // Match search text
+                    const matchSearch = filters.search === '' ||
+                        name.includes(filters.search) ||
+                        itemContent.includes(filters.search);
+
+                    // Determine visibility
+                    const isVisible = matchCategory && matchDegree && matchSearch;
+                    item.style.display = isVisible ? '' : 'none';
+
+                    if (isVisible) visibleCount++;
+                });
+
+                // Show/hide no results message
+                noResultsMessage.classList.toggle('d-none', visibleCount > 0);
+
+                // Apply sorting
+                sortItems();
             }
+
+            // Sort items function
+            function sortItems() {
+                const items = Array.from(materialItems);
+                const sortedItems = items.sort((a, b) => {
+                    switch (filters.sort) {
+                        case 'name':
+                            return a.dataset.name.localeCompare(b.dataset.name);
+                        case 'nameDesc':
+                            return b.dataset.name.localeCompare(a.dataset.name);
+                        case 'dateNewest':
+                            return new Date(b.dataset.date) - new Date(a.dataset.date);
+                        case 'dateOldest':
+                            return new Date(a.dataset.date) - new Date(b.dataset.date);
+                        case 'sizeSmallest':
+                            return parseFloat(a.dataset.size) - parseFloat(b.dataset.size);
+                        case 'sizeLargest':
+                            return parseFloat(b.dataset.size) - parseFloat(a.dataset.size);
+                        default:
+                            return 0;
+                    }
+                });
+
+                // Re-append items in sorted order
+                sortedItems.forEach(item => {
+                    materialsContainer.appendChild(item);
+                });
+            }
+
+            // Initial filter application
+            applyFilters();
         });
-
-        // Sorting
-        $('#sortSelect').change(function() {
-            const sortBy = $(this).val();
-            const container = $('#materialsContainer');
-            const items = container.find('.material-item').get();
-
-            items.sort((a, b) => {
-                const aVal = $(a).data(sortBy);
-                const bVal = $(b).data(sortBy);
-                return aVal > bVal ? 1 : -1;
-            });
-
-            container.empty().append(items);
-        });
-
-        // Mobile filters
-        $('#mobileCategorySelect, #mobileDegreeSelect').change(function() {
-            selectedCategory = $('#mobileCategorySelect').val();
-            selectedDegree = $('#mobileDegreeSelect').val();
-            filterMaterials();
-        });
-
-        // Helper function for file size
-        function formatFileSize(bytes) {
-            if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-        }
     </script>
 @endsection
