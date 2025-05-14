@@ -29,6 +29,8 @@ Route::middleware('auth:sanctum')->get('/logout', function (Request $request) {
 // Degree API
 Route::get('/degree-programmes/{id}/subjects', [DegreeProgrammeController::class, 'getSubjects']);
 
+
+// Mobile App
 Route::post('/login', [AuthApiController::class, 'login']);
 Route::post('/register', [AuthApiController::class, 'register']);
 
