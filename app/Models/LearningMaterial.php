@@ -19,6 +19,14 @@ class LearningMaterial extends Model
         'category_id',
     ];
 
+    protected $appends = ['file_size'];
+
+    public function getFileSizeAttribute()
+    {
+        $path = ('storage/' . $this->file_path);
+        return file_exists($path) ? filesize($path) : 0;
+    }
+
     public function subjects()
     {
         return $this->belongsTo(Subject::class, 'subject_id', 'id');

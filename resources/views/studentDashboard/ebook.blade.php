@@ -112,6 +112,10 @@
                                     <td id="modalCategories"></td>
                                 </tr>
                                 <tr>
+                                    <th>Size:</th>
+                                    <td id="modalSize"></td>
+                                </tr>
+                                <tr>
                                     <th>Description:</th>
                                     <td id="modalDescription"></td>
                                 </tr>
@@ -232,6 +236,8 @@
                         `<span class="badge bg-primary">${cat.name}</span>`
                     ).join(' ')
                 );
+                $('#modalSize').text(ebook.file_size_formatted);
+
                 $('#readButton').attr('href', '/storage/' + ebook.file_path);
             });
 

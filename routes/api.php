@@ -34,11 +34,13 @@ Route::get('/degree-programmes/{id}/subjects', [DegreeProgrammeController::class
 Route::post('/login', [AuthApiController::class, 'login']);
 Route::post('/register', [AuthApiController::class, 'register']);
 
-
-Route::get('/degree/category', [PdfApiController::class, 'degreeCategory']);
-Route::get('/pdf/category', [PdfApiController::class, 'pdfCategory']);
-Route::get('/ebook/category', [PdfApiController::class, 'ebookCategory']);
-Route::get('/ebooks', [PdfApiController::class, 'ebooks']);
-Route::get('/ebook/{id}', [PdfApiController::class, 'ebook']);
-Route::get('/pdf', [PdfApiController::class, 'pdf']);
-
+Route::middleware([
+    'auth:sanctum',
+])->group(function () {
+    Route::get('/degree/category', [PdfApiController::class, 'degreeCategory']);
+    Route::get('/pdf/category', [PdfApiController::class, 'pdfCategory']);
+    Route::get('/ebook/category', [PdfApiController::class, 'ebookCategory']);
+    Route::get('/ebooks', [PdfApiController::class, 'ebooks']);
+    Route::get('/ebook/{id}', [PdfApiController::class, 'ebook']);
+    Route::get('/pdf', [PdfApiController::class, 'pdf']);
+});

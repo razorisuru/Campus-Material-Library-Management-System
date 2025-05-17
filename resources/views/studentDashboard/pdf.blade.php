@@ -152,12 +152,11 @@
                                 ];
                                 $iconPath = '/img/' . ($fileIcons[strtolower($fileExtension)] ?? 'file.png');
                                 $fileName = basename($material->file_path);
-                                $fileSize = round(filesize('storage/' . $material->file_path) / 1000000, 2);
                             @endphp
                             <div class="col-12 col-md-6 col-lg-4 material-item"
                                 data-category="{{ $material->category->name }}"
                                 data-degree="{{ $material->degree->name }}" data-date="{{ $material->created_at }}"
-                                data-name="{{ $fileName }}" data-size="{{ $fileSize }}">
+                                data-name="{{ $fileName }}" data-size="{{ $material->file_size_formatted }}">
                                 <div class="material-card h-100">
                                     <div class="card border-0 shadow-sm h-100">
                                         <div class="card-body d-flex flex-column">
@@ -181,8 +180,9 @@
                                                     <div class="file-meta text-muted small">
                                                         <span><i
                                                                 class="bi bi-calendar me-1"></i>{{ $material->created_at->format('M d, Y') }}</span>
-                                                        <span><i class="bi bi-file-earmark me-1"></i>{{ $fileSize }}
-                                                            MB</span>
+                                                        <span><i
+                                                                class="bi bi-file-earmark me-1"></i>{{ $material->file_size_formatted }}
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -535,10 +535,10 @@
                     if (view === 'list') {
                         materialsContainer.classList.add('list-view');
                         document.querySelectorAll('#materialsContainer > .col-md-6').forEach(
-                        col => {
-                            col.classList.remove('col-md-6', 'col-lg-4');
-                            col.classList.add('col-12');
-                        });
+                            col => {
+                                col.classList.remove('col-md-6', 'col-lg-4');
+                                col.classList.add('col-12');
+                            });
                     } else {
                         materialsContainer.classList.remove('list-view');
                         document.querySelectorAll('#materialsContainer > .col-12').forEach(col => {

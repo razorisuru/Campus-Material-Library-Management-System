@@ -11,10 +11,29 @@ class EbookController extends Controller
 {
     public function index()
     {
-        $ebooks = EBook::with('categories')->get(); // Load categories with ebooks
+        $ebooks = EBook::with('categories')
+            ->get()
+            ->map(function ($ebooks) {
+                $ebooks->file_size_formatted = $this->formatBytes($ebooks->file_size);
+                return $ebooks;
+            });
+        ; // Load categories with ebooks
         $ebookCategories = EBookCategory::all(); // Load categories with ebooks
         return view('studentDashboard.ebook', compact(['ebooks', 'ebookCategories']));
         // return($ebookCategories);
+    }
+
+    private function formatBytes($bytes, $precision = 2)
+    {
+        $units = ['B', 'KB', 'MB', 'GB', 'TB'];
+
+        $bytes = max($bytes, 0);
+        $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
+        $pow = min($pow, count($units) - 1);
+
+        $bytes /= (1 << (10 * $pow));
+
+        return round($bytes, $precision) . ' ' . $units[$pow];
     }
 
     public function ai()
