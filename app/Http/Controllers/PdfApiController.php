@@ -50,6 +50,7 @@ class PdfApiController extends Controller
     public function pdf()
     {
         $materials = LearningMaterial::with(['subjects', 'user', 'category', 'degree'])
+            ->where('status', '=', 'approved')
             ->get()
             ->map(function ($material) {
                 $material->file_size_formatted = $this->formatBytes($material->file_size);

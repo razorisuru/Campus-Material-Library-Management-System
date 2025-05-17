@@ -16,7 +16,9 @@
                                     </path>
                                 </svg>
                             </span>
-                            <input id="searchInput" placeholder="Search eBooks" class="form-control border-0" />
+                            <input id="searchInput"
+                                   placeholder="Search by title, author, or ISBN"
+                                   class="form-control border-0" />
                         </div>
                     </label>
                 </div>
@@ -50,6 +52,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $ebook->title }}</h5>
                                     <p class="card-text text-muted">{{ $ebook->author }}</p>
+                                    <p class="isbn-text text-muted small">ISBN: {{ $ebook->isbn }}</p>
                                     <div class="mb-2">
                                         @foreach ($ebook->categories as $category)
                                             <span class="badge bg-primary">{{ $category->name }}</span>
@@ -177,6 +180,12 @@
         .pagination .active .page-link {
             transform: scale(1.05);
         }
+
+        .isbn-text {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-bottom: 0.5rem;
+        }
     </style>
 
     <script>
@@ -187,7 +196,10 @@
                 $('.ebook-item').each(function() {
                     const title = $(this).find('.card-title').text().toLowerCase();
                     const author = $(this).find('.card-text').text().toLowerCase();
-                    const shouldShow = title.includes(searchText) || author.includes(searchText);
+                    const isbn = $(this).find('.isbn-text').text().toLowerCase();
+                    const shouldShow = title.includes(searchText) ||
+                                      author.includes(searchText) ||
+                                      isbn.includes(searchText);
 
                     if (shouldShow) {
                         $(this).removeClass('hidden');
