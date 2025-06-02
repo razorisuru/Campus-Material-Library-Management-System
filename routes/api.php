@@ -2,9 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PdfApiController;
 use App\Http\Controllers\AuthApiController;
 use App\Http\Controllers\DegreeProgrammeController;
-use App\Http\Controllers\PdfApiController;
 
 /*
 |--------------------------------------------------------------------------
