@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PdfApiController;
 use App\Http\Controllers\AuthApiController;
+use App\Http\Controllers\NodeJsAiPdfController;
 use App\Http\Controllers\DegreeProgrammeController;
 
 /*
@@ -43,4 +44,8 @@ Route::middleware([
     Route::get('/ebooks', [PdfApiController::class, 'ebooks']);
     Route::get('/ebook/{id}', [PdfApiController::class, 'ebook']);
     Route::get('/pdf', [PdfApiController::class, 'pdf']);
+
+    Route::post('/mobile/chat-bot', [NodeJsAiPdfController::class, 'chatBotMobile']);
 });
+
+

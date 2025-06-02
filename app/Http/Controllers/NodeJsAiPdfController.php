@@ -71,7 +71,9 @@ class NodeJsAiPdfController extends Controller
             // if this class does not work, run this and dont ask why
             // run this command when the AI IS NOT WORKING
             // if anyhing is not working, run this command
+            // php artisan optimize
             // php artisan config:clear
+            // php artisan cache:clear
 
             $responseData = $this->gpi->callAPI($content);
 
@@ -109,6 +111,19 @@ class NodeJsAiPdfController extends Controller
         $text = $request->input(key: 'text');
 
         // $gpi = new GeminiAPI();
+
+        $response = $this->gpi->callAPI($text);
+
+        $responseData = $response['candidates'][0]['content']['parts'][0]['text'];
+
+        return response()->json([
+            'message' => $responseData
+        ]);
+    }
+
+    public function chatBotMobile(Request $request)
+    {
+        $text = $request->text;
 
         $response = $this->gpi->callAPI($text);
 

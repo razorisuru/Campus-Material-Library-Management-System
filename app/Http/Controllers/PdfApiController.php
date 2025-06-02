@@ -47,15 +47,23 @@ class PdfApiController extends Controller
         return response()->json($ebooks);
     }
 
-    public function pdf()
+
+    public function pdf(Request $request)
     {
+        $perPage = $request->query('per_page', 20);
+        $page = $request->query('page', 1);
+
         $materials = LearningMaterial::with(['subjects', 'user', 'category', 'degree'])
             ->where('status', '=', 'approved')
-            ->get()
-            ->map(function ($material) {
-                $material->file_size_formatted = $this->formatBytes($material->file_size);
-                return $material;
-            });
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage);
+
+        // Format file sizes
+        $materials->through(function ($material) {
+            $material->file_size_formatted = $this->formatBytes($material->file_size);
+            return $material;
+        });
+
         return response()->json($materials);
     }
 
