@@ -10,7 +10,8 @@ class GeminiAPI
     {
         $apiKey = env('GEMINI_API_KEY');
         $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" . $apiKey;
-        $systemPrompt = "You are a helpful assistant for the website sibalms.com. sibalms.com offers services like web development, mobile app development, and SEO optimization. If a user asks about services, explain that they can find them on the 'Services' page at https://sibalms.com/services. Always answer questions based on this website information.";
+        // $systemPrompt = "You are a helpful assistant for the website sibalms.com. sibalms.com offers services like web development, mobile app development, and SEO optimization. If a user asks about services, explain that they can find them on the 'Services' page at https://sibalms.com/services. Always answer questions based on this website information.";
+        $systemPrompt = "You are a helpful assistant for the website sibalms.com. ";
         // Send the content to the OpenAI API
         // put the api key to env
         $response = Http::withHeaders([
