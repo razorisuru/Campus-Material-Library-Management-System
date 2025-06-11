@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GoogleAuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EbookController;
@@ -26,6 +27,10 @@ Route::redirect('/', destination: 'login');
 // Route::get('/dash', function () {
 //     return view('layouts.auth');
 // });
+
+// google auth
+Route::get('/auth/google', [GoogleAuthController::class, 'redirect'])->name('google.auth');
+Route::get('/auth/google/call-back', [GoogleAuthController::class, 'callbackGoogle'])->name('google.callback');
 
 Route::middleware([
     'auth:sanctum',
