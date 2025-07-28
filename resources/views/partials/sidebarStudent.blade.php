@@ -90,13 +90,13 @@
 
                 </li>
 
-                <li class="sidebar-item  {{ request()->routeIs( 'student.upload') ? 'active' : '' }}">
+                {{-- <li class="sidebar-item  {{ request()->routeIs( 'student.upload') ? 'active' : '' }}">
                     <a href="{{ route('student.upload') }}" class="sidebar-link">
                         <i class="bi bi-stack"></i>
                         <span>GPA Cal</span>
                     </a>
 
-                </li>
+                </li> --}}
 
 
 
