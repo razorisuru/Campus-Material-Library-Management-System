@@ -156,7 +156,8 @@
                             <div class="col-12 col-md-6 col-lg-4 material-item"
                                 data-category="{{ $material->category->name }}"
                                 data-degree="{{ $material->degree->name }}" data-date="{{ $material->created_at }}"
-                                data-name="{{ $fileName }}" data-size="{{ $material->file_size_formatted }}">
+                                data-name="{{ $fileName }}" data-size="{{ $material->file_size_formatted }}"
+                                data-name="{{ $material->id }}">
                                 <div class="material-card h-100">
                                     <div class="card border-0 shadow-sm h-100">
                                         <div class="card-body d-flex flex-column">
@@ -168,7 +169,7 @@
                                                 </div>
                                                 <div class="flex-grow-1 overflow-hidden">
                                                     <h6 class="file-name text-truncate mb-1" title="{{ $fileName }}">
-                                                        {{ $fileName }}</h6>
+                                                        {{ $fileName }} </h6>
                                                     <div class="d-flex flex-wrap gap-1 mb-1">
                                                         <span
                                                             class="badge bg-primary">{{ $material->category->name }}</span>
@@ -192,7 +193,8 @@
                                                             class="bi bi-person me-1"></i>{{ $material->user->name }}</span>
                                                 </div>
                                                 <a href="{{ asset('storage/' . $material->file_path) }}" target="_blank"
-                                                    class="btn btn-primary w-100">
+                                                    class="btn btn-primary w-100 view-document-btn"
+                                                    data-material-id="{{ $material->id }}">
                                                     <i class="bi bi-eye me-1"></i> View Document
                                                 </a>
                                             </div>
@@ -612,6 +614,37 @@
                     materialsContainer.appendChild(item);
                 });
             }
+
+            // AJAX log PDF access when "View Document" is clicked
+            document.querySelectorAll('.view-document-btn').forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    const pdf_id = this.getAttribute('data-material-id');
+                    const st_id = "{{ auth()->id() }}"; // Get the authenticated student's ID
+                    try {
+                        const res = fetch("/api/pdf/recommend", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                student_id: st_id,
+                                pdf_id: pdf_id
+                            })
+                        });
+                        res.then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        }).then(data => {
+                            console.log('PDF access logged successfully:', data);
+                        });
+                    } catch (error) {
+                        console.error('Error logging PDF access:', error);
+                    }
+                    // No need to preventDefault, allow normal navigation
+                });
+            });
 
             // Initial filter application
             applyFilters();

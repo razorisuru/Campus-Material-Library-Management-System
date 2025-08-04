@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PdfApiController;
 use App\Http\Controllers\AuthApiController;
 use App\Http\Controllers\NodeJsAiPdfController;
+use App\Http\Controllers\PdfAccessLogController;
 use App\Http\Controllers\DegreeProgrammeController;
 
 /*
@@ -49,3 +50,5 @@ Route::middleware([
 });
 
 
+// AI Rec
+Route::post('/pdf/recommend', [PdfAccessLogController::class, 'store']);

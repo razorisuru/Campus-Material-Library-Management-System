@@ -3,28 +3,29 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\pdf_access_log;
 use App\Models\LearningMaterial;
+use App\Models\pdf_access_log;
 
-class pdf_access_log extends Controller
+class PdfAccessLogController extends Controller
 {
     public function store(Request $request)
     {
-        $request->validate([
-            'pdf_id' => 'required|exists:learning_materials,id',
-        ]);
+        // $request->validate([
+        //     'pdf_id' => 'required|exists:learning_materials,id',
+        // ]);
         pdf_access_log::create([
-            'student_id' => auth()->id(),
-            'pdf_id' => $material->id,
+            'student_id' => $request->student_id,
+            'pdf_id' => $request->pdf_id,
             'accessed_at' => now(),
         ]);
+        return response()->json(['message' => 'PDF access logged successfully'], 201);
     }
 
     public function getRecommendations()
     {
         $lastAccessed = pdf_access_log::where('student_id', auth()->id())
             ->orderByDesc('accessed_at')
-            ->take(3)
+            ->take(5)
             ->pluck('pdf_id');
 
         $pdfs = LearningMaterial::whereIn('id', $lastAccessed)->get();
@@ -39,6 +40,9 @@ class pdf_access_log extends Controller
         // Parse response and query for recommended PDFs
         // ...your logic here...
 
-        return view('studentDashboard.recommendations', compact('recommendedPdfs'));
+        return response()->json(
+            $response,
+            200
+        );
     }
 }
