@@ -52,3 +52,4 @@ Route::middleware([
 
 // AI Rec
 Route::post('/pdf/recommend', [PdfAccessLogController::class, 'store']);
+Route::post('/pdf/getRecommendations', [PdfAccessLogController::class, 'getRecommendations']);
