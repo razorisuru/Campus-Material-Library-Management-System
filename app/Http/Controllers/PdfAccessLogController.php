@@ -36,20 +36,29 @@ class PdfAccessLogController extends Controller
 
         $pdfs = LearningMaterial::whereIn('id', $lastAccessed)->get();
 
-        $prompt = "Suggest similar study materials for these PDFs:\n";
+        $prompt = "You are an expert academic assistant. Based on the following study materials (PDFs), suggest a list of similar books or study resources that would help students learn more deeply.
+For each suggested resource, include:
+- Title of the book or material
+- Author(s)
+- Difficulty level (Beginner / Intermediate / Advanced)
+- Key topics covered
+- Why this resource is relevant
+
+Here are the study materials:\n";
+
         foreach ($pdfs as $pdf) {
             $prompt .= "Title: {$pdf->title}, Description: {$pdf->description}, Category: {$pdf->category->name}\n";
         }
 
         $response = $this->gpi->callAPI($prompt);
 
-        // $responseData = $response['candidates'][0]['content']['parts'][0]['text'];
+        $responseData = $response['candidates'][0]['content']['parts'][0]['text'];
 
         // Parse response and query for recommended PDFs
         // ...your logic here...
 
         return response()->json(
-            $response,
+            $responseData,
             200
         );
     }

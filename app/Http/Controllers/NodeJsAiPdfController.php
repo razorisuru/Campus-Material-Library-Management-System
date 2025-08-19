@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LearningMaterial;
+use App\Models\pdf_access_log;
 use App\Services\GeminiAPI;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -48,6 +50,14 @@ class NodeJsAiPdfController extends Controller
 
         $summaries = [];
 
+        $st_id = auth()->id() ?: 1; // Fallback to 1 if not authenticated
+        $lastAccessed = pdf_access_log::where('student_id', 1)
+            ->orderByDesc('accessed_at')
+            ->take(5)
+            ->pluck('pdf_id');
+
+        $pdfs = LearningMaterial::whereIn('id', $lastAccessed)->get();
+
         // Iterate through each page and perform the selected task
         foreach ($pages as $pageText) {
             // Default prompt message based on the selected task
@@ -64,6 +74,20 @@ class NodeJsAiPdfController extends Controller
                 return response()->json(['summary' => $formattedpageText]);
             } elseif ($task === 'translate') {
                 $content = "Translate this to Sinhala : $pageText";
+            } elseif ($task === 'getRecommendations') {
+                $content = "You are an expert academic assistant. Based on the following study materials (PDFs), suggest a list of similar books or study resources that would help students learn more deeply.
+For each suggested resource, include:
+- Title of the book or material
+- Author(s)
+- Difficulty level (Beginner / Intermediate / Advanced)
+- Key topics covered
+- Why this resource is relevant
+
+Here are the study materials:\n";
+
+                foreach ($pdfs as $pdf) {
+                    $content .= "Title: {$pdf->title}, Description: {$pdf->description}, Category: {$pdf->category->name}\n";
+                }
             }
             // elseif ($task === 'check_plagiarism') {
 
