@@ -32,50 +32,27 @@ class NodeJsAiPdfController extends Controller
 
     public function summarize(Request $request)
     {
-        // Validate the inputs
+        // Validate inputs
         $request->validate([
-            'pdf' => 'required|file|mimes:pdf',
+            'pdf' => 'nullable|file|mimes:pdf',
             'task' => 'required|string',
         ]);
 
-        // Get the task and prompt from the request
         $task = $request->input('task');
-
-        // Read the PDF file
-        $pdfPath = $request->file('pdf')->getRealPath();
-        $parser = new Parser();
-        $pdf = $parser->parseFile($pdfPath);
-        $text = $pdf->getText();
-        $pages = explode("\f", $text);
-
         $summaries = [];
 
-        $st_id = auth()->id() ?: 1; // Fallback to 1 if not authenticated
-        $lastAccessed = pdf_access_log::where('student_id', 1)
-            ->orderByDesc('accessed_at')
-            ->take(5)
-            ->pluck('pdf_id');
+        $st_id = auth()->id() ?: 1;
 
-        $pdfs = LearningMaterial::whereIn('id', $lastAccessed)->get();
+        // --- Special case: getRecommendations does NOT need PDF ---
+        if ($task === 'getRecommendations') {
+            $lastAccessed = pdf_access_log::where('student_id', $st_id)
+                ->orderByDesc('accessed_at')
+                ->take(5)
+                ->pluck('pdf_id');
 
-        // Iterate through each page and perform the selected task
-        foreach ($pages as $pageText) {
-            // Default prompt message based on the selected task
-            $content = "Perform the task '$task' on this: $pageText";
+            $pdfs = LearningMaterial::whereIn('id', $lastAccessed)->get();
 
-            if ($task === 'summarize') {
-                $content = "Summarize this: $pageText";
-            } elseif ($task === 'paraphrase') {
-                $content = "Paraphrase this: $pageText";
-            } elseif ($task === 'check_ai_written') {
-                $content = "Check if this content is AI-written: $pageText";
-            } elseif ($task === 'extract_text') {
-                $formattedpageText = nl2br($pageText);
-                return response()->json(['summary' => $formattedpageText]);
-            } elseif ($task === 'translate') {
-                $content = "Translate this to Sinhala : $pageText";
-            } elseif ($task === 'getRecommendations') {
-                $content = "You are an expert academic assistant. Based on the following study materials (PDFs), suggest a list of similar books or study resources that would help students learn more deeply.
+            $content = "You are an expert academic assistant. Based on the following study materials (PDFs), suggest a list of similar books or study resources that would help students learn more deeply.
 For each suggested resource, include:
 - Title of the book or material
 - Author(s)
@@ -85,12 +62,54 @@ For each suggested resource, include:
 
 Here are the study materials:\n";
 
-                foreach ($pdfs as $pdf) {
-                    $content .= "Title: {$pdf->title}, Description: {$pdf->description}, Category: {$pdf->category->name}\n";
-                }
+            foreach ($pdfs as $pdf) {
+                $content .= "Title: {$pdf->title}, Description: {$pdf->description}, Category: {$pdf->category->name}\n";
             }
-            // elseif ($task === 'check_plagiarism') {
 
+            $responseData = $this->gpi->callAPI($content);
+
+            $finalSummary = '';
+            if (!empty($responseData['candidates'][0]['content']['parts'])) {
+                foreach ($responseData['candidates'][0]['content']['parts'] as $part) {
+                    $finalSummary .= $part['text'] ?? '';
+                }
+            } else {
+                $finalSummary = $responseData;
+            }
+
+            if ($request->ajax()) {
+                return response()->json(['summary' => nl2br($finalSummary)]);
+            }
+
+            return view('PDF.summarize-pdf', ['summary' => $finalSummary]);
+        }
+
+        // --- Other tasks DO need a PDF ---
+        if (!$request->hasFile('pdf')) {
+            return response()->json(['error' => 'PDF is required for this task.'], 422);
+        }
+
+        $pdfPath = $request->file('pdf')->getRealPath();
+        $parser = new Parser();
+        $pdf = $parser->parseFile($pdfPath);
+        $text = $pdf->getText();
+        $pages = explode("\f", $text);
+
+        foreach ($pages as $pageText) {
+            // Default prompt
+            $content = "Perform the task '$task' on this: $pageText";
+
+            if ($task === 'summarize') {
+                $content = "Summarize this: $pageText";
+            } elseif ($task === 'paraphrase') {
+                $content = "Paraphrase this: $pageText";
+            } elseif ($task === 'check_ai_written') {
+                $content = "Check if this content is AI-written: $pageText";
+            } elseif ($task === 'extract_text') {
+                return response()->json(['summary' => nl2br($pageText)]);
+            } elseif ($task === 'translate') {
+                $content = "Translate this to Sinhala: $pageText";
+            }
 
             // if this class does not work, run this and dont ask why
             // run this command when the AI IS NOT WORKING
@@ -101,34 +120,27 @@ Here are the study materials:\n";
 
             $responseData = $this->gpi->callAPI($content);
 
-            // Map the new structure to extract the content parts
             $pageSummary = '';
             if (!empty($responseData['candidates'][0]['content']['parts'])) {
-                $parts = $responseData['candidates'][0]['content']['parts'];
-                foreach ($parts as $part) {
+                foreach ($responseData['candidates'][0]['content']['parts'] as $part) {
                     $pageSummary .= $part['text'] ?? '';
                 }
             } else {
                 $pageSummary = $responseData;
             }
 
-            // Store the summary
             $summaries[] = $pageSummary;
-
         }
 
-        // Combine all summaries into one text
         $finalSummary = implode("\n\n", $summaries);
 
         if ($request->ajax()) {
-            // Format the summary with line breaks for better display in HTML
-            $formattedSummary = nl2br($finalSummary);
-            return response()->json(['summary' => $formattedSummary]);
+            return response()->json(['summary' => nl2br($finalSummary)]);
         }
 
-        // Return the summary to the view for non-AJAX requests
         return view('PDF.summarize-pdf', ['summary' => $finalSummary]);
     }
+
 
     public function chatBot(Request $request)
     {

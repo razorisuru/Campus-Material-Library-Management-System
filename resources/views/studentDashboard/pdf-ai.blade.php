@@ -25,7 +25,7 @@
                     <div class="row align-items-end">
                         <div class="col-md-5 mb-3">
                             <label for="pdf" class="form-label">Upload PDF:</label>
-                            <input type="file" name="pdf" id="pdf" class="form-control" required>
+                            <input type="file" name="pdf" id="pdf" class="form-control" >
                         </div>
 
                         <div class="col-md-5 mb-3">
@@ -36,6 +36,7 @@
                                 <option value="check_ai_written">Check AI-Written Content</option>
                                 <option value="extract_text">Extract Text</option>
                                 <option value="translate">Translate To Sinhala</option>
+                                <option value="getRecommendations">Get Recommendations</option>
                             </select>
                         </div>
 
